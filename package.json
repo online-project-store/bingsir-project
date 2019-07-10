@@ -1,0 +1,35 @@
+{
+  "name": "blogs_project_aliyun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev  supervisor app.js ",
+    "ndb": "cross-env NODE_ENV=dev  ndb app.js ",
+    "test": "cross-env NODE_ENV=test  node app.js ",
+    "prd": "cross-env NODE_ENV=prd  node app.js ",
+    "pm2": "cross-env NODE_ENV=prd ENABLE_NODE_LOG=YES  pm2 start app.js --name blogs_project_aliyun"
+  },
+  "keywords": [],
+  "author": "andy",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.5",
+    "ejs": "^2.6.2",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-jwt": "^3.5.1",
+    "koa-router": "^7.4.0",
+    "koa-session2": "^2.2.10",
+    "koa-static-cache": "^5.1.2",
+    "koa-views": "^6.2.0",
+    "moment": "^2.24.0",
+    "mysql": "^2.17.1",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0"
+  }
+}
