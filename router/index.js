@@ -57,7 +57,7 @@ router.post('/login', async (ctx, next) => {
                         }
                         // console.log(userToken);
                         const token = jwt.sign(userToken, "andy", {expiresIn: '1h'});//token签名 有效期为1小时
-
+                        
                         ctx.body = {
                             code: 1,
                             msg: "成功",
