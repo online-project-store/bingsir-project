@@ -21,6 +21,7 @@ axios.defaults.timeout = 100000
       return  response.data
     }else {
       // 非200请求抱错
+      console.log(response.data);
       throw Error(response.data.msg || '服务异常')
     }
 });

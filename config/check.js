@@ -2,7 +2,6 @@ const Promise = require("bluebird");
 const jwt = require("jsonwebtoken");
 const verify = Promise.promisify(jwt.verify);
 
-
 async function check(ctx, next) {
     let url = ctx.request.url;
     // 登录 不用检查
@@ -16,27 +15,34 @@ async function check(ctx, next) {
             token = ctx.query.token
         }
         // 解码
-        let payload = await verify(token, 'andy');
-        console.log(payload);
-        
-        let {
-            time,
-            timeout
-        } = payload;
-        let data = new Date().getTime();
-        console.log(data - time <= timeout);
-        
-        if (data - time <= timeout) {
-            // 未过期
-            await next();
-        } else {
-            //过期
+        try {
+           let payload = await verify(token, 'andy');
+           let { time, timeout } = payload;
+           let data = new Date().getTime();
+           if (data - time <= timeout) {
+               // 未过期
+               await next();
+           } else {
+               //过期
+               ctx.body = {
+                   code: 0,
+                   status: 50014,
+                   data:'',
+                   msg: 'token 已过期'
+               };
+           }
+        } catch (error) {
             ctx.body = {
-                status: 50014,
-                message: 'token 已过期'
+                status: 401,
+                code: 0,
+                data: {
+                    error
+                },
+                msg: '无权限'
             };
         }
     }
+   
 }
 
 module.exports = check

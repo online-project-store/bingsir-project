@@ -98,7 +98,6 @@ router.post('/register',async (ctx,next) => {
         img:'',
     }
     //phone,username,password,img,moment
-
     if (data.username && data.password && data.phone && data.password === data.confirmPwd) {
 
         await sql.findUsersByName(data.username).then(async res=>{
