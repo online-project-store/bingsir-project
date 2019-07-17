@@ -17,9 +17,6 @@ app.use(views('view', {
 
 app.use(router.routes()).use(router.allowedMethods()); // 返回匹配路由的复合中间件
 
-app.listen({port: 8000}, (err) => {
-    if (err) {
-        throw err;
-    }
+app.listen(8000,'0.0.0.0', () => {
     console.log("the server is running on port 8000");
 })
