@@ -18,6 +18,5 @@ module.exports = function (app) {
     app.use(bodyParser({
         formLimit: '1mb',
     }));
-    
     app.use(check);
 }
