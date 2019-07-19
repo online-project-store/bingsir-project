@@ -36,7 +36,8 @@ router.post('/login', async (ctx, next) => {
        username: ctx.request.body.username,
        password: ctx.request.body.password,
    }
-   console.log(user);
+   
+   //console.log(user);
    
    if (user.username !== "" && user.password !== "") {
        await sql.findUsersByName(user.username).then(result => {

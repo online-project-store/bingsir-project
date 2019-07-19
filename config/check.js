@@ -4,7 +4,7 @@ const verify = Promise.promisify(jwt.verify);
 
 async function check(ctx, next) {
     let url = ctx.request.url;
-    // console.log(url);
+    //  console.log(url);
     // 登录 不用检查
     if (url == "/login" || url == "/register" || url == "/") await next();
     else {
@@ -43,7 +43,6 @@ async function check(ctx, next) {
             };
         }
     }
-   
 }
 
 module.exports = check

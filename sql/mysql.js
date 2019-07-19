@@ -1,4 +1,5 @@
 const mysql = require('mysql')
+const tables = require('./tables')
 const config = require("./config")
 // 创建数据池
 const pool = mysql.createPool({
@@ -33,17 +34,8 @@ const createTbale = (sql) => {
     query(sql, []);
 }
 
-const users = `create table if not exists users(
-        id INT NOT NULL AUTO_INCREMENT,
-        phone VARCHAR(20) NOT NULL,
-        username VARCHAR(30) NOT NULL,
-        password VARCHAR(50) NOT NULL,
-        img VARCHAR(100) NOT NULL,
-        moment VARCHAR(20) NOT NULL,
-        PRIMARY KEY (id)
-     );`
 
-createTbale(users);
+createTbale(tables.users);
 
 const insertUsers = (value) => {
     let _sql = `insert into users(phone,username,password,img,moment) values(?,?,?,?,?)`;

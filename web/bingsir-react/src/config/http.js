@@ -1,6 +1,10 @@
 import axios from 'axios'
 import method from "./method"
-axios.defaults.baseURL = 'api'
+if (process.env.NODE_ENV == 'development') {
+    axios.defaults.baseURL = 'api'
+}else{
+    axios.defaults.baseURL = ''
+}
 axios.defaults.withCredentials = true
 axios.defaults.timeout = 100000
 // console.log(method.getQueryString('token').length);
@@ -11,7 +15,6 @@ axios.defaults.timeout = 100000
     if (method.getQueryString('token')) {
         config.headers['Authorization'] = 'Bearer ' + method.getQueryString('token');
     }
-    
     return config
  });
   
