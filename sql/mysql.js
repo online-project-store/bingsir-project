@@ -35,8 +35,11 @@ const createTbale = (sql) => {
 }
 
 
+createTbale(tables.options);
 createTbale(tables.users);
-
+createTbale(tables.friends);
+createTbale(tables.articles);
+createTbale(tables.comments);
 const insertUsers = (value) => {
     let _sql = `insert into users(phone,username,password,img,moment) values(?,?,?,?,?)`;
     return query(_sql, value)
