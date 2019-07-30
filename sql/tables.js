@@ -69,12 +69,24 @@ const classify = `create table if not exists classify(
     KEY class_parent_id(class_parent_id)
 )ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
 const classify_articles = `create table if not exists classify_articles(
-    
-)`
+    classify_articles_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    classify_id INT NOT NULL COMMENT '分类id',
+    articles_id INT NOT NULL COMMENT '文章id',
+    constraint fk_classify_id foreign key(classify_id) references classify(class_id),
+    constraint fk_articles_id foreign key(articles_id) references articles(article_id)
+)ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
+const tag = `create table if not exists tag(
+    tag_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    tag_name VARCHAR(20) not null,
+    tag_description VARCHAR(60) not null,
+    tag_another_name VARCHAR(20) not null
+)ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
 module.exports  ={
     options,
     users,
     friends,
     articles,
-    comments
+    comments,
+    classify,
+    classify_articles
 }

@@ -40,6 +40,8 @@ createTbale(tables.users);
 createTbale(tables.friends);
 createTbale(tables.articles);
 createTbale(tables.comments);
+createTbale(tables.classify);
+createTbale(tables.classify_articles);
 const insertUsers = (value) => {
     let _sql = `insert into users(phone,username,password,img,moment) values(?,?,?,?,?)`;
     return query(_sql, value)
