@@ -108,11 +108,28 @@ const bbs_card = `create table if not exists bbs_card(
     bbs_card_time datetime NOT NULL COMMENT '帖子创建时间',
     bbs_card_user_id INT NOT NULL COMMENT '发帖用户id',
     bbs_card_likenum INT NOT NULL DEFAULT '0' COMMENT '帖子点赞数',
-    bbs_card_reply_id INT NOT NULL  COMMENT '回帖id',
-    bbs_card_reply_uid INT NOT NULL COMMENT '回帖用户id',
-    constraint fk_user_id foreign key(bbs_card_user_id) references users(user_id)
+    constraint fk_user_id foreign key(bbs_card_user_id) references users(user_id),
+    constraint fk_bbs_id foreign key(bbs_id) references bbs(bbs_id)
 )ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
 
+const bbs_card_reply = `create table if not exists bbs_card(
+    bbs_card_reply_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    bbs_card_id INT NOT NULL COMMENT '帖子id',
+    bbs_card_reply_content VARCHAR(100) NOT NULL COMMENT '回复帖子内容',
+    bbs_card_reply_time datetime NOT NULL COMMENT '回复帖子时间',
+    bbs_card_reply_reply_id INT NOT NULL  COMMENT '回帖id(当前回复的是谁)',
+    bbs_card_reply_reply_uid INT NOT NULL COMMENT '回帖用户id',
+    constraint fk_bbs_user_id foreign key(bbs_card_reply_reply_uid) references users(user_id),
+    constraint fk_bbs_card_id foreign key(bbs_card_id) references bbs_card(bbs_card_id)
+)ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
+
+const menu = `create table if not exists menu(
+    menu_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    menu_name VARCHAR(20) NOT NULL COMMENT '菜单名称',
+    menu_link VARCHAR(30) NOT NULL COMMENT '回帖用户id',
+    constraint fk_bbs_user_id foreign key(bbs_card_reply_reply_uid) references users(user_id),
+    constraint fk_bbs_card_id foreign key(bbs_card_id) references bbs_card(bbs_card_id)
+)ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
 module.exports  ={
     options,
     users,
@@ -123,5 +140,7 @@ module.exports  ={
     classify_articles,
     tag,
     tag_articles,
-    bbs
+    bbs,
+    bbs_card,
+    bbs_card_reply
 }

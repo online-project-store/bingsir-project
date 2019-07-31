@@ -2,7 +2,7 @@ let mysqlPasswor;
 if (process.env.NODE_ENV == 'prd') {
     mysqlPasswor = "bing@123"
 }else{
-    mysqlPasswor = "root" // Yubing_123 
+    mysqlPasswor = "Yubing_123" //root  
 }
 module.exports = {
     user: 'root',
