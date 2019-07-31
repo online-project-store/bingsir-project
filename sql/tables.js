@@ -69,11 +69,11 @@ const classify = `create table if not exists classify(
     KEY class_parent_id(class_parent_id)
 )ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
 const classify_articles = `create table if not exists classify_articles(
-    classify_articles_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    classify_article_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     classify_id INT NOT NULL COMMENT '分类id',
-    articles_id INT NOT NULL COMMENT '文章id',
+    article_id INT NOT NULL COMMENT '文章id',
     constraint fk_classify_id foreign key(classify_id) references classify(class_id),
-    constraint fk_articles_id foreign key(articles_id) references articles(article_id)
+    constraint fk_article_id foreign key(article_id) references articles(article_id)
 )ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
 const tag = `create table if not exists tag(
     tag_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -81,6 +81,38 @@ const tag = `create table if not exists tag(
     tag_description VARCHAR(60) not null,
     tag_another_name VARCHAR(20) not null
 )ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
+const tag_articles = `create table if not exists tag_articles(
+    tag_article_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    tag_id INT NOT NULL,
+    article_id INT NOT NULL,
+    constraint fk_tag_id foreign key(tag_id) references tag(tag_id),
+    constraint fk_article_id foreign key(article_id) references articles(article_id)
+)ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
+
+const bbs = `create table if not exists bbs(
+    bbs_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    bbs_name VARCHAR(60) NOT NULL COMMENT '论坛名称',
+    bbs_description VARCHAR(100) NOT NULL COMMENT '论坛描述',
+    bbs_time datetime NOT NULL COMMENT '创建时间',
+    bbs_num INT NOT NULL COMMENT '帖子总数',
+    bbs_logo VARCHAR(255) NOT NULL COMMENT '论坛logo',
+    bbs_user_id INT NOT NULL COMMENT '发帖用户id',
+    constraint fk_user_id foreign key(bbs_user_id) references users(user_id)
+)ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
+
+const bbs_card = `create table if not exists bbs_card(
+    bbs_card_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    bbs_id INT NOT NULL COMMENT '论坛id',
+    bbs_card_title VARCHAR(60) NOT NULL COMMENT '帖子标题',
+    bbs_card_content VARCHAR(100) NOT NULL COMMENT '帖子内容',
+    bbs_card_time datetime NOT NULL COMMENT '帖子创建时间',
+    bbs_card_user_id INT NOT NULL COMMENT '发帖用户id',
+    bbs_card_likenum INT NOT NULL DEFAULT '0' COMMENT '帖子点赞数',
+    bbs_card_reply_id INT NOT NULL  COMMENT '回帖id',
+    bbs_card_reply_uid INT NOT NULL COMMENT '回帖用户id',
+    constraint fk_user_id foreign key(bbs_card_user_id) references users(user_id)
+)ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
+
 module.exports  ={
     options,
     users,
@@ -88,5 +120,8 @@ module.exports  ={
     articles,
     comments,
     classify,
-    classify_articles
+    classify_articles,
+    tag,
+    tag_articles,
+    bbs
 }

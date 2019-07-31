@@ -42,6 +42,7 @@ createTbale(tables.articles);
 createTbale(tables.comments);
 createTbale(tables.classify);
 createTbale(tables.classify_articles);
+createTbale(tables.tag);
 const insertUsers = (value) => {
     let _sql = `insert into users(phone,username,password,img,moment) values(?,?,?,?,?)`;
     return query(_sql, value)
