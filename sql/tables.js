@@ -89,8 +89,8 @@ const tag_articles = `create table if not exists tag_articles(
     tag_article_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     tag_id INT NOT NULL,
     article_id INT NOT NULL,
-    CONSTRAINT fk_tag_id foreign key(tag_id) references tag(tag_id),
-    CONSTRAINT fk_article_id foreign key(article_id) references articles(article_id)
+    CONSTRAINT fk_tag_articles_tag_id foreign key(tag_id) references tag(tag_id),
+    CONSTRAINT fk_tag_articles_article_id foreign key(article_id) references articles(article_id)
 )ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
 //论坛
 const bbs = `create table if not exists bbs(

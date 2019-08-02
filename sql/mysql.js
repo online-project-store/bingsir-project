@@ -41,14 +41,14 @@ createTbale(tables.friends);
 createTbale(tables.articles);
 createTbale(tables.comments);
 createTbale(tables.classify);
-createTbale(tables.classify_articles);//
 createTbale(tables.tag);
-createTbale(tables.tag_articles);
 createTbale(tables.bbs);
-createTbale(tables.bbs_card);
-createTbale(tables.bbs_card_reply);
 createTbale(tables.menu);
 createTbale(tables.blogroll);
+createTbale(tables.bbs_card);
+createTbale(tables.bbs_card_reply);
+createTbale(tables.classify_articles);
+createTbale(tables.tag_articles);
 const insertUsers = (value) => {
     let _sql = `insert into users(phone,username,password,img,moment) values(?,?,?,?,?)`;
     return query(_sql, value)
