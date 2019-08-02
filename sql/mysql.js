@@ -37,14 +37,14 @@ const createTbale = (sql) => {
 
 createTbale(tables.options);
 createTbale(tables.users);
-createTbale(tables.friends);
 createTbale(tables.articles);
-createTbale(tables.comments);
 createTbale(tables.classify);
 createTbale(tables.tag);
-createTbale(tables.bbs);
 createTbale(tables.menu);
 createTbale(tables.blogroll);
+createTbale(tables.friends);
+createTbale(tables.comments);
+createTbale(tables.bbs);
 createTbale(tables.bbs_card);
 createTbale(tables.bbs_card_reply);
 createTbale(tables.classify_articles);
