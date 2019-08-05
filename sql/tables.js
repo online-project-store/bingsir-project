@@ -14,7 +14,6 @@ const users = `create table if not exists users(
     user_password varchar(60) NOT NULL COMMENT '密码',
     user_email varchar(30) NOT NULL COMMENT '用户邮箱',
     user_profile_photo varchar(255) NOT NULL COMMENT '用户头像',
-    user_level varchar(10) NOT NULL COMMENT '用户等级',
     user_rights varchar(10) NOT NULL COMMENT '用户权限',
     user_registration_time datetime NOT NULL COMMENT '用户注册时间',
     user_telephone_number char(11) NOT NULL COMMENT '用户手机号',
@@ -25,6 +24,34 @@ const users = `create table if not exists users(
     KEY user_email(user_email),
     KEY user_telephone_number(user_telephone_number)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;`
+// rbac权限控制 (用户表,角色表,权限表) (用户角色表,角色权限表)
+//角色表
+const role = `create table if not exists role(
+    role_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    super_admin varchar(20) NOT NULL COMMENT '超级管理员',
+    Administrator varchar(20) NOT NNULL COMMENT '管理员',
+    normal_user varchar(20) NOT NULL COMMENT '普通用户'
+)ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;`
+//权限表
+const power = `create table if not exists power(
+    power_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    power_sign VARCAHR(10) NOT NULL COMMENT '1:超级管理员,2:管理员,3:普通用户'
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8 COMMENT = '权限表';`
+//用户角色表
+const user_role = `create table if not exists user_role(
+    user_role_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    uid varchar(20) NOT NULL COMMENT '用户id',
+    rid varchar(20) NOT NNULL COMMENT '角色id',
+)ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;`
+//角色权限表
+const role_power = `create table if not exists role_power(
+    role_power_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    pid varchar(20) NOT NULL COMMENT '权限id',
+    rid varchar(20) NOT NNULL COMMENT '角色id',
+)ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;`
+
+
+
 //用户好友
 const friends = `create table if not exists friends(
     friends_id INT NOT NULL AUTO_INCREMENT COMMENT '好友id',
@@ -130,8 +157,10 @@ const bbs_card_reply = `create table if not exists bbs_card_reply(
 const menu = `create table if not exists menu(
     menu_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     menu_name VARCHAR(20) NOT NULL COMMENT '菜单名称',
-    menu_link VARCHAR(40) NOT NULL COMMENT '菜单链接'
+    menu_link VARCHAR(40) NOT NULL COMMENT '菜单链接',
+    power_id INT NOT NULL COMMENT '权限id'
 )ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
+
 //友情链接
 const blogroll = `create table if not exists blogroll(
     blogroll_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
