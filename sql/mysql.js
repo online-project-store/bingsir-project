@@ -41,6 +41,7 @@ createTbale(tables.articles);
 createTbale(tables.classify);
 createTbale(tables.tag);
 createTbale(tables.menu);
+createTbale(tables.role);
 createTbale(tables.blogroll);
 createTbale(tables.friends);
 createTbale(tables.comments);
@@ -49,6 +50,8 @@ createTbale(tables.bbs_card);
 createTbale(tables.bbs_card_reply);
 createTbale(tables.classify_articles);
 createTbale(tables.tag_articles);
+createTbale(tables.user_role);
+createTbale(tables.role_menu);
 const insertUsers = (value) => {
     let _sql = `insert into users(phone,username,password,img,moment) values(?,?,?,?,?)`;
     return query(_sql, value)
