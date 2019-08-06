@@ -25,11 +25,15 @@ const users = `create table if not exists users(
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;`
 // rbac权限控制 (用户表,角色表,权限表) (用户角色表,角色权限表)
 //角色表
-const role = `create table if not exists role(
+/* const role = `create table if not exists role(
     role_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     super_admin varchar(20) NOT NULL COMMENT '超级管理员',
     Administrator varchar(20) NOT NULL COMMENT '管理员',
     normal_user varchar(20) NOT NULL COMMENT '普通用户'
+)ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;` */
+const role = `create table if not exists role(
+    role_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    role_name VARCHAR(10) NOT NULL COMMENT '角色名称'
 )ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;`
 /* //权限表
 const power = `create table if not exists power(
