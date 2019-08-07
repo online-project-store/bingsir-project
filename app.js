@@ -14,7 +14,7 @@ app.use(views('view', {
     default: 'html',
     extension: 'html'
 }));
-
+ 
 app.use(router.routes()).use(router.allowedMethods()); // 返回匹配路由的复合中间件
 
 app.listen(8000,'0.0.0.0', () => {

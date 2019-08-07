@@ -8,16 +8,16 @@ class Login extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                http.post(api.login,values,res=>{
+                http.post(api.login, values, res => {
                     console.log(res);
                     this.props.history.push('/?token=' + res.token);
-                },err=>{
+                }, err => {
                     console.log(err);
                 })
             }
         });
     };
-    
+
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
@@ -55,18 +55,18 @@ class Login extends React.Component {
                                 <a className="login-form-forgot" href="">
                                     Forgot password
                                 </a> */}
-                                
+
                                 <Button type="primary" htmlType="submit" className="login-form-button">
                                     Log in
                                 </Button>
-                                   
+
                                 {/* <a href="">register now!</a> */}
                             </Form.Item>
                         </Form>
                     </Col>
                 </Row>
             </div>
-            
+
         )
     }
 }

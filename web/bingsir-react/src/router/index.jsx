@@ -3,9 +3,8 @@ import React from 'react';
 import { Router, Link, Switch, Route, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from "history";
 import LayoutIndex from '@/layout/index.jsx';
-import Login from '@/pages/login.jsx';
+import loginLayout from '@/pages/loginLayout.jsx';
 import Home from '@/pages/home.jsx';
-import Register from '@/pages/register.jsx';
 const history = createBrowserHistory();
 
 const BasicRoute = () => (
@@ -13,8 +12,7 @@ const BasicRoute = () => (
         <LayoutIndex>
             <Switch>
                 <Route exact path="/" component={Home}/>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={loginLayout} />
                 <Route render={() => <Redirect to="/" />} />
             </Switch>
         </LayoutIndex>

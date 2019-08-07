@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { createBrowserHistory } from "history";
-import HeaderComponenet from '@/components/header.jsx';
-import FooterComponenet from '@/components/footer.jsx';
+import Header from '@/components/common/header.jsx';
+import Footer from '@/components/common/footer.jsx';
 import "@/static/style/public.less"
 const { Content } = Layout;
 const history = createBrowserHistory();
@@ -16,11 +16,11 @@ export default class Login extends React.Component {
     LayoutDom(props) {
         return (
             <Layout>
-                <HeaderComponenet />
-                <Content>
-                    {this.props.children}
-                </Content>
-                <FooterComponenet />
+                <Header/>
+                    <Content>
+                        {this.props.children}
+                    </Content>
+                <Footer />
             </Layout>
         )
     }
@@ -32,7 +32,7 @@ export default class Login extends React.Component {
         )
     }
     componentWillMount(){
-        if (history.location.pathname === '/login' || history.location.pathname === '/register') {
+        if (history.location.pathname === '/login') {
             this.setState({
                 isShow: true
             })
