@@ -1,19 +1,8 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox, Row, Col } from 'antd';
-import "@/static/style/register.less"
+import { Form, Icon, Input, Button, Row, Col } from 'antd';
 import api from '@/config/api';
 import http from '@/config/http';
 
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-    },
-};
 class Register extends React.Component {
     constructor() {
         super();
@@ -21,8 +10,8 @@ class Register extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
+            console.log(values);
             if (!err) {
-                // console.log('Received values of form: ', values);
                 http.post(api.register, values, res => {
                     if (res = 'success') {
                         this.props.history.push('/login');
@@ -37,10 +26,10 @@ class Register extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-            <div className="mt10">
+            <div className="login-form">
                 <Row>
-                    <Col span={8} offset={8}>
-                        <Form {...formItemLayout} onSubmit={this.handleSubmit} className="login-form">
+                    <Col span={24} >
+                        <Form  onSubmit={this.handleSubmit}>
                             <Form.Item label="手机号" hasFeedback>
                                 {getFieldDecorator('phone', {
                                     rules: [{ required: true, message: '请输入手机号!' }],
@@ -48,19 +37,11 @@ class Register extends React.Component {
                                     <Input prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="手机号" />,
                                 )}
                             </Form.Item>
-                            <Form.Item label="用户名" hasFeedback>
-                                {getFieldDecorator('username', {
-                                    rules: [{ required: true, message: '请输入用户名!' }],
-                                })(
-                                    <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />,
-                                )}
-
-                            </Form.Item>
                             <Form.Item label="邮箱" hasFeedback>
                                 {getFieldDecorator('email', {
                                     rules: [{ required: true, message: '请输入邮箱!' }],
                                 })(
-                                    <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />,
+                                    <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="邮箱" />,
                                 )}
                             </Form.Item>
                             <Form.Item label="密码" hasFeedback>
@@ -77,21 +58,13 @@ class Register extends React.Component {
                                     <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />,
                                 )}
                             </Form.Item>
-                            {/* <Form.Item label="上传图片" hasFeedback>
-                                {getFieldDecorator('uploadImg', {
-                                    rules: [{ required: true, message: '请上传图片!' }],
-                                })(
-                                    <Input  type="file"  />,
-                                )}
-                            </Form.Item> */}
                             <Form.Item>
-                                <Button type="primary" htmlType="submit" className="register-form-button"> 注册 </Button>
+                                <Button type="primary" block htmlType="submit" > 注册 </Button>
                             </Form.Item>
                         </Form>
                     </Col>
                 </Row>
             </div>
-
         );
     }
 }

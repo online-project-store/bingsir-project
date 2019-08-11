@@ -10,7 +10,6 @@ const options = `create table if not exists options(
 //用户表
 const users = `create table if not exists users(
     user_id INT NOT NULL AUTO_INCREMENT COMMENT '用户id',
-    user_name varchar(20) NOT NULL COMMENT '用户名',
     user_password varchar(60) NOT NULL COMMENT '密码',
     user_email varchar(30) NOT NULL COMMENT '用户邮箱',
     user_profile_photo varchar(255) NOT NULL COMMENT '用户头像',
@@ -18,7 +17,6 @@ const users = `create table if not exists users(
     user_telephone_number char(11) NOT NULL COMMENT '用户手机号',
     user_nickname varchar(20) NOT NULL COMMENT '用户昵称',
     PRIMARY KEY(user_id),
-    KEY user_name(user_name),
     KEY user_nickname(user_nickname),
     KEY user_email(user_email),
     KEY user_telephone_number(user_telephone_number)

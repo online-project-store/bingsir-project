@@ -52,13 +52,22 @@ createTbale(tables.classify_articles);
 createTbale(tables.tag_articles);
 createTbale(tables.user_role);
 createTbale(tables.role_menu);
+
+/* 
+        user_password varchar(60) NOT NULL COMMENT '密码',
+        user_email varchar(30) NOT NULL COMMENT '用户邮箱',
+        user_profile_photo varchar(255) NOT NULL COMMENT '用户头像',
+        user_registration_time datetime NOT NULL COMMENT '用户注册时间',
+        user_telephone_number char(11) NOT NULL COMMENT '用户手机号',
+        user_nickname varchar(20) NOT NULL COMMENT '用户昵称',
+    */
 const insertUsers = (value) => {
-    let _sql = `insert into users(phone,username,password,img,moment) values(?,?,?,?,?)`;
+    let _sql = `insert into users(user_password,user_email,user_profile_photo,user_registration_time,user_telephone_number,user_nickname) values(?,?,?,?,?,?)`;
     return query(_sql, value)
 }
 
-const findUsersByName = (value) => {
-    let _sql = `SELECT * FROM users WHERE username = "${value}"`;
+const findUsersByPhone = (value) => {
+    let _sql = `SELECT * FROM users WHERE user_telephone_number = "${value}"`;
     return query(_sql);
 }
 
@@ -66,5 +75,5 @@ const findUsersByName = (value) => {
 
 module.exports = {
     insertUsers,
-    findUsersByName,
+    findUsersByPhone,
 }

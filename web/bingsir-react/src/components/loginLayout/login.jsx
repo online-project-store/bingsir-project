@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col, Form, Icon, Input, Button, Checkbox } from 'antd';
-import "@/static/style/login.less"
 import http from '@/config/http';
 import api from '@/config/api';
 class Login extends React.Component {
@@ -21,46 +20,42 @@ class Login extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-            <div className="mt10">
+            <div className="login-form">
                 <Row>
-                    <Col span={8} offset={8}>
-                        <Form onSubmit={this.handleSubmit} className="login-form">
-                            <Form.Item>
+                    <Col span={24}>
+                        <Form onSubmit={this.handleSubmit}>
+                            <Form.Item label="手机号或邮箱">
                                 {getFieldDecorator('username', {
-                                    rules: [{ required: true, message: 'Please input your username!' }],
+                                    rules: [{ required: true, message: '请输入您的手机号或邮箱!' }],
                                 })(
                                     <Input
                                         prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                        placeholder="Username"
+                                        placeholder="手机号或邮箱"
                                     />,
                                 )}
                             </Form.Item>
-                            <Form.Item>
+                            <Form.Item label="密码">
                                 {getFieldDecorator('password', {
-                                    rules: [{ required: true, message: 'Please input your Password!' }],
+                                    rules: [{ required: true, message: '请速入密码!' }],
                                 })(
                                     <Input
                                         prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                         type="password"
-                                        placeholder="Password"
+                                        placeholder="密码"
                                     />,
                                 )}
                             </Form.Item>
                             <Form.Item>
-                                {/* {getFieldDecorator('remember', {
+                                {getFieldDecorator('remember', {
                                     valuePropName: 'checked',
                                     initialValue: true,
-                                })(<Checkbox>Remember me</Checkbox>)}
-
+                                })(<Checkbox>记住我</Checkbox>)}
                                 <a className="login-form-forgot" href="">
-                                    Forgot password
-                                </a> */}
-
-                                <Button type="primary" htmlType="submit" className="login-form-button">
-                                    Log in
+                                    登录遇到问题
+                                </a>
+                                <Button type="primary" block htmlType="submit" className="login-form-button">
+                                    登录
                                 </Button>
-
-                                {/* <a href="">register now!</a> */}
                             </Form.Item>
                         </Form>
                     </Col>
