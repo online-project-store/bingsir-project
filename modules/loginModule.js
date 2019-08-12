@@ -1,7 +1,10 @@
 const moment = require("moment");
 const fs = require("fs");
+const sql = require('../sql/mysql');
+/* const verify = util.promisify(jwt.verify);
+const rp = require('request-promise'); */
 // const jsonwebtoken = require('jsonwebtoken')
-module.login = async (ctx, next) => {
+exports.login = async (ctx, next) => {
     let user = {
         phone: ctx.request.body.phone,
         password: ctx.request.body.password,
@@ -60,7 +63,7 @@ module.login = async (ctx, next) => {
     }
 }
 
-module.register = async (ctx, next) => {
+exports.register = async (ctx, next) => {
     let data = {
         email: ctx.request.body.email,
         phone: ctx.request.body.phone,
@@ -78,11 +81,9 @@ module.register = async (ctx, next) => {
     */
 
     if (data.email && data.password && data.phone && data.password === data.confirmPwd) {
-
+        // data.img = ""
         await sql.findUsersByPhone(data.phone).then(async res => {
-            console.log(res);
-            data.name = data.phone;
-            data.img = "";
+            data.nickname = 'bingsir'+data.phone.substring(7);
             if (res.length > 0) {
                 ctx.body = {
                     code: 1,
@@ -90,7 +91,7 @@ module.register = async (ctx, next) => {
                     msg: "创建用户失败"
                 }
             } else {
-                let base64Data = user.img.replace(/^data:image\/\w+;base64,/, "");
+                let base64Data = data.img.replace(/^data:image\/\w+;base64,/, "");
                 if (!base64Data) {
                     ctx.body = {
                         code: 0,
@@ -101,7 +102,7 @@ module.register = async (ctx, next) => {
                 }
                 let dataBuffer = new Buffer(base64Data, 'base64');
                 let getName = Number(Math.random().toString().substr(3)).toString(36) + Date.now();
-
+                
                 async function upload() {
                     await fs.writeFile('static/images/' + getName + '.png', dataBuffer, err => {
                         if (err) {
@@ -110,7 +111,7 @@ module.register = async (ctx, next) => {
                     });
                 }
                 upload().then(() => {
-                    sql.insertUsers([data.password, data.email, data.img, moment().format('YYYY-MM-DD, H:mm:ss'), data.phone, data.nickname]).then(res => {
+                    sql.insertUsers([data.password, data.email, getName + '.png', moment().format('YYYY-MM-DD, H:mm:ss'), data.phone, data.nickname]).then(res => {
                         ctx.body = {
                             code: 1,
                             data: 'success',

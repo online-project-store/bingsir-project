@@ -1,4 +1,4 @@
-module.userinfo = async (ctx, next) => {
+exports.userinfo = async (ctx, next) => {
     let token; // 获取jwt
     /* if (ctx.header.authorization && ctx.headers.authorization.split(' ')[0] === "Bearer") {
         token = ctx.header.authorization.split(' ')[1]

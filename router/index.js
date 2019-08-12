@@ -2,12 +2,9 @@ const Router = require('koa-router');
 const router = new Router();
 const jwt = require('jsonwebtoken');
 const util = require('util');
-const verify = util.promisify(jwt.verify);
-const rp = require('request-promise');
-const moment = require('moment');
-const sql = require('../sql/mysql');
+
 const loginModule = require('../modules/loginModule');
-const luserinfoModule = require('../modules/luserinfoModule');
+const userinfoModule = require('../modules/userinfoModule');
 /* router.get("/*", async (ctx, next) => {
     await ctx.render('/index')
 }); */
@@ -32,10 +29,11 @@ router.get('/home', async (ctx) => {
       }
     });
 }); */
+
 router.post('/login', loginModule.login);
 
 router.post('/register', loginModule.register);
 
-router.post('/userinfo', luserinfoModule.userinfo);
+router.post('/userinfo', userinfoModule.userinfo);
 
 module.exports = router;
