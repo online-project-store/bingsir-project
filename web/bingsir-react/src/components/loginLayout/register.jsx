@@ -11,8 +11,10 @@ class Register extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             console.log(values);
-            if (!err) {
+            if (!err && values.password === values.confirmPwd) {
                 http.post(api.register, values, res => {
+                    console.log(res);
+                    
                     if (res = 'success') {
                         this.props.history.push('/login');
                     }
@@ -32,30 +34,30 @@ class Register extends React.Component {
                         <Form  onSubmit={this.handleSubmit}>
                             <Form.Item label="手机号" hasFeedback>
                                 {getFieldDecorator('phone', {
-                                    rules: [{ required: true, message: '请输入手机号!' }],
+                                    rules: [{ required: true, message: '请输入手机号!', len: 11 }],
                                 })(
                                     <Input prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="手机号" />,
                                 )}
                             </Form.Item>
                             <Form.Item label="邮箱" hasFeedback>
                                 {getFieldDecorator('email', {
-                                    rules: [{ required: true, message: '请输入邮箱!' }],
+                                    rules: [{ required: true, message: '请输入邮箱!', pattern: /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/}],
                                 })(
                                     <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="邮箱" />,
                                 )}
                             </Form.Item>
                             <Form.Item label="密码" hasFeedback>
                                 {getFieldDecorator('password', {
-                                    rules: [{ required: true, message: '请输入密码!' }],
+                                    rules: [{ required: true, message: '请输入密码!', min: 6 }],
                                 })(
-                                    <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />,
+                                    <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="最少6位密码" />,
                                 )}
                             </Form.Item>
                             <Form.Item label="确认密码" hasFeedback>
                                 {getFieldDecorator('confirmPwd', {
-                                    rules: [{ required: true, message: '请再次确认密码!' }],
+                                    rules: [{ required: true, message: '请再次确认密码!', min: 6 }],
                                 })(
-                                    <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />,
+                                    <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="确认密码" />,
                                 )}
                             </Form.Item>
                             <Form.Item>

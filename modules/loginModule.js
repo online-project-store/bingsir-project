@@ -91,7 +91,20 @@ exports.register = async (ctx, next) => {
                     msg: "创建用户失败"
                 }
             } else {
-                let base64Data = data.img.replace(/^data:image\/\w+;base64,/, "");
+                 sql.insertUsers([data.password, data.email, '', moment().format('YYYY-MM-DD, H:mm:ss'), data.phone, data.nickname]).then(res => {
+                     ctx.body = {
+                         code: 1,
+                         data: 'success',
+                         msg: "创建成功"
+                     }
+                 }, err => {
+                     ctx.body = {
+                         code: 0,
+                         data: err,
+                         msg: "插入失败"
+                     }
+                 });
+                /* let base64Data = data.img.replace(/^data:image\/\w+;base64,/, "");
                 if (!base64Data) {
                     ctx.body = {
                         code: 0,
@@ -124,7 +137,7 @@ exports.register = async (ctx, next) => {
                             msg: "插入失败"
                         }
                     })
-                }).catch(err => console.log(err));
+                }).catch(err => console.log(err)); */
             }
         }, err => {
             ctx.body = {
