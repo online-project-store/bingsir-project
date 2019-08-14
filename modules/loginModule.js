@@ -91,7 +91,7 @@ exports.register = async (ctx, next) => {
                     msg: "创建用户失败"
                 }
             } else {
-                 sql.insertUsers([data.password, data.email, '', moment().format('YYYY-MM-DD, H:mm:ss'), data.phone, data.nickname]).then(res => {
+               await sql.insertUsers([data.password, data.email, '', moment().format('YYYY-MM-DD, H:mm:ss'), data.phone, data.nickname]).then(res => {
                      ctx.body = {
                          code: 1,
                          data: 'success',

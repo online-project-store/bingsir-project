@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Row, Col } from 'antd';
+import { Form, Icon, Input, Button, Row, Col, message } from 'antd';
 import api from '@/config/api';
 import http from '@/config/http';
 
@@ -10,13 +10,10 @@ class Register extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            console.log(values);
             if (!err && values.password === values.confirmPwd) {
                 http.post(api.register, values, res => {
-                    console.log(res);
-                    
-                    if (res = 'success') {
-                        this.props.history.push('/login');
+                    if (res == 'success') {
+                        message.info('账号创建成功!');
                     }
                 }, err => {
                     console.log(err);
