@@ -6,10 +6,11 @@ class Login extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
+            console.log(values);
             if (!err) {
                 http.post(api.login, values, res => {
                     console.log(res);
-                    this.props.history.push('/?token=' + res.token);
+                    //this.props.history.push('/?token=' + res.token);
                 }, err => {
                     console.log(err);
                 })
@@ -25,7 +26,7 @@ class Login extends React.Component {
                     <Col span={24}>
                         <Form onSubmit={this.handleSubmit}>
                             <Form.Item label="手机号或邮箱">
-                                {getFieldDecorator('username', {
+                                {getFieldDecorator('phone', {
                                     rules: [{ required: true, message: '请输入您的手机号或邮箱!' }],
                                 })(
                                     <Input

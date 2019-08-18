@@ -1,20 +1,20 @@
 const moment = require("moment");
 const fs = require("fs");
 const sql = require('../sql/mysql');
-/* const verify = util.promisify(jwt.verify);
-const rp = require('request-promise'); */
+const jwt = require('jsonwebtoken');
+// const util = require('util');
+// const verify = util.promisify(jwt.verify);
+// const rp = require('request-promise');
 // const jsonwebtoken = require('jsonwebtoken')
 exports.login = async (ctx, next) => {
     let user = {
         phone: ctx.request.body.phone,
         password: ctx.request.body.password,
     }
-    //console.log(user);
     if (user.username !== "" && user.password !== "") {
         await sql.findUsersByPhone(user.phone).then(result => {
-            console.log(result);
             if (result.length > 0) {
-                if (user.password != result[0].password) {
+                if (user.password != result[0].user_password) {
                     ctx.body = {
                         code: 1,
                         msg: "密码有误",
@@ -23,11 +23,10 @@ exports.login = async (ctx, next) => {
                 } else {
                     const userToken = {
                         id: result[0].id,
-                        username: result[0].username,
+                        phone: result[0].user_telephone_number,
                         time: new Date().getTime(),
                         timeout: 3600000 * 2 //2小时
                     }
-                    // console.log(userToken);
                     const token = jwt.sign(userToken, "andy", {
                         expiresIn: '1h'
                     }); //token签名 有效期为1小时
@@ -71,15 +70,6 @@ exports.register = async (ctx, next) => {
         confirmPwd: ctx.request.body.confirmPwd,
     }
 
-    /* 
-        user_password varchar(60) NOT NULL COMMENT '密码',
-        user_email varchar(30) NOT NULL COMMENT '用户邮箱',
-        user_profile_photo varchar(255) NOT NULL COMMENT '用户头像',
-        user_registration_time datetime NOT NULL COMMENT '用户注册时间',
-        user_telephone_number char(11) NOT NULL COMMENT '用户手机号',
-        user_nickname varchar(20) NOT NULL COMMENT '用户昵称',
-    */
-
     if (data.email && data.password && data.phone && data.password === data.confirmPwd) {
         // data.img = ""
         await sql.findUsersByPhone(data.phone).then(async res => {
@@ -91,19 +81,43 @@ exports.register = async (ctx, next) => {
                     msg: "创建用户失败"
                 }
             } else {
-               await sql.insertUsers([data.password, data.email, '', moment().format('YYYY-MM-DD, H:mm:ss'), data.phone, data.nickname]).then(res => {
-                     ctx.body = {
-                         code: 1,
-                         data: 'success',
-                         msg: "创建成功"
-                     }
-                 }, err => {
-                     ctx.body = {
-                         code: 0,
-                         data: err,
-                         msg: "插入失败"
-                     }
-                 });
+                let interUser =  await sql.insertUsers([data.password, data.email, '', moment().format('YYYY-MM-DD, H:mm:ss'), data.phone, data.nickname]).then(res => {
+                    return res;
+                }, err => {
+                    ctx.body = {
+                        code: 0,
+                        data: err,
+                        msg: "插入失败"
+                    }
+                });
+                let rid = 3;//1: 超级管理员 2:管理员 3:普通用户
+                switch (data.phone) {
+                    case '17600113369':
+                        rid = 1;
+                        break;
+                    case '17600113368':
+                        rid = 2;
+                        break;
+                    default:
+                        rid = 3;
+                        break;
+                };
+                if (interUser.affectedRows == 1) {
+                   let insertUserRole = await sql.insertUserRole([interUser.insertId, rid]); //用户角色关系
+                   if (insertUserRole.affectedRows==1) {
+                        ctx.body = {
+                            code: 1,
+                            data: 'success',
+                            msg: "创建成功"
+                        }
+                   }
+                }else{
+                    ctx.body = {
+                        code: 1,
+                        data: 'err',
+                        msg: "数据插入失败"
+                    }
+                }
                 /* let base64Data = data.img.replace(/^data:image\/\w+;base64,/, "");
                 if (!base64Data) {
                     ctx.body = {

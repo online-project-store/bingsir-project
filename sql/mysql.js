@@ -71,9 +71,15 @@ const findUsersByPhone = (value) => {
     return query(_sql);
 }
 
-
+// uid INT NOT NULL COMMENT '用户id',
+// rid INT NOT NULL COMMENT '角色id', //1: 超级管理员 2:管理员 3:普通用户
+const insertUserRole = (value) => {
+    let _sql = `insert into user_role(uid,rid) values(?,?)`;
+    return query(_sql, value);
+}
 
 module.exports = {
     insertUsers,
     findUsersByPhone,
+    insertUserRole
 }
