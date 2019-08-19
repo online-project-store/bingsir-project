@@ -30,7 +30,7 @@ exports.login = async (ctx, next) => {
                     const token = jwt.sign(userToken, "andy", {
                         expiresIn: '1h'
                     }); //token签名 有效期为1小时
-
+                    ctx.session.userToken = userToken;
                     ctx.body = {
                         code: 1,
                         msg: "成功",
@@ -103,6 +103,7 @@ exports.register = async (ctx, next) => {
                         break;
                 };
                 if (interUser.affectedRows == 1) {
+                    console.log(interUser.insertId, rid);
                    let insertUserRole = await sql.insertUserRole([interUser.insertId, rid]); //用户角色关系
                    if (insertUserRole.affectedRows==1) {
                         ctx.body = {
