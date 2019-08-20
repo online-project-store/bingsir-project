@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const util = require('util');
 const verify = util.promisify(jwt.verify);
 const Store = require("./Store.js");
-
 const routerPage = require('./routerPage');
 const publicData = require('./publicData');
 const check = require('./check')
@@ -21,12 +20,13 @@ module.exports = function (app) {
         formLimit: '1mb',
     }));
     //app.use(check);//使用jwt
-
+    
     app.use(session({
+        key: "SESSIONID",
         store: new Store()
     }));
-    app.use(ctx => {
+    /* app.use(ctx => {
         // refresh session if set maxAge
         ctx.session.refresh()
-    })
+    }) */
 }

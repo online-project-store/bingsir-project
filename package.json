@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=dev  supervisor app.js ",
     "work": "cross-env NODE_ENV=work  supervisor app.js ",
-    "ndb": "cross-env NODE_ENV=dev  ndb app.js ",
+    "ndb": "cross-env NODE_ENV=work  ndb app.js ",
     "test": "cross-env NODE_ENV=test  node app.js ",
     "prd": "cross-env NODE_ENV=prd  node app.js ",
     "pm2": "cross-env NODE_ENV=prd ENABLE_NODE_LOG=YES  pm2 start app.js --name blogs_project_aliyun"

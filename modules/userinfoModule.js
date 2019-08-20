@@ -1,3 +1,5 @@
+const Store = require("../config/Store");
+const redisStore = new Store();
 exports.userinfo = async (ctx, next) => {
     let token; // 获取jwt
     /* if (ctx.header.authorization && ctx.headers.authorization.split(' ')[0] === "Bearer") {
@@ -5,7 +7,9 @@ exports.userinfo = async (ctx, next) => {
     } else if (ctx.query && ctx.query.token) {
         token = ctx.query.token
     } */
-
+    redisStore.get('SESSIONID').then(res => {
+        console.log('SESSIONID', res);
+    },err=>{})
     ctx.body = {
         msg: '登陆状态',
         data: {

@@ -2,17 +2,22 @@ const moment = require("moment");
 const fs = require("fs");
 const sql = require('../sql/mysql');
 const jwt = require('jsonwebtoken');
+const Store = require("../config/Store");
+const redisStore = new Store();
 // const util = require('util');
 // const verify = util.promisify(jwt.verify);
 // const rp = require('request-promise');
 // const jsonwebtoken = require('jsonwebtoken')
+// redisStore.set('123').then(res=>{
+//     console.log('redisStore',res);
+// },err=>{})
 exports.login = async (ctx, next) => {
     let user = {
         phone: ctx.request.body.phone,
         password: ctx.request.body.password,
     }
     if (user.username !== "" && user.password !== "") {
-        await sql.findUsersByPhone(user.phone).then(result => {
+        await sql.findUsersByPhone(user.phone).then(async result => {
             if (result.length > 0) {
                 if (user.password != result[0].user_password) {
                     ctx.body = {
@@ -30,7 +35,11 @@ exports.login = async (ctx, next) => {
                     const token = jwt.sign(userToken, "andy", {
                         expiresIn: '1h'
                     }); //token签名 有效期为1小时
-                    ctx.session.userToken = userToken;
+                    
+                   let redisData =  await redisStore.set(token, {sid:'ID'});
+
+                    ctx.session.userToken = redisData;
+
                     ctx.body = {
                         code: 1,
                         msg: "成功",
@@ -63,6 +72,7 @@ exports.login = async (ctx, next) => {
 }
 
 exports.register = async (ctx, next) => {
+    console.log(ctx,'register');
     let data = {
         email: ctx.request.body.email,
         phone: ctx.request.body.phone,
