@@ -8,9 +8,7 @@ const redisStore = new Store();
 // const verify = util.promisify(jwt.verify);
 // const rp = require('request-promise');
 // const jsonwebtoken = require('jsonwebtoken')
-// redisStore.set('123').then(res=>{
-//     console.log('redisStore',res);
-// },err=>{})
+
 exports.login = async (ctx, next) => {
     let user = {
         phone: ctx.request.body.phone,
@@ -18,6 +16,8 @@ exports.login = async (ctx, next) => {
     }
     if (user.username !== "" && user.password !== "") {
         await sql.findUsersByPhone(user.phone).then(async result => {
+            console.log(result);
+            
             if (result.length > 0) {
                 if (user.password != result[0].user_password) {
                     ctx.body = {
@@ -26,7 +26,7 @@ exports.login = async (ctx, next) => {
                         data: "输入的密码有误",
                     }
                 } else {
-                    const userToken = {
+                    /* const userToken = { //使用jwt
                         id: result[0].id,
                         phone: result[0].user_telephone_number,
                         time: new Date().getTime(),
@@ -34,18 +34,23 @@ exports.login = async (ctx, next) => {
                     }
                     const token = jwt.sign(userToken, "andy", {
                         expiresIn: '1h'
-                    }); //token签名 有效期为1小时
-                    
-                   let redisData =  await redisStore.set(token, {sid:'ID'});
-
+                    }); //token签名 有效期为1小时 */
+                    const userToken = {
+                        id: result[0].id,
+                        phone: result[0].user_telephone_number,
+                        time: new Date().getTime(),
+                    }
+                    let redisData =  await redisStore.set(userToken);
+                    console.log('redisData', redisData);
                     ctx.session.userToken = redisData;
-
+                    console.log(ctx.session);
+                    
                     ctx.body = {
                         code: 1,
                         msg: "成功",
                         data: {
                             result,
-                            token
+                            redisData
                         },
                     }
                 }

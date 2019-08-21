@@ -7,9 +7,9 @@ exports.userinfo = async (ctx, next) => {
     } else if (ctx.query && ctx.query.token) {
         token = ctx.query.token
     } */
-    redisStore.get('SESSIONID').then(res => {
+ /*    redisStore.get('SESSIONID').then(res => {
         console.log('SESSIONID', res);
-    },err=>{})
+    },err=>{}) */
     ctx.body = {
         msg: '登陆状态',
         data: {
