@@ -12,15 +12,23 @@ class RedisStore extends Store {
         return JSON.parse(data);
     }
     
-    async set(session, { sid =  this.getID(24), maxAge = 1000000 } = {}, ctx) {
+    async set(session, { sid =  this.getID(24), maxAge = 1000 } = {}, ctx) {
         try {
             // Use redis set EX to automatically drop expired sessions //时间单位是秒
-            await this.redis.set(`SESSION:${sid}`, JSON.stringify(session), 'EX', maxAge / 1000);
+            await this.redis.set(`SESSION:${sid}`, JSON.stringify(session), 'EX', maxAge);
         } catch (e) {
             
             console.log(e);
         }
         return sid;
+    }
+
+    async expire(sid, maxAge=1000) {
+        try {
+           return await this.redis.expire(`SESSION:${sid}`,maxAge);
+        } catch (error) {
+            console.log(e);
+        }
     }
 
     async destroy(sid, ctx) {

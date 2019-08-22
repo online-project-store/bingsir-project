@@ -16,7 +16,6 @@ exports.login = async (ctx, next) => {
     }
     if (user.username !== "" && user.password !== "") {
         await sql.findUsersByPhone(user.phone).then(async result => {
-            console.log(result);
             
             if (result.length > 0) {
                 if (user.password != result[0].user_password) {
@@ -36,28 +35,26 @@ exports.login = async (ctx, next) => {
                         expiresIn: '1h'
                     }); //token签名 有效期为1小时 */
                     const userToken = {
-                        id: result[0].id,
-                        phone: result[0].user_telephone_number,
-                        time: new Date().getTime(),
+                        phone: result[0].user_telephone_number
                     }
-                    let redisData =  await redisStore.set(userToken);
-                    console.log('redisData', redisData);
-                    ctx.session.userToken = redisData;
-                    console.log(ctx.session);
-                    
+                    let redisData = await redisStore.set(userToken);
+                    //ctx.session.userToken = redisData;
+                    ctx.session = {
+                        redisData,
+                        phone: result[0].user_telephone_number
+                    }
                     ctx.body = {
                         code: 1,
-                        msg: "成功",
+                        msg: "登录成功",
                         data: {
-                            result,
-                            redisData
+                            result
                         },
                     }
                 }
             } else {
                 ctx.body = {
                     code: 0,
-                    msg: "账户信息报错",
+                    msg: "账户信息不存在",
                     data: result,
                 }
             }
