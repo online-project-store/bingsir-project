@@ -13,6 +13,7 @@ exports.login = async (ctx, next) => {
     let user = {
         phone: ctx.request.body.phone,
         password: ctx.request.body.password,
+        remember: ctx.request.body.remember,
     }
     if (user.username !== "" && user.password !== "") {
         await sql.findUsersByPhone(user.phone).then(async result => {
@@ -37,11 +38,13 @@ exports.login = async (ctx, next) => {
                     const userToken = {
                         phone: result[0].user_telephone_number
                     }
+                    
                     let redisData = await redisStore.set(userToken);
-                    //ctx.session.userToken = redisData;
+                    
                     ctx.session = {
                         redisData,
-                        phone: result[0].user_telephone_number
+                        phone: result[0].user_telephone_number,
+                        remember: user.remember
                     }
                     ctx.body = {
                         code: 1,

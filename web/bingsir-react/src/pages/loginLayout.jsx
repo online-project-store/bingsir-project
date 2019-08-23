@@ -15,6 +15,7 @@ export default class loginLayout extends Component {
         this.setState({
             current: e.key,
         });
+        
         e.key === 'login' ? this.setState({
             loginSign: true
         }) : this.setState({

@@ -1,16 +1,15 @@
 import React from 'react';
 import { Row, Col, Form, Icon, Input, Button, Checkbox } from 'antd';
+import { withRouter  } from 'react-router-dom';
 import http from '@/config/http';
 import api from '@/config/api';
 class Login extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            console.log(values);
             if (!err) {
                 http.post(api.login, values, res => {
-                    console.log(res);
-                    //this.props.history.push('/?token=' + res.token);
+                    this.props.history.push('/');
                 }, err => {
                     console.log(err);
                 })
@@ -67,6 +66,6 @@ class Login extends React.Component {
     }
 }
 
-const LoginForm = Form.create({ name: 'normal_login' })(Login);
+const LoginForm = Form.create({ name: 'login' })(withRouter(Login));
 
 export default LoginForm;

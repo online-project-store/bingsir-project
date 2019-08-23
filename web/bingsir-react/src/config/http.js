@@ -12,16 +12,20 @@ axios.defaults.timeout = 100000
 //  axios拦截器
  axios.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=UTF-8';
-    if (method.getQueryString('token')) {
+    /* if (method.getQueryString('token')) { //jwt请求头
         config.headers['Authorization'] = 'Bearer ' + method.getQueryString('token');
-    }
+    } */
     return config
  });
   
  axios.interceptors.response.use(response => {
      // 在这里你可以判断后台返回数据携带的请求码
     if (response.data.code == 1) {
-      return  response.data
+      if (window.location.pathname != '/' && !response.data.logining) { //没有权限返回首页
+        window.location.href = '/'
+        return  false;
+      }
+      return  response.data;
     }else {
       // 非200请求抱错
       console.log(response.data);
