@@ -1,10 +1,10 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { createBrowserHistory } from "history";
-import Header from '@/components/common/header.jsx';
-import Footer from '@/components/common/footer.jsx';
+import HeaderComponent from '@/components/common/header.jsx';
+import FooterComponent from '@/components/common/footer.jsx';
 import "@/static/style/public.less"
-const { Content } = Layout;
+const { Content, Sider } = Layout;
 const history = createBrowserHistory();
 export default class Login extends React.Component {
     constructor(props){
@@ -16,11 +16,14 @@ export default class Login extends React.Component {
     LayoutDom(props) {
         return (
             <Layout>
-                <Header/>
-                    <Content>
+                <HeaderComponent/>
+                <Layout  className="w1200">
+                    <Content style={{backgroundColor:'#fff',marginTop:'20px'}}>
                         {this.props.children}
                     </Content>
-                <Footer />
+                    <Sider style={{ backgroundColor: '#fff', marginLeft: '20px', marginTop: '20px'}}>Sider</Sider>
+                </Layout>
+                <FooterComponent />
             </Layout>
         )
     }
