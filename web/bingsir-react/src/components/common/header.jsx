@@ -30,10 +30,10 @@ class HeaderComponenet extends React.Component {
                     <Col span={14} >
                         <Menu className="ui-header-ul" onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
                             <Menu.Item key="home">
-                                <Link exact="true" to="/"><Icon type="home" />首页 </Link>
+                                <Link to="/"><Icon type="home" />首页 </Link>
                             </Menu.Item>
                             <Menu.Item key="article">
-                                <Link exact="true" to="/article"><Icon type="read" />文章 </Link>
+                                <Link to="/article"><Icon type="read" />文章 </Link>
                             </Menu.Item>
                             <Menu.Item key="classify">
                                 <Link to="/classify"><Icon type="fire" />话题 </Link>

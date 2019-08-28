@@ -6,12 +6,11 @@ export default class Home extends React.Component {
     render() {
         return (
             <div>
-                home页面
+                
             </div>
         )
     }
     getData(){
-        
         http.post(api.userinfo,{},res=>{
             console.log(res);
         },err=>{

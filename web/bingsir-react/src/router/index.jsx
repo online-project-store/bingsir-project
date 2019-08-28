@@ -5,6 +5,10 @@ import { createBrowserHistory } from "history";
 import LayoutIndex from '@/layout/index.jsx';
 import loginLayout from '@/pages/loginLayout.jsx';
 import Home from '@/pages/home.jsx';
+import article from '@/pages/article.jsx';
+import classify from '@/pages/classify.jsx';
+import topicList from '@/pages/topicList.jsx';
+import activity from '@/pages/activity.jsx';
 const history = createBrowserHistory();
 
 const BasicRoute = () => (
@@ -13,6 +17,10 @@ const BasicRoute = () => (
             <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/login" component={loginLayout} />
+                <Route exact path="/article" component={article} />
+                <Route exact path="/classify" component={classify} />
+                <Route exact path="/topicList" component={topicList} />
+                <Route exact path="/activity" component={activity} />
                 <Route render={() => <Redirect to="/" />} />
             </Switch>
         </LayoutIndex>
