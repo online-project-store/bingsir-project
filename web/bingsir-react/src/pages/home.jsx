@@ -3,7 +3,6 @@ import http from '@/config/http';
 import api from '@/config/api';
 import { connect } from 'react-redux'
 import { increment, decrement, reset  } from "@/store/actions";
-console.log(increment);
 
 class Home extends React.Component {
     render() {
@@ -21,22 +20,21 @@ class Home extends React.Component {
         })
     }
     componentDidMount(){
-        // console.log();
-        this.props.decrement()
+        this.props.decrement(3)
+        console.log('props', this.props);
         this.getData();
     }
 }
+
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        // increase: (...args) => dispatch(actions.increase(...args)),
-        decrement: () => dispatch(decrement()),
-        increment: () => dispatch(increment()),
-        // decrease: (...args) => dispatch(actions.decrease(...args))
+        decrement: (...args) => dispatch(decrement(...args)),
+        // increment: () => dispatch(increment()),
     }
 }
 
-
 function mapStateToProps(state) {
+    console.log(state);
     return {
         count: state.counter.count,
     }

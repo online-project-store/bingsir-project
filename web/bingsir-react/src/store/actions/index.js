@@ -16,10 +16,15 @@ export const toggleTodo = id => ({
 });
 
 export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
-
-
  */
-
-export const increment = () => ({ type: "INC" });
-export const decrement = () => ({ type: "DEC" });
+// import { ADD_TODO, TOGGLE_TODO, SET_FILTER } from "./action-types";
+export const increment = () => ({ 
+  type: "INC",
+});
+export const decrement = (num) => ({
+  type: "DEC",
+  payload: {
+    num
+  }
+});
 export const reset = () => ({ type: "RESET" });
