@@ -13,7 +13,7 @@ export default class Login extends React.Component {
             isShow:false,
         }
     }
-    LayoutDom(props) {
+    template(props) {
         return (
             <Layout>
                 <HeaderComponent/>
@@ -27,7 +27,7 @@ export default class Login extends React.Component {
             </Layout>
         )
     }
-    Login(props) {
+    simpleTemplate(props) {
         return (
             <div>
                 {this.props.children}
@@ -35,7 +35,7 @@ export default class Login extends React.Component {
         )
     }
     componentWillMount(){
-        if (history.location.pathname === '/login') {
+        if (history.location.pathname === '/login' || history.location.pathname === '/writeArticle') {
             this.setState({
                 isShow: true
             })
@@ -47,7 +47,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <div>
-                {this.state.isShow ? this.Login() : this.LayoutDom()} 
+                {this.state.isShow ? this.simpleTemplate() : this.template()} 
             </div>
         )
     }

@@ -8,7 +8,8 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                {this.props.count}
+                {/* {this.props.count} */}
+                
             </div>
         )
     }
@@ -21,7 +22,7 @@ class Home extends React.Component {
     }
     componentDidMount(){
         this.props.decrement(3)
-        console.log('props', this.props);
+        // console.log('props', this.props);
         this.getData();
     }
 }

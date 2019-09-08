@@ -9,6 +9,7 @@ import article from '@/pages/article.jsx';
 import classify from '@/pages/classify.jsx';
 import topicList from '@/pages/topicList.jsx';
 import activity from '@/pages/activity.jsx';
+import writeArticle from '@/pages/writeArticle.jsx'
 const history = createBrowserHistory();
 
 const BasicRoute = () => (
@@ -21,6 +22,7 @@ const BasicRoute = () => (
                 <Route exact path="/classify" component={classify} />
                 <Route exact path="/topicList" component={topicList} />
                 <Route exact path="/activity" component={activity} />
+                <Route exact path="/writeArticle" component={writeArticle} />
                 <Route render={() => <Redirect to="/" />} />
             </Switch>
         </LayoutIndex>

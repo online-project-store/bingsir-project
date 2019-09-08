@@ -9,13 +9,13 @@ class HeaderComponenet extends React.Component {
         current: 'home',
     };
     handleClick = e => {
-        console.log('click ', e);
+        // console.log('click ', e);
         this.setState({
             current: e.key,
         });
     };
     goWriteArticle(){
-        window.location.href='/'
+        window.location.href = '/writeArticle'
     }
     goLogin(){
         window.location.href = '/login'
