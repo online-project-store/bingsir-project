@@ -78,8 +78,14 @@ const insertUserRole = (value) => {
     return query(_sql, value);
 }
 
+const findClasslist = () => {
+    let _sql = `SELECT * FROM classify`;
+    return query(_sql);
+}
+
 module.exports = {
     insertUsers,
     findUsersByPhone,
-    insertUserRole
+    insertUserRole,
+    findClasslist
 }
