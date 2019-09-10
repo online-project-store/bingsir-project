@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import BraftEditor from 'braft-editor'
+import BraftEditor from 'braft-editor';
 import { Input, Button, Row, Col, Popover, Tag, message} from 'antd';
-import 'braft-editor/dist/index.css'
-import '@/static/style/calsslist.less'
+import api from '@/config/api';
+import http from '@/config/http';
+import 'braft-editor/dist/index.css';
+import '@/static/style/calsslist.less';
 let lineStyle = {
     text_title:{
         margin: 0,
@@ -45,9 +47,14 @@ class writeArticle extends Component {
        // this.props.history.push('/')
        window.location.href = '/';
     }
-    async componentDidMount() {
+    componentDidMount() {
         // 假设此处从服务端获取html格式的编辑器内容
         // const htmlContent = await fetchEditorContent()
+        http.post(api.classlist, '', res => {
+            console.log(res);
+        }, err => {
+            console.log(err);
+        })
         const htmlContent =  ''
         // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorState数据
         this.setState({
@@ -84,9 +91,7 @@ class writeArticle extends Component {
             message.info('添加一个标签！')
             return false;
         }
-        
        console.log(this.state.inputVal,this.state.radioItem)
-
     }
     render() {
         const { editorState, radioItem} = this.state;

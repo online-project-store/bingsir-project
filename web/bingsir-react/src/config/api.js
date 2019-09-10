@@ -8,5 +8,6 @@ export default (config => {
 })({
     "login": "/login",
     "register": "/register",
-    "userinfo": "/userinfo"
+    "userinfo": "/userinfo",
+    "classlist": "class-list",
 })

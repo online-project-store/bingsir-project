@@ -34,5 +34,5 @@ router.post('/register', loginModule.register);
 
 router.post('/userinfo', userinfoModule.userinfo);
 
-router.post('/class-list', classModule);
+router.post('/class-list', classModule.classlist);
 module.exports = router;
