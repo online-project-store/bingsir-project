@@ -66,8 +66,8 @@ const insertUsers = (value) => {
     return query(_sql, value)
 }
 
-const findUsersByPhone = (value) => {
-    let _sql = `SELECT * FROM users WHERE user_telephone_number = "${value}"`;
+const findUsersByName = (value) => {
+    let _sql = `SELECT * FROM users WHERE user_telephone_number = "${value}" OR user_email  = "${value}"`;
     return query(_sql);
 }
 
@@ -85,7 +85,7 @@ const findClasslist = () => {
 
 module.exports = {
     insertUsers,
-    findUsersByPhone,
+    findUsersByName,
     insertUserRole,
     findClasslist
 }

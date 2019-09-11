@@ -24,7 +24,6 @@ let lineStyle = {
     }
 }
 const { CheckableTag } = Tag;
-const listdata = ['iOS', '后端', '前端', '阅读', 'Android', '程序人生', '开发工具', '人工智能'];
 function mapStateToProps(state) {
     return {
         
@@ -41,6 +40,8 @@ class writeArticle extends Component {
             selectedTags:[],
             radioItem: '前端',
             inputVal:'',
+            listdata:[],
+            title:'',
         }
     }
     toHome(){
@@ -51,7 +52,14 @@ class writeArticle extends Component {
         // 假设此处从服务端获取html格式的编辑器内容
         // const htmlContent = await fetchEditorContent()
         http.post(api.classlist, '', res => {
-            console.log(res);
+            let arr = [];
+            for (let i = 0; i < res.classList.length; i++) {
+                arr.push(res.classList[i].class_name);
+            }
+            
+            this.setState({
+                listdata: arr
+            })
         }, err => {
             console.log(err);
         })
@@ -86,12 +94,24 @@ class writeArticle extends Component {
             inputVal: event.target.value,
         })
     }
-    release(){
+    publish(){
+        console.log(this.state.title, this.state.editorState.toHTML());
         if (this.state.inputVal==''){
             message.info('添加一个标签！')
             return false;
         }
+        
+        if (this.state.title == ''){
+            message.info('标题和内容不能为空！')
+            return false;
+        }
        console.log(this.state.inputVal,this.state.radioItem)
+    }
+    addTitle(e){
+        this.setState({
+            title: e.target.value 
+        })
+
     }
     render() {
         const { editorState, radioItem} = this.state;
@@ -101,7 +121,7 @@ class writeArticle extends Component {
                 <h3>发布文章</h3>
                 <p>分类</p>
                 <div className='listTag'>
-                    {listdata.map(item => (
+                    {this.state.listdata.map(item => (
                         <CheckableTag
                             key={item}
                             checked={radioItem==item}
@@ -113,7 +133,7 @@ class writeArticle extends Component {
                 </div>
                 <p>标签</p>
                 <Input placeholder="添加一个标签" value={this.state.inputVal} onChange={this.addTag.bind(this)}/>
-                <Button type="primary" block style={{ marginTop: '10px' }} onClick={this.release.bind(this)}>确定并发布</Button>
+                <Button type="primary" block style={{ marginTop: '10px' }} onClick={this.publish.bind(this)}>确定并发布</Button>
             </div>
         );
         return (
@@ -131,7 +151,7 @@ class writeArticle extends Component {
                     </Col>
                 </Row>
                 <div style={{marginTop:'30px'}}>
-                    <textarea style={lineStyle.text_title} placeholder="请输入标题..."></textarea>
+                    <textarea value={this.state.title} onChange={this.addTitle.bind(this)} style={lineStyle.text_title} placeholder="请输入标题..."></textarea>
                     <BraftEditor
                         value={editorState}
                         onChange={this.handleEditorChange}

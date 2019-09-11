@@ -10,7 +10,7 @@ async function Interceptor(ctx, next) {
             try {
                 let duration = 900; //15分钟
                 if (ctx.session.remember) {
-                    duration = 60 * 60 * 7 ; //一周
+                    duration = 60 * 60 * 24 * 7 ; //一周
                 }
                 await redisStore.expire(ctx.session.redisData, duration); //时间单位是秒  重置redisid
                 console.log('sid===========>>>>>>>>>>>>>>', ctx.headers.cookie.split('='));
@@ -26,9 +26,7 @@ async function Interceptor(ctx, next) {
         } else {
             ctx.body = {
                 code: 1,
-                data: {
-                    logining: false
-                },
+                lose: true,
                 msg: '登录已失效,请重新登录'
             };
         }

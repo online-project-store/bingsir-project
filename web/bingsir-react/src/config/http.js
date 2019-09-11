@@ -1,5 +1,6 @@
 import axios from 'axios'
 import method from "./method"
+import { message } from 'antd';
 if (process.env.NODE_ENV == 'development') {
     axios.defaults.baseURL = 'api'
 }else{
@@ -21,9 +22,10 @@ axios.defaults.timeout = 100000
  axios.interceptors.response.use(response => {
      // 在这里你可以判断后台返回数据携带的请求码
     if (response.data.code == 1) {
-      if (window.location.pathname != '/' && !response.data.logining) { //没有权限返回首页
-        window.location.href = '/'
-        return  false;
+      if (response.data.lose && window.location.pathname != '/') {
+            message.info('登录已失效,即将跳转到首页',3,()=>{
+                    window.location.href = '/'
+            });
       }
       return  response.data;
     }else {

@@ -11,12 +11,14 @@ const redisStore = new Store();
 
 exports.login = async (ctx, next) => {
     let user = {
-        phone: ctx.request.body.phone,
+        loginName: ctx.request.body.loginName,
         password: ctx.request.body.password,
         remember: ctx.request.body.remember,
     }
     if (user.username !== "" && user.password !== "") {
-        await sql.findUsersByPhone(user.phone).then(async result => {
+        await sql.findUsersByName(user.loginName).then(async result => {
+            
+            console.log('result', result);
             
             if (result.length > 0) {
                 if (user.password != result[0].user_password) {
@@ -77,7 +79,7 @@ exports.login = async (ctx, next) => {
 }
 
 exports.register = async (ctx, next) => {
-    console.log(ctx,'register');
+    
     let data = {
         email: ctx.request.body.email,
         phone: ctx.request.body.phone,

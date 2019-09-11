@@ -25,7 +25,7 @@ class Login extends React.Component {
                     <Col span={24}>
                         <Form onSubmit={this.handleSubmit}>
                             <Form.Item label="手机号或邮箱">
-                                {getFieldDecorator('phone', {
+                                {getFieldDecorator('loginName', {
                                     rules: [{ required: true, message: '请输入您的手机号或邮箱!' }],
                                 })(
                                     <Input
