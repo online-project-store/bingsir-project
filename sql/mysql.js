@@ -78,14 +78,35 @@ const insertUserRole = (value) => {
     return query(_sql, value);
 }
 
-const findClasslist = () => {
+const findClassify = () => {
     let _sql = `SELECT * FROM classify`;
     return query(_sql);
 }
 
+const insertArticle = (value) => {
+    let _sql = `insert into articles(user_id,article_title,article_content,article_views,article_comment_count,article_date,article_like_count) values(?,?,?,?,?,?,?)`;
+    return query(_sql, value);
+}
+
+const insertTag = (value) => {
+    let _sql = `insert into tag(tag_name,tag_description,tag_another_name) values(?,?,?)`;
+    return query(_sql, value);
+}
+const insert_tag_article = (value) => {
+    let _sql = `insert into tag_articles(tag_id,article_id) values(?,?)`;
+    return query(_sql, value);
+}
+const insert_classify_articles = (value) => {
+    let _sql = `insert into classify_articles(classify_id,article_id) values(?,?)`;
+    return query(_sql, value);
+}
 module.exports = {
     insertUsers,
     findUsersByName,
     insertUserRole,
-    findClasslist
+    findClassify,
+    insertArticle,
+    insertTag,
+    insert_tag_article,
+    insert_classify_articles
 }

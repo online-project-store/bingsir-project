@@ -95,23 +95,20 @@ class writeArticle extends Component {
         })
     }
     publish(){
-        console.log(this.state.title, this.state.editorState.toHTML());
         if (this.state.inputVal==''){
             message.info('添加一个标签！')
             return false;
         }
-        
-        if (this.state.title == ''){
+        if (this.state.title == '' || this.state.editorState.toHTML() =='<p></p>'){
             message.info('标题和内容不能为空！')
             return false;
         }
-       console.log(this.state.inputVal,this.state.radioItem)
+        //user_id,article_title,article_content,article_views,article_comment_count,article_date,article_like_count
     }
     addTitle(e){
         this.setState({
             title: e.target.value 
         })
-
     }
     render() {
         const { editorState, radioItem} = this.state;
