@@ -9,5 +9,6 @@ export default (config => {
     "login": "/login",
     "register": "/register",
     "userinfo": "/userinfo",
-    "classlist": "class-list",
+    "classlist": "/class-list",
+    "insertarticle": "/insertarticle"
 })

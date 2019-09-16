@@ -78,8 +78,13 @@ const insertUserRole = (value) => {
     return query(_sql, value);
 }
 
-const findClassify = () => {
-    let _sql = `SELECT * FROM classify`;
+const findClassify = (value) => {
+    let _sql = '';
+    if (!!value) {
+        _sql = `SELECT * FROM classify WHERE class_name = "${value}"`;
+    }else{
+        _sql = `SELECT * FROM classify`;
+    }
     return query(_sql);
 }
 

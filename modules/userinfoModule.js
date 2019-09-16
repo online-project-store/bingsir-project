@@ -10,6 +10,8 @@ exports.userinfo = async (ctx, next) => {
  /*    redisStore.get('SESSIONID').then(res => {
         console.log('SESSIONID', res);
     },err=>{}) */
+    console.log('session',ctx.session);
+    
     ctx.body = {
         msg: '登陆状态',
         data: {

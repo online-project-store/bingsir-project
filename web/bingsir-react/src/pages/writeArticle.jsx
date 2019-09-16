@@ -103,7 +103,11 @@ class writeArticle extends Component {
             message.info('标题和内容不能为空！')
             return false;
         }
-        //user_id,article_title,article_content,article_views,article_comment_count,article_date,article_like_count
+        http.post(api.insertarticle, { 'article_title': this.state.title, 'article_content': this.state.editorState.toHTML(), 'tag_name': this.state.inputVal, 'tag_description': '', 'tag_another_name': '', 'classify': this.state.radioItem},res=>{
+            console.log(res);
+        },err=>{
+            console.log(err);
+        })
     }
     addTitle(e){
         this.setState({
