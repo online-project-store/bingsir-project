@@ -4,12 +4,16 @@ import { withRouter  } from 'react-router-dom';
 import http from '@/config/http';
 import api from '@/config/api';
 class Login extends React.Component {
+    constructor(props) {
+        super(props)
+    }
     handleSubmit = e => {
         e.preventDefault();
+        //this.props.history.push('/');
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 http.post(api.login, values, res => {
-                    this.props.history.push('/');
+                    window.location.href = '/';
                 }, err => {
                     console.log(err);
                 })
@@ -23,7 +27,7 @@ class Login extends React.Component {
             <div className="login-form">
                 <Row>
                     <Col span={24}>
-                        <Form onSubmit={this.handleSubmit}>
+                        <Form onSubmit={this.handleSubmit.bind(this)}>
                             <Form.Item label="手机号或邮箱">
                                 {getFieldDecorator('loginName', {
                                     rules: [{ required: true, message: '请输入您的手机号或邮箱!' }],
@@ -50,8 +54,8 @@ class Login extends React.Component {
                                     valuePropName: 'checked',
                                     initialValue: true,
                                 })(<Checkbox>记住我</Checkbox>)}
-                                <a className="login-form-forgot" href="">
-                                    登录遇到问题
+                                <a style={{float:'right'}} href="/">
+                                    返回首页
                                 </a>
                                 <Button type="primary" block htmlType="submit" className="login-form-button">
                                     登录

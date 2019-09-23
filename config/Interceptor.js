@@ -1,11 +1,9 @@
-const fs = require("fs");
-const Router = require('koa-router');
-const router = new Router();
+// const fs = require("fs");
 const Store = require("../config/Store");
 // const sql = require('../sql/mysql');
 const redisStore = new Store();
 
-const routerPage = require('./routerPage');
+// const routerPage = require('./routerPage');
 
 async function Interceptor(ctx, next) {
     let url = ctx.request.url;
@@ -33,7 +31,7 @@ async function Interceptor(ctx, next) {
             }
         } else {
             ctx.body = {
-                logiSign:false
+                loginMiss: true
             };
             await next()
         }

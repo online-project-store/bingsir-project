@@ -4,6 +4,7 @@ const loginModule = require('../modules/loginModule');
 const userinfoModule = require('../modules/userinfoModule');
 const classModule = require('../modules/article/class');
 const contentModule = require('../modules/article/content');
+
 /* router.get("/*", async (ctx, next) => {
     await ctx.render('/index')
 }); */
@@ -31,7 +32,7 @@ router.get('/home', async (ctx) => {
 }); */
 
 router.post('/*', async (ctx, next) => {
-    if (!ctx.body.logiSign) {
+    if (ctx.body&&ctx.body.loginMiss) {
         ctx.body =  {
             code: 1,
             lose: true,
@@ -51,5 +52,7 @@ router.post('/userinfo', userinfoModule.userinfo);
 router.post('/class-list', classModule.classlist);
 
 router.post('/insertarticle', contentModule.insertarticle);
+
+router.post('/getarticlelist', contentModule.getarticlelist);
 
 module.exports = router;

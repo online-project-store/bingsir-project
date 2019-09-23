@@ -14,11 +14,11 @@ class Home extends React.Component {
         )
     }
     getData(){
-        http.post(api.userinfo,{},res=>{
+        /* http.post(api.userinfo,{},res=>{
             console.log(res);
         },err=>{
             console.log(err);
-        })
+        }) */
     }
     componentDidMount(){
         this.props.decrement(3)

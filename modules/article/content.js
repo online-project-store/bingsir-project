@@ -1,9 +1,7 @@
 const sql = require('../../sql/mysql');
 const moment = require('moment');
-//user_id,article_title,article_content,article_views,article_comment_count,article_date,article_like_count
 exports.insertarticle = async (ctx, next) => {
     let articleCon = ctx.request.body;
-    
     let user = await sql.findUsersByName(ctx.session.phone);
     let article_date = moment().format('YYYY-MM-DD h:mm:ss'); //2015-12-20 10:01:00
     // console.log(articleCon, article_date, user[0].user_id);
@@ -38,4 +36,8 @@ exports.insertarticle = async (ctx, next) => {
         }  
     }
   
+}
+
+exports.getarticlelist = async (ctx, next) => {
+    
 }
