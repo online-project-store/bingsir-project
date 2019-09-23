@@ -40,17 +40,33 @@ module.exports = function (app) {
      })
 }
  */
-
  const fs = require("fs");
+/*  const Koa = require('koa');
+ const app = new Koa(); */
 
  class RouterPage{
      constructor(app) {
         app.use(async (ctx) => {
-            // console.log(ctx.state,'state');
             let url = ctx.request.url
             let html = await this.route(url)
+            //console.log(html);
             ctx.body = html
         })
+       /*  let url = ctx.request.url;
+        console.log(url);
+        this.route(url).then(res=>{
+            console.log(res);
+            ctx.body = res
+        },err=>{
+             ctx.body = err
+        }) */
+         //this.ctx = ctx;
+     }
+     async renderHtml(){
+         let url = this.ctx.request.url;
+         let html = await this.route(url)
+        //  console.log(html);
+         this.ctx.body = html;
      }
      render(page) {
          return new Promise((resolve, reject) => {
@@ -80,6 +96,7 @@ module.exports = function (app) {
                  view = '404.html'
                  break
              default:
+                 view = 'index.html'
                  break
          }
          let html = await this.render(view)

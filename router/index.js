@@ -9,6 +9,7 @@ const contentModule = require('../modules/article/content');
 }); */
 
 router.get("/*", async (ctx, next) => {
+    console.log(ctx);
     await ctx.render('/index');
 });
 
@@ -28,6 +29,18 @@ router.get('/home', async (ctx) => {
       }
     });
 }); */
+
+router.post('/*', async (ctx, next) => {
+    if (!ctx.body.logiSign) {
+        ctx.body =  {
+            code: 1,
+            lose: true,
+            msg: "登录已失效,请重新登录"
+        };
+    }else{
+        await next();
+    }
+})
 
 router.post('/login', loginModule.login);
 

@@ -26,7 +26,7 @@ module.exports = function (app) {
         key: "SESSIONID",
         store: new Store()
     }));
-    
+   
     app.use(Interceptor) //使用session 拦截器
     /* app.use(ctx => {
         // refresh session if set maxAge

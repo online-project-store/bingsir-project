@@ -1,9 +1,17 @@
+const fs = require("fs");
+const Router = require('koa-router');
+const router = new Router();
 const Store = require("../config/Store");
-const sql = require('../sql/mysql');
+// const sql = require('../sql/mysql');
 const redisStore = new Store();
+
+const routerPage = require('./routerPage');
+
 async function Interceptor(ctx, next) {
     let url = ctx.request.url;
-     if (url == "/login" || url == "/register" || url == "/") await next();
+    const allowpage = ['/login', '/register', '/'];
+    //console.log(allowpage.indexOf(url),url);
+     if (allowpage.indexOf(url) > -1) await next();
      else{
         let data = await redisStore.get(ctx.session.redisData);
         if (data && !!data.phone) {
@@ -25,10 +33,9 @@ async function Interceptor(ctx, next) {
             }
         } else {
             ctx.body = {
-                code: 1,
-                lose: true,
-                msg: '登录已失效,请重新登录'
+                logiSign:false
             };
+            await next()
         }
      }
 }
