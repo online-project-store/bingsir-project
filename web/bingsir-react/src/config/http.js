@@ -23,7 +23,7 @@ axios.defaults.timeout = 100000
      // 在这里你可以判断后台返回数据携带的请求码
     if (response.data.code == 1) {
       if (response.data.lose && window.location.pathname != '/') {
-            message.info('sorry,登录已失效,即将跳转到首页',2,()=>{
+            message.info('登录已失效,即将跳转到首页',2,()=>{
                   window.location.href = '/'
             });
       }

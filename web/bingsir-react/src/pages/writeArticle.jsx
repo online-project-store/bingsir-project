@@ -74,7 +74,6 @@ class writeArticle extends Component {
         // 编辑器内容提交到服务端之前，可直接调用editorState.toHTML()来获取HTML格式的内容
         const htmlContent = this.state.editorState.toHTML()
         console.log(htmlContent);
-        
         //const result = await saveEditorContent(htmlContent)
     }
     handleEditorChange = (editorState) => {

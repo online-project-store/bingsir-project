@@ -1,6 +1,7 @@
 import React from 'react';
 import http from '@/config/http';
 import api from '@/config/api';
+import {  withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { increment, decrement, reset  } from "@/store/actions";
 
@@ -8,13 +9,12 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                {/* {this.props.count} */}
                 
             </div>
         )
     }
     getData(){
-        /* http.post(api.userinfo,{},res=>{
+       /*  http.post(api.getarticlelist,{},res=>{
             console.log(res);
         },err=>{
             console.log(err);
@@ -41,4 +41,4 @@ function mapStateToProps(state) {
     }
     // 这里的state是react-redux store中的state，
 }
-export default connect(mapStateToProps, mapDispatchToProps )(Home);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home)) ;

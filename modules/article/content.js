@@ -35,9 +35,8 @@ exports.insertarticle = async (ctx, next) => {
             }
         }  
     }
-  
 }
 
 exports.getarticlelist = async (ctx, next) => {
-    
+    //ctx.session.phone
 }

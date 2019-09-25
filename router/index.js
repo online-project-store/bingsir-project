@@ -55,4 +55,6 @@ router.post('/insertarticle', contentModule.insertarticle);
 
 router.post('/getarticlelist', contentModule.getarticlelist);
 
+router.post('/loginStatus', loginModule.loginStatus);
+
 module.exports = router;

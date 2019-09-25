@@ -105,6 +105,12 @@ const insert_classify_articles = (value) => {
     let _sql = `insert into classify_articles(classify_id,article_id) values(?,?)`;
     return query(_sql, value);
 }
+
+const findArticlebyUser = (value) => {
+    let _sql = `select * from articles where user_id = "${value}`;
+    return query(_sql, value);
+}
+
 module.exports = {
     insertUsers,
     findUsersByName,
@@ -113,5 +119,6 @@ module.exports = {
     insertArticle,
     insertTag,
     insert_tag_article,
-    insert_classify_articles
+    insert_classify_articles,
+    findArticlebyUser
 }

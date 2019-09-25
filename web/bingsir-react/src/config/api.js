@@ -10,5 +10,7 @@ export default (config => {
     "register": "/register",
     "userinfo": "/userinfo",
     "classlist": "/class-list",
-    "insertarticle": "/insertarticle"
+    "insertarticle": "/insertarticle",
+    "loginStatus": "/loginStatus",
+    "getarticlelist": "/getarticlelist",
 })

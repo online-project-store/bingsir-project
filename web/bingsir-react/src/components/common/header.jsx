@@ -1,13 +1,51 @@
 import React from 'react';
 import { Layout, Menu, Icon, Row, Col } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { increment, decrement, reset } from "@/store/actions";
 import '@/static/style/header.less'
+import api from '@/config/api';
+import http from '@/config/http';
 const { Header } = Layout;
 const { SubMenu } = Menu;
+
 class HeaderComponenet extends React.Component {
-    state = {
-        current: 'home',
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            current: 'home',
+            loginStatus: false,
+            userName:'',
+        };
+    }
+    
+    componentDidMount(){
+        http.post(api.loginStatus,{},res=>{
+            console.log(res);
+            
+            if (res.lose){
+                this.setState({
+                    loginStatus: false,
+                    userinfo:'',
+                })
+            }else{
+                this.setState({
+                    loginStatus: true,
+                    userName: res[0].user_nickname
+                })
+            }
+           
+        },err=>{
+            console.log(err);
+        })
+    }
+    getUserInfo(){
+        //console.log(this.state.current);
+        this.setState({
+            current:'userinfo'
+        })
+        this.props.history.push('/userinfo')
+    }
     handleClick = e => {
         // console.log('click ', e);
         this.setState({
@@ -49,11 +87,24 @@ class HeaderComponenet extends React.Component {
                     <Col span={6} className='ui-header-right'>
                         <span   onClick={this.goWriteArticle}><Icon type="form" />写文章 </span>
                         <i> | </i>
-                        <span   onClick={this.goLogin}><Icon type="login" />登录·注册 </span>
+                        {this.state.loginStatus ? (<span onClick={this.getUserInfo.bind(this)}><Icon type="user" /> {this.state.userName} </span>) : (<span onClick={this.goLogin}><Icon type="login" />登录·注册 </span>)}
                     </Col>
                 </Row>
             </Header>
         )
     }
 }
-export default HeaderComponenet;
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        decrement: (...args) => dispatch(decrement(...args)),
+        // increment: () => dispatch(increment()),
+    }
+}
+function mapStateToProps(state) {
+    console.log(state);
+    return {
+        count: state.counter.count,
+    }
+    // 这里的state是react-redux store中的state，
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderComponenet));
