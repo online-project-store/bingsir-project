@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout, Menu, Icon, Row, Col } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { increment, decrement, reset } from "@/store/actions";
+import { userinfo } from "@/store/actions/home";
 import '@/static/style/header.less'
 import api from '@/config/api';
 import http from '@/config/http';
@@ -21,8 +21,8 @@ class HeaderComponenet extends React.Component {
     
     componentDidMount(){
         http.post(api.loginStatus,{},res=>{
-            console.log(res);
-            
+            //console.log(res);
+            this.props.userinfo(res)
             if (res.lose){
                 this.setState({
                     loginStatus: false,
@@ -96,14 +96,13 @@ class HeaderComponenet extends React.Component {
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        decrement: (...args) => dispatch(decrement(...args)),
+        userinfo: (...args) => dispatch(userinfo(...args)),
         // increment: () => dispatch(increment()),
     }
 }
 function mapStateToProps(state) {
-    console.log(state);
     return {
-        count: state.counter.count,
+        user_info: state.counter.user_info,
     }
     // 这里的state是react-redux store中的state，
 }

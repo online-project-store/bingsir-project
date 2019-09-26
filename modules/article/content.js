@@ -39,4 +39,20 @@ exports.insertarticle = async (ctx, next) => {
 
 exports.getarticlelist = async (ctx, next) => {
     //ctx.session.phone
+    let user_id = ctx.request.body.user_id;
+    if (user_id) {
+        let articleList = await sql.findArticlebyUser(user_id);
+
+        ctx.body = {
+            code: 1,
+            data: articleList,
+        }
+    }else{
+        ctx.body = {
+            code: 0,
+            data: {},
+            msg: '数据有误'
+        }
+    }
+    
 }

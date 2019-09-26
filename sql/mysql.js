@@ -107,8 +107,8 @@ const insert_classify_articles = (value) => {
 }
 
 const findArticlebyUser = (value) => {
-    let _sql = `select * from articles where user_id = "${value}`;
-    return query(_sql, value);
+    let _sql = `select * from articles where user_id = "${value}"`;
+    return query(_sql);
 }
 
 module.exports = {

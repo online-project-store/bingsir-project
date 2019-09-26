@@ -13,11 +13,11 @@ import * as types from "./action-types";
     }
 } */
 
-let nextTodoId = 0;
-export const addTodo = content => ({
-    type: types.ADD_TODO,
-    payload: {
-        id: ++nextTodoId,
-        content
+
+
+export const userinfo = (data) => ({
+    type: types.USER_INFO,
+    payload:{
+        info: data
     }
-});
+})
