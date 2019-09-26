@@ -1,10 +1,25 @@
 import React from 'react';
 import http from '@/config/http';
 import api from '@/config/api';
+import { Icon} from 'antd';
 import {  withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 //import { increment, decrement, reset  } from "@/store/actions";
-
+import '@/static/style/article.less';
+let lineStyle = {
+    text_title: {
+        margin: 0,
+        padding: '18px',
+        fontWeight: 700,
+        color: '#000',
+        border: 'none',
+        outline: 'none',
+        resize: 'none',
+        overflow: 'hidden',
+        width: '100%',
+        backgroundColor: '#F4F5F5'
+    }
+}
 
 
 class Home extends React.Component {
@@ -21,8 +36,8 @@ class Home extends React.Component {
                 <div>
                     {this.state.articleList.map((item,index) => {
                         return (
-                            <div key={index}>
-                                <div >{item.article_content}</div>
+                            <div key={index} className="articleContent">
+                                <div dangerouslySetInnerHTML={{ __html: item.article_content }}></div>
                             </div>
                         )
                     })}
@@ -31,7 +46,7 @@ class Home extends React.Component {
         }else{
             return (
                 <div>
-                    
+                    <Icon type="loading" />
                 </div>
             )
         }
