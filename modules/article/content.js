@@ -30,8 +30,8 @@ exports.insertarticle = async (ctx, next) => {
         } catch (err) {
             ctx.body = {
                 code: 1,
-                data: null,
-                msg:'输入内容为空'
+                data: err,
+                msg:'插入数据出错'
             }
         }  
     }

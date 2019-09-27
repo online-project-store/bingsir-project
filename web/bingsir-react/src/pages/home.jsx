@@ -21,15 +21,16 @@ let lineStyle = {
     }
 }
 
-
 class Home extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             articleList:'',
+            userInfo:''
         }
     }
     render() {
+       
         console.log('render======>>>>>',this.state)
         if (this.state.articleList){
             return (
@@ -45,18 +46,16 @@ class Home extends React.Component {
             )
         }else{
             return (
-                <div>
-                    <Icon type="loading" />
+                <div className="article_no_data" style={{ minHeight: this.props.clientHeight+'px'}}>
+                    <div>
+                        <p> <Icon type="loading" /></p>
+                        <p>玩命加载中！！！</p>
+                    </div>
                 </div>
             )
         }
-        
     }
-    /* shouldComponentUpdate(nextProps, nextState) {
-        console.log('nextProps====>>>', nextProps, 'nextState=====>>>>',nextState);
-        if (nextProps.user_info.info){}
-        return true;
-    } */
+    
     getData(user){
         http.post(api.getarticlelist, { 'user_id': user.info[0].user_id},res=>{
             console.log(res);
@@ -67,11 +66,21 @@ class Home extends React.Component {
             console.log(err);
         })
     }
+    /* componentWillUpdate(nextProps, nextState) {
+      //这个里面不可以做更新ui的事情
+    } */
     componentWillReceiveProps(nextProps) {
+        // this.getData();
+        /* this.setState({
+            userInfo: nextProps.user_info
+        }) */
         this.getData(nextProps.user_info);
     }
     componentDidMount(){
-       
+        console.log('componentDidMount====>>>',this.props);
+        if (this.props.user_info){
+            this.getData(this.props.user_info);
+        }
     }
 }
 
@@ -85,6 +94,7 @@ class Home extends React.Component {
 function mapStateToProps(state) {
     return {
         user_info: state.counter.user_info,
+        clientHeight: state.counter.clientHeight,
     }
     // 这里的state是react-redux store中的state，
 }

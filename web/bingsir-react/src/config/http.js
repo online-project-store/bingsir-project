@@ -43,7 +43,7 @@ const http = {
             url, // 请求的地址
             data,
         }).then((result) => {
-             console.log('ajax数据',result);
+            //  console.log('ajax数据',result);
             if (result.code == "1") {
                 success(result.data);
             } else if (result.code == "0" || result.code >= 500) {
