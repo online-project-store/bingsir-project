@@ -38,11 +38,17 @@ exports.insertarticle = async (ctx, next) => {
 }
 
 exports.getarticlelist = async (ctx, next) => {
+    let articleList = await sql.findArticleList(1, 2);
+    console.log('articleList',articleList);
+    ctx.body = {
+        code: 1,
+        data: articleList,
+    }
     //ctx.session.phone
-    let user_id = ctx.request.body.user_id;
-    if (user_id) {
-        let articleList = await sql.findArticlebyUser(user_id);
-
+    //let user_id = ctx.request.body.user_id;
+    /* if (user_id) {
+        let articleList = await sql.findArticleList(1, 2);
+        
         ctx.body = {
             code: 1,
             data: articleList,
@@ -53,6 +59,6 @@ exports.getarticlelist = async (ctx, next) => {
             data: {},
             msg: '数据有误'
         }
-    }
+    } */
     
 }

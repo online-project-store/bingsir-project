@@ -6,7 +6,7 @@ import FooterComponent from '@/components/common/footer.jsx';
 import "@/static/style/public.less"
 const { Content, Sider } = Layout;
 const history = createBrowserHistory();
-export default class Login extends React.Component {
+class layoutDom extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -53,4 +53,4 @@ export default class Login extends React.Component {
     }
 }
 
- 
+export default layoutDom;

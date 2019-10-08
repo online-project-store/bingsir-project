@@ -3,6 +3,7 @@ import { Layout, Menu, Icon, Row, Col } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { userinfo } from "@/store/actions/home";
+import { getClientHeight } from "@/store/actions";
 import '@/static/style/header.less'
 import api from '@/config/api';
 import http from '@/config/http';
@@ -20,6 +21,8 @@ class HeaderComponenet extends React.Component {
     }
     
     componentDidMount(){
+        let num = document.documentElement.clientHeight - 64 - 20 - 69 - 30;
+        this.props.getClientHeight(num);
         http.post(api.loginStatus,{},res=>{
             //console.log(res);
             this.props.userinfo(res)
@@ -97,7 +100,7 @@ class HeaderComponenet extends React.Component {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         userinfo: (...args) => dispatch(userinfo(...args)),
-        // increment: () => dispatch(increment()),
+        getClientHeight: (...args) => dispatch(getClientHeight(...args))
     }
 }
 function mapStateToProps(state) {

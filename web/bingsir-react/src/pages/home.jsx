@@ -6,20 +6,7 @@ import {  withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 //import { increment, decrement, reset  } from "@/store/actions";
 import '@/static/style/article.less';
-let lineStyle = {
-    text_title: {
-        margin: 0,
-        padding: '18px',
-        fontWeight: 700,
-        color: '#000',
-        border: 'none',
-        outline: 'none',
-        resize: 'none',
-        overflow: 'hidden',
-        width: '100%',
-        backgroundColor: '#F4F5F5'
-    }
-}
+
 
 class Home extends React.Component {
     constructor(props){
@@ -30,7 +17,6 @@ class Home extends React.Component {
         }
     }
     render() {
-       
         console.log('render======>>>>>',this.state)
         if (this.state.articleList){
             return (
@@ -56,9 +42,9 @@ class Home extends React.Component {
         }
     }
     
-    getData(user){
-        http.post(api.getarticlelist, { 'user_id': user.info[0].user_id},res=>{
-            console.log(res);
+    getData(){
+        http.post(api.getarticlelist, { },res=>{
+            
             this.setState({
                 articleList: res
             })
@@ -74,13 +60,17 @@ class Home extends React.Component {
         /* this.setState({
             userInfo: nextProps.user_info
         }) */
-        this.getData(nextProps.user_info);
+        
+        if (nextProps.user_info){
+            this.getData(nextProps.user_info);
+        }
     }
     componentDidMount(){
-        console.log('componentDidMount====>>>',this.props);
+        /* console.log('componentDidMount====>>>',this.props);
         if (this.props.user_info){
             this.getData(this.props.user_info);
-        }
+        } */
+        this.getData();
     }
 }
 

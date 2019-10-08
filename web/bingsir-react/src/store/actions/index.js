@@ -18,13 +18,10 @@ export const toggleTodo = id => ({
 export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
  */
 // import { ADD_TODO, TOGGLE_TODO, SET_FILTER } from "./action-types";
-export const increment = () => ({ 
-  type: "INC",
-});
-export const decrement = (num) => ({
-  type: "DEC",
+
+export const getClientHeight = (num) => ({
+  type: "CLIENT_NUM",
   payload: {
-    num
+    clientHeight: num
   }
 });
-export const reset = () => ({ type: "RESET" });
