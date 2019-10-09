@@ -35,7 +35,9 @@ router.post('/*', async (ctx, next) => {
     if (ctx.body&&ctx.body.loginMiss) {
         ctx.body =  {
             code: 1,
-            lose: true,
+            data:{
+                lose: true
+            },
             msg: "登录已失效,请重新登录"
         };
     }else{

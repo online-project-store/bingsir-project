@@ -1,9 +1,9 @@
 import React from 'react';
 import http from '@/config/http';
 import api from '@/config/api';
-import { Icon} from 'antd';
+import { Icon, Pagination} from 'antd';
 import {  withRouter } from 'react-router-dom';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 //import { increment, decrement, reset  } from "@/store/actions";
 import '@/static/style/article.less';
 
@@ -13,21 +13,27 @@ class Home extends React.Component {
         super(props)
         this.state = {
             articleList:'',
-            userInfo:''
+            userInfo:'',
+            pageNum: 1,
+            pageSize: 15,
+            totalPages:'',
         }
     }
     render() {
-        console.log('render======>>>>>',this.state)
+         
         if (this.state.articleList){
             return (
-                <div>
+                <div className="articleDiv">
                     {this.state.articleList.map((item,index) => {
                         return (
-                            <div key={index} className="articleContent">
+                            <div key={index} className="articleDiv-content">
                                 <div dangerouslySetInnerHTML={{ __html: item.article_content }}></div>
                             </div>
                         )
                     })}
+                    <div style={{textAlign:"center"}}>
+                        <Pagination defaultCurrent={this.state.pageNum} defaultPageSize={this.state.pageSize} total={this.state.totalPages} onChange={this.onChange.bind(this)} />
+                    </div>
                 </div>
             )
         }else{
@@ -41,29 +47,31 @@ class Home extends React.Component {
             )
         }
     }
-    
+    onChange(pageNumber) {
+        console.log('Page: ', pageNumber);
+    }
     getData(){
-        http.post(api.getarticlelist, { },res=>{
-            
+        http.post(api.getarticlelist, { pageNum: this.state.pageNum, pageSize: this.state.pageSize },res=>{
             this.setState({
-                articleList: res
+                articleList: res.articleList,
+                totalPages: res.totalPages
             })
         },err=>{
             console.log(err);
         })
+       
+        
     }
     /* componentWillUpdate(nextProps, nextState) {
       //这个里面不可以做更新ui的事情
     } */
     componentWillReceiveProps(nextProps) {
-        // this.getData();
         /* this.setState({
             userInfo: nextProps.user_info
         }) */
-        
-        if (nextProps.user_info){
+        /* if (nextProps.user_info){
             this.getData(nextProps.user_info);
-        }
+        } */
     }
     componentDidMount(){
         /* console.log('componentDidMount====>>>',this.props);
@@ -71,6 +79,8 @@ class Home extends React.Component {
             this.getData(this.props.user_info);
         } */
         this.getData();
+        
+        
     }
 }
 

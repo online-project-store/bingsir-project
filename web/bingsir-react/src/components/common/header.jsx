@@ -24,7 +24,7 @@ class HeaderComponenet extends React.Component {
         let num = document.documentElement.clientHeight - 64 - 20 - 69 - 30;
         this.props.getClientHeight(num);
         http.post(api.loginStatus,{},res=>{
-            //console.log(res);
+            // console.log(res);
             this.props.userinfo(res)
             if (res.lose){
                 this.setState({

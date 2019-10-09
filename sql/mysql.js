@@ -118,6 +118,12 @@ const findArticleList = (pageNum, pageSize) => {
 }
 //https://www.runoob.com/note/28032
 /* SELECT * FROM articles WHERE id >=(SELECT id FROM articles WHERE category_id = 123 ORDER BY id LIMIT 10000, 1) LIMIT 10 */
+
+const findArticleNum = ()=>{
+    let _sql = `SELECT COUNT(*) FROM articles`;
+    return query(_sql);
+}
+//SELECT COUNT(*) FROM employee_tbl
 module.exports = {
     insertUsers,
     findUsersByName,
@@ -128,5 +134,6 @@ module.exports = {
     insert_tag_article,
     insert_classify_articles,
     findArticlebyUser,
-    findArticleList
+    findArticleList,
+    findArticleNum
 }

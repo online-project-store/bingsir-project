@@ -38,12 +38,26 @@ exports.insertarticle = async (ctx, next) => {
 }
 
 exports.getarticlelist = async (ctx, next) => {
-    let articleList = await sql.findArticleList(1, 2);
-    console.log('articleList',articleList);
-    ctx.body = {
-        code: 1,
-        data: articleList,
-    }
+     let pageMessage = ctx.request.body;
+     if (pageMessage.pageNum && pageMessage.pageSize) {
+        let articleList = await sql.findArticleList(pageMessage.pageNum, pageMessage.pageSize);
+        let totalPages = await sql.findArticleNum();
+        let num = totalPages[0]['COUNT(*)']
+        ctx.body = {
+            code: 1,
+            data: {
+                articleList,
+                totalPages: num
+            },
+        }
+     }else{
+         ctx.body = {
+             code: 1,
+             data: null,
+             msg: '参数有误'
+         }
+     }
+    
     //ctx.session.phone
     //let user_id = ctx.request.body.user_id;
     /* if (user_id) {
