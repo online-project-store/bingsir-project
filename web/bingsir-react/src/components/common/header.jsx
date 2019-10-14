@@ -73,15 +73,15 @@ class HeaderComponenet extends React.Component {
                             <Menu.Item key="home">
                                 <Link to="/"><Icon type="home" />首页 </Link>
                             </Menu.Item>
-                            <Menu.Item key="article">
+                            {/* <Menu.Item key="article">
                                 <Link to="/article"><Icon type="read" />文章 </Link>
-                            </Menu.Item>
+                            </Menu.Item> */}
                             <Menu.Item key="classify">
                                 <Link to="/classify"><Icon type="fire" />话题 </Link>
                             </Menu.Item>
-                            <Menu.Item key="topicList">
+                            {/* <Menu.Item key="topicList">
                                 <Link to="/topicList"><Icon type="bars" />论点 </Link>
-                            </Menu.Item>
+                            </Menu.Item> */}
                             <Menu.Item key="activity">
                                 <Link to="/activity"><Icon type="heart" />活动 </Link>
                             </Menu.Item>

@@ -27,7 +27,10 @@ class Home extends React.Component {
                     {this.state.articleList.map((item,index) => {
                         return (
                             <div key={index} className="articleDiv-content">
-                                <div dangerouslySetInnerHTML={{ __html: item.article_content }}></div>
+                                {/* <div dangerouslySetInnerHTML={{ __html: item.article_content }}></div> */}
+                                <div>
+                                    <h3>{}</h3>
+                                </div>
                             </div>
                         )
                     })}
