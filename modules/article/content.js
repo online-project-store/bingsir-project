@@ -1,9 +1,10 @@
 const sql = require('../../sql/mysql');
 const moment = require('moment');
+moment.locale('zh-cn');
 exports.insertarticle = async (ctx, next) => {
     let articleCon = ctx.request.body;
     let user = await sql.findUsersByName(ctx.session.phone);
-    let article_date = moment().format('YYYY-MM-DD h:mm:ss'); //2015-12-20 10:01:00
+    let article_date = new Date(); //2015-12-20 10:01:00
     // console.log(articleCon, article_date, user[0].user_id);
     let article_views = 0,
         article_comment_count = 0,
@@ -42,7 +43,13 @@ exports.getarticlelist = async (ctx, next) => {
      if (pageMessage.pageNum && pageMessage.pageSize) {
         let articleList = await sql.findArticleList(pageMessage.pageNum, pageMessage.pageSize);
         let totalPages = await sql.findArticleNum();
-        let num = totalPages[0]['COUNT(*)']
+        let num = totalPages[0]['COUNT(*)'];
+        articleList.map((item,index)=>{
+            // console.log(item);
+            //item.time = moment(item.article_date).format('YYYY-MM-DD HH:mm:ss');
+            item.time = moment(item.article_date).startOf('day').fromNow();
+            return item;
+        })
         ctx.body = {
             code: 1,
             data: {

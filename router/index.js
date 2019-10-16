@@ -32,9 +32,10 @@ router.get('/home', async (ctx) => {
 }); */
 
 router.post('/*', async (ctx, next) => {
+   
     if (ctx.body&&ctx.body.loginMiss) {
         ctx.body =  {
-            code: 1,
+            code: -1,
             data:{
                 lose: true
             },

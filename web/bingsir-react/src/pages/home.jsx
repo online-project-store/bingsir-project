@@ -4,6 +4,7 @@ import api from '@/config/api';
 import { Icon, Pagination} from 'antd';
 import {  withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+// import moment  from 'moment';
 //import { increment, decrement, reset  } from "@/store/actions";
 import '@/static/style/article.less';
 
@@ -29,7 +30,7 @@ class Home extends React.Component {
                             <div key={index} className="articleDiv-content">
                                 {/* <div dangerouslySetInnerHTML={{ __html: item.article_content }}></div> */}
                                 <div>
-                                    <h3>{}</h3>
+                                    <h3>{item.article_title}</h3>
                                 </div>
                             </div>
                         )
