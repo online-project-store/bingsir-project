@@ -1,13 +1,25 @@
 .articleDiv{
     background-color: #f0f2f5;
-    >.articleDiv-content{
-        padding: 18px 24px;
-        margin: 20px 0;
-        background-color: #fff;
-        &:first-child{
-            margin-top: 0px;
+    padding: 0;
+    >.articleList{
+        list-style: none;
+        .articleDiv-content {
+            padding: 18px 24px;
+            margin: 20px 0;
+            background-color: #fff;
+            >p{
+                font-size: 12px;
+                margin-bottom: 5px;
+                >span{
+                    color: #b2bac2;
+                }
+            }
+            &:first-child {
+                margin-top: 0px;
+            }
         }
     }
+    
 }
 
 .article_no_data{

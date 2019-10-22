@@ -25,17 +25,18 @@ class Home extends React.Component {
         if (this.state.articleList){
             return (
                 <div className="articleDiv">
-                    {this.state.articleList.map((item,index) => {
-                        return (
-                            <div key={index} className="articleDiv-content">
-                                {/* <div dangerouslySetInnerHTML={{ __html: item.article_content }}></div> */}
-                                <div>
+                    <ul className="articleList">
+                        {this.state.articleList.map((item, index) => {
+                            return (
+                                <li key={index} className="articleDiv-content">
+                                    {/* <div dangerouslySetInnerHTML={{ __html: item.article_content }}></div> */}
+                                    <p><span>张三</span> · <span>{item.time}</span> · <span>javascript</span></p>
                                     <h3>{item.article_title}</h3>
-                                </div>
-                            </div>
-                        )
-                    })}
-                    <div style={{textAlign:"center"}}>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                    <div style={{ textAlign: "center" }}>
                         <Pagination defaultCurrent={this.state.pageNum} defaultPageSize={this.state.pageSize} total={this.state.totalPages} onChange={this.onChange.bind(this)} />
                     </div>
                 </div>

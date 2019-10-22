@@ -15,13 +15,13 @@ class layoutDom extends React.Component {
     }
     template(props) {
         return (
-            <Layout>
+            <Layout style={{position:'relative',paddingBottom:'90px'}}>
                 <HeaderComponent/>
-                <Layout  className="w1200">
-                    <Content style={{backgroundColor:'#fff',marginTop:'20px'}}>
+                <Layout className="w1200">
+                    <Content style={{ backgroundColor: '#fff', marginTop: '20px' }}>
                         {this.props.children}
                     </Content>
-                    <Sider style={{ backgroundColor: '#fff', marginLeft: '20px', marginTop: '20px'}}>Sider</Sider>
+                    <Sider style={{ backgroundColor: '#fff', marginLeft: '20px', marginTop: '20px' }}>Sider</Sider>
                 </Layout>
                 <FooterComponent />
             </Layout>
