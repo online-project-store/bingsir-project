@@ -16,7 +16,7 @@ class Home extends React.Component {
             articleList:'',
             userInfo:'',
             pageNum: 1,
-            pageSize: 15,
+            pageSize: 10,
             totalPages:'',
         }
     }
@@ -24,13 +24,13 @@ class Home extends React.Component {
          
         if (this.state.articleList){
             return (
-                <div className="articleDiv">
+                <div className="articleDiv" style={{ minHeight: this.props.clientHeight + 'px' }}>
                     <ul className="articleList">
                         {this.state.articleList.map((item, index) => {
                             return (
-                                <li key={index} className="articleDiv-content">
+                                <li key={index} className="articleDiv-content" onClick={this.toDetails.bind(this, item)}>
                                     {/* <div dangerouslySetInnerHTML={{ __html: item.article_content }}></div> */}
-                                    <p><span>张三</span> · <span>{item.time}</span> · <span>javascript</span></p>
+                                    <p><span> {item.user_nickname}</span> · <span>{item.time}</span> · <span>{item.tag_name}</span></p>
                                     <h3>{item.article_title}</h3>
                                 </li>
                             )
@@ -52,8 +52,16 @@ class Home extends React.Component {
             )
         }
     }
+    toDetails(item){
+        console.log(item);
+        this.props.history.push('/details')
+    }
     onChange(pageNumber) {
-        console.log('Page: ', pageNumber);
+        this.setState({
+            pageNum: pageNumber
+        },()=>{
+            this.getData()
+        });
     }
     getData(){
         http.post(api.getarticlelist, { pageNum: this.state.pageNum, pageSize: this.state.pageSize },res=>{
