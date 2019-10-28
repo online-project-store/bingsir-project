@@ -47,8 +47,9 @@ exports.getarticlelist = async (ctx, next) => {
         articleList.map((item,index)=>{
             // console.log(item);
             //item.time = moment(item.article_date).format('YYYY-MM-DD HH:mm:ss');
-            item.time = moment(item.article_date).startOf('day').fromNow();
-            return item;
+            item.time = moment(item.article_date, "YYYYMMDD").fromNow();
+            // item.time111 = moment(item.article_date).format('YYYY-MM-DD HH:mm:ss');
+            return item; 
         })
         ctx.body = {
             code: 1,

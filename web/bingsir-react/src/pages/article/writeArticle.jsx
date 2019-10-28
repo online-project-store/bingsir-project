@@ -42,77 +42,10 @@ class writeArticle extends Component {
             inputVal:'',
             listdata:[],
             title:'',
+            publishSign: false 
         }
     }
-    toHome(){
-       // this.props.history.push('/')
-       window.location.href = '/';
-    }
-    componentDidMount() {
-        // 假设此处从服务端获取html格式的编辑器内容
-        // const htmlContent = await fetchEditorContent()
-        http.post(api.classlist, '', res => {
-            let arr = [];
-            for (let i = 0; i < res.classList.length; i++) {
-                arr.push(res.classList[i].class_name);
-            }
-            
-            this.setState({
-                listdata: arr
-            })
-        }, err => {
-            console.log(err);
-        })
-        const htmlContent =  ''
-        // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorState数据
-        this.setState({
-            editorState: BraftEditor.createEditorState(htmlContent)
-        })
-    }
-    submitContent = async () => {
-        // 在编辑器获得焦点时按下ctrl+s会执行此方法
-        // 编辑器内容提交到服务端之前，可直接调用editorState.toHTML()来获取HTML格式的内容
-        const htmlContent = this.state.editorState.toHTML()
-        console.log(htmlContent);
-        //const result = await saveEditorContent(htmlContent)
-    }
-    handleEditorChange = (editorState) => {
-        this.setState({ editorState })
-    }
-    handleChange(tag, checked) {
-        this.setState({
-            radioItem:tag,
-        })
-        const { selectedTags } = this.state;
-        const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
-        // console.log('You are interested in: ', nextSelectedTags);
-        this.setState({ selectedTags: nextSelectedTags });
-    }
-    addTag(event){
-        this.setState({
-            inputVal: event.target.value,
-        })
-    }
-    publish(){
-        if (this.state.inputVal==''){
-            message.info('添加一个标签！')
-            return false;
-        }
-        if (this.state.title == '' || this.state.editorState.toHTML() =='<p></p>'){
-            message.info('标题和内容不能为空！')
-            return false;
-        }
-        http.post(api.insertarticle, { 'article_title': this.state.title, 'article_content': this.state.editorState.toHTML(), 'tag_name': this.state.inputVal, 'tag_description': '', 'tag_another_name': '', 'classify': this.state.radioItem},res=>{
-            console.log(res);
-        },err=>{
-            console.log(err);
-        })
-    }
-    addTitle(e){
-        this.setState({
-            title: e.target.value 
-        })
-    }
+    
     render() {
         const { editorState, radioItem} = this.state;
         
@@ -133,7 +66,7 @@ class writeArticle extends Component {
                 </div>
                 <p>标签</p>
                 <Input placeholder="添加一个标签" value={this.state.inputVal} onChange={this.addTag.bind(this)}/>
-                <Button type="primary" block style={{ marginTop: '10px' }} onClick={this.publish.bind(this)}>确定并发布</Button>
+                <Button type="primary" disabled={this.state.publishSign} block style={{ marginTop: '10px' }} onClick={this.publish.bind(this)}>确定并发布</Button>
             </div>
         );
         return (
@@ -161,6 +94,84 @@ class writeArticle extends Component {
                 </div>
             </div>
         )
+    }
+    toHome() {
+        // this.props.history.push('/')
+        window.location.href = '/';
+    }
+    componentDidMount() {
+        // 假设此处从服务端获取html格式的编辑器内容
+        // const htmlContent = await fetchEditorContent()
+        http.post(api.classlist, '', res => {
+            let arr = [];
+            for (let i = 0; i < res.classList.length; i++) {
+                arr.push(res.classList[i].class_name);
+            }
+
+            this.setState({
+                listdata: arr
+            })
+        }, err => {
+            console.log(err);
+        })
+        const htmlContent = ''
+        // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorState数据
+        this.setState({
+            editorState: BraftEditor.createEditorState(htmlContent)
+        })
+    }
+    submitContent = async () => {
+        // 在编辑器获得焦点时按下ctrl+s会执行此方法
+        // 编辑器内容提交到服务端之前，可直接调用editorState.toHTML()来获取HTML格式的内容
+        const htmlContent = this.state.editorState.toHTML()
+        console.log(htmlContent);
+        //const result = await saveEditorContent(htmlContent)
+    }
+    handleEditorChange = (editorState) => {
+        this.setState({ editorState })
+    }
+    handleChange(tag, checked) {
+        this.setState({
+            radioItem: tag,
+        })
+        const { selectedTags } = this.state;
+        const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
+        // console.log('You are interested in: ', nextSelectedTags);
+        this.setState({ selectedTags: nextSelectedTags });
+    }
+    addTag(event) {
+        this.setState({
+            inputVal: event.target.value,
+        })
+    }
+    publish() {
+        if (this.state.inputVal == '') {
+            message.info('添加一个标签！')
+            return false;
+        }
+        if (this.state.title == '' || this.state.editorState.toHTML() == '<p></p>') {
+            message.info('标题和内容不能为空！')
+            return false;
+        }
+        http.post(api.insertarticle, { 'article_title': this.state.title, 'article_content': this.state.editorState.toHTML(), 'tag_name': this.state.inputVal, 'tag_description': '', 'tag_another_name': '', 'classify': this.state.radioItem }, res => {
+            // console.log(res);
+            this.setState({
+                publishSign: true
+            })
+            if (res.affectedRows === 1) {
+                //this.props.history.push('/')
+                message.info('添加成功,即将跳转到首页', 1, () => {
+                    window.location.href = '/'
+                });
+            }
+        }, err => {
+            console.log(err);
+        })
+    }
+    addTitle(e) {
+        this.setState({
+            title: e.target.value
+        })
     }
 }
 
