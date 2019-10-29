@@ -45,10 +45,7 @@ exports.getarticlelist = async (ctx, next) => {
         let totalPages = await sql.findArticleNum();
         let num = totalPages[0]['COUNT(*)'];
         articleList.map((item,index)=>{
-            // console.log(item);
-            //item.time = moment(item.article_date).format('YYYY-MM-DD HH:mm:ss');
             item.time = moment(item.article_date, "YYYYMMDD").fromNow();
-            // item.time111 = moment(item.article_date).format('YYYY-MM-DD HH:mm:ss');
             return item; 
         })
         ctx.body = {
@@ -65,22 +62,31 @@ exports.getarticlelist = async (ctx, next) => {
              msg: '参数有误'
          }
      }
-    
-    //ctx.session.phone
-    //let user_id = ctx.request.body.user_id;
-    /* if (user_id) {
-        let articleList = await sql.findArticleList(1, 2);
+}
+
+exports.getArticleDetails = async (ctx, next) => {
+    let pageMessage = ctx.request.body;
+    // { article_id: 13, user_id: 8, tag_id: 16 }
+    if (pageMessage.article_id && pageMessage.user_id && pageMessage.tag_id) {
+        
+        let articleinfo = await sql.findArticlebyArticle_id(pageMessage.article_id);
+        let userinfo = await sql.findUserbyUser_id(pageMessage.user_id);
+        let taginfo = await sql.findTagbyTag_id(pageMessage.tag_id);
+        console.log(articleinfo, userinfo, taginfo);
         
         ctx.body = {
             code: 1,
-            data: articleList,
+            data: {
+                articleinfo,
+                userinfo,
+                taginfo
+            }
         }
-    }else{
+    } else {
         ctx.body = {
-            code: 0,
-            data: {},
-            msg: '数据有误'
+            code: 1,
+            data: null,
+            msg: '参数有误'
         }
-    } */
-    
+    }
 }

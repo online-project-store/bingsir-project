@@ -13,4 +13,5 @@ export default (config => {
     "insertarticle": "/insertarticle",
     "loginStatus": "/loginStatus",
     "getarticlelist": "/getarticlelist",
+    "getArticleDetails": "/get-article-details"
 })

@@ -105,7 +105,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 function mapStateToProps(state) {
     return {
-        user_info: state.counter.user_info,
+        user_info: state.homeReducer.user_info,
     }
     // 这里的state是react-redux store中的state，
 }

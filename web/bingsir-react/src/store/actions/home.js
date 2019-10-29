@@ -21,3 +21,10 @@ export const userinfo = (data) => ({
         info: data
     }
 })
+
+export const articleInfo = (data) => ({
+    type: types.ARTICLE_INFO,
+    payload: {
+        articleInfo: data
+    }
+})

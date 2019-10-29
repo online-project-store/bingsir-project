@@ -60,4 +60,6 @@ router.post('/getarticlelist', contentModule.getarticlelist);
 
 router.post('/loginStatus', loginModule.loginStatus);
 
+router.post('/get-article-details', contentModule.getArticleDetails);
+
 module.exports = router;

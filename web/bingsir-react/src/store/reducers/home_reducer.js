@@ -1,5 +1,5 @@
 import obj from "../initState/index";
-const userReducer = (state = obj, action) => {
+const homeReducer = (state = obj, action) => {
     
     switch (action.type) {
         case 'USER_INFO':
@@ -12,9 +12,14 @@ const userReducer = (state = obj, action) => {
                 ...state, //更新state数据
                 clientHeight: action.payload.clientHeight
             }
+        case 'ARTICLE_INFO':
+            return {
+                ...state, //更新state数据
+                article_info: action.payload.articleInfo
+            }
         default:
             return state;
     }
 }
 
-export default userReducer;
+export default homeReducer;

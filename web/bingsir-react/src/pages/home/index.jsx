@@ -1,11 +1,11 @@
 import React from 'react';
-import http from '@/config/http';
-import api from '@/config/api';
 import { Icon, Pagination} from 'antd';
 import {  withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import moment  from 'moment';
-//import { increment, decrement, reset  } from "@/store/actions";
+import { articleInfo} from "@/store/actions/home";
+import http from '@/config/http';
+import api from '@/config/api';
 import '@/static/style/article.less';
 
 
@@ -53,8 +53,13 @@ class Home extends React.Component {
         }
     }
     toDetails(item){
-        console.log(item);
-        this.props.history.push('/details')
+         console.log(item);
+        // this.props.getArticleInfo(item)
+        // let params = JSON.stringify();
+        this.props.history.push({
+            pathname: '/details',
+            state: { 'article_id': item.article_id, 'user_id': item.user_id, 'tag_id': item.tag_id }
+        })
     }
     onChange(pageNumber) {
         this.setState({
@@ -72,8 +77,6 @@ class Home extends React.Component {
         },err=>{
             console.log(err);
         })
-       
-        
     }
     /* componentWillUpdate(nextProps, nextState) {
       //这个里面不可以做更新ui的事情
@@ -97,18 +100,18 @@ class Home extends React.Component {
     }
 }
 
-/* const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        decrement: (...args) => dispatch(decrement(...args)),
+        getArticleInfo: (...args) => dispatch(articleInfo(...args)),
         // increment: () => dispatch(increment()),
     }
 }
- */
+
 function mapStateToProps(state) {
     return {
-        user_info: state.counter.user_info,
-        clientHeight: state.counter.clientHeight,
+        user_info: state.homeReducer.user_info,
+        clientHeight: state.homeReducer.clientHeight,
     }
     // 这里的state是react-redux store中的state，
 }
-export default withRouter(connect(mapStateToProps)(Home)) ;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home)) ;
