@@ -1,5 +1,5 @@
 import axios from 'axios'
-import method from "./method"
+// import method from "./method"
 import { message } from 'antd';
 if (process.env.NODE_ENV == 'development') {
     axios.defaults.baseURL = 'api'
@@ -29,9 +29,11 @@ axios.defaults.timeout = 100000
       } */
       return  response.data;
     } else if (response.data.code == '-1' && window.location.pathname != '/') {
-         message.info('登录已失效,即将跳转到首页', 1.5, () => {
+        console.log(response);
+        
+        /*  message.info('登录已失效,即将跳转到首页', 1.5, () => {
              window.location.href = '/'
-         });
+         }); */
     } else {
       // 非200请求抱错
       console.log(response.data);

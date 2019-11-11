@@ -82,21 +82,11 @@ class Home extends React.Component {
       //这个里面不可以做更新ui的事情
     } */
     componentWillReceiveProps(nextProps) {
-        /* this.setState({
-            userInfo: nextProps.user_info
-        }) */
-        /* if (nextProps.user_info){
-            this.getData(nextProps.user_info);
-        } */
+        
     }
     componentDidMount(){
-        /* console.log('componentDidMount====>>>',this.props);
-        if (this.props.user_info){
-            this.getData(this.props.user_info);
-        } */
+       
         this.getData();
-        
-        
     }
 }
 

@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Button } from 'antd';
 import http from '@/config/http';
 import api from '@/config/api';
+import "@/static/style/details.less";
 class Details extends Component {
     static propTypes = {
         prop: PropTypes.string
@@ -11,15 +13,27 @@ class Details extends Component {
     constructor(props){
         super(props);
         this.state = {
-            
+            userinfo:{
+                name:'',
+                img:'',
+            },
+            article:{
+                createdTime:'',
+                article_views:'',
+            }
         }
     }
     render() {
-       
+        console.log(this.state);
         
         return (
-            <div>
+            <div style={{ minHeight: this.props.clientHeight + 'px' }} className="details-content">
                 {/* {this.state.detailsInfo.article_id} */}
+                <div className="details-content-header">
+                    {this.state.userinfo.img ? <img src={this.state.userinfo.img} alt="" /> : <img src={require("@/static/images/user-default.jpg")} alt="" />}
+                    <h4>{this.state.userinfo.name} <Button style={{float:'right'}} type="primary" ghost> 关注 </Button></h4>
+                    <p>{this.state.article.createdTime} 阅读 {this.state.article.article_views}</p>
+                </div>
             </div>
         )
     }
@@ -30,7 +44,17 @@ class Details extends Component {
 
         }) */
         http.post(api.getArticleDetails, this.props.location.state,res=>{
-            console.log(res);
+            
+            this.setState({
+                userinfo: {
+                    name: res.userinfo[0].user_nickname,
+                    img: res.userinfo[0].user_profile_photo,
+                },
+                article: {
+                    createdTime: res.articleinfo[0].createdTime,
+                    article_views: res.articleinfo[0].article_views,
+                }
+            })
         },err=>{
             console.log(err);
         })
@@ -40,7 +64,8 @@ class Details extends Component {
 function mapStateToProps(state) {
     return {
         article_info: state.homeReducer.article_info,
+        clientHeight: state.homeReducer.clientHeight,
     }
-    // 这里的state是react-redux store中的state，
 }
+
 export default withRouter(connect(mapStateToProps)(Details))  ;

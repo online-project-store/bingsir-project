@@ -72,8 +72,11 @@ exports.getArticleDetails = async (ctx, next) => {
         let articleinfo = await sql.findArticlebyArticle_id(pageMessage.article_id);
         let userinfo = await sql.findUserbyUser_id(pageMessage.user_id);
         let taginfo = await sql.findTagbyTag_id(pageMessage.tag_id);
-        console.log(articleinfo, userinfo, taginfo);
-        
+        // console.log(articleinfo, userinfo, taginfo);
+        articleinfo.map((item, index) => {
+            item.createdTime = moment(item.article_date).format("YYYY-MM-DD");
+            return item;
+        })
         ctx.body = {
             code: 1,
             data: {

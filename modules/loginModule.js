@@ -189,8 +189,18 @@ exports.register = async (ctx, next) => {
 
 exports.loginStatus = async (ctx, next) => {
    let userinfo =  await sql.findUsersByName(ctx.session.phone);
-   ctx.body = {
-        code: 1,
-        data: userinfo
-    }
+   if (userinfo.length>0) {
+        ctx.body = {
+            code: 1,
+            data: userinfo
+        }
+   }else{   
+       ctx.body = {
+           code: 1,
+           data: {
+               lose:true
+           }
+       }
+   }
+   
 }
