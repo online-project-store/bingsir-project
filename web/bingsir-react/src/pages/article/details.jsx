@@ -20,22 +20,28 @@ class Details extends Component {
             article:{
                 createdTime:'',
                 article_views:'',
+                content:''
             }
         }
     }
     render() {
-        console.log(this.state);
-        
         return (
             <div style={{ minHeight: this.props.clientHeight + 'px' }} className="details-content">
                 {/* {this.state.detailsInfo.article_id} */}
                 <div className="details-content-header">
                     {this.state.userinfo.img ? <img src={this.state.userinfo.img} alt="" /> : <img src={require("@/static/images/user-default.jpg")} alt="" />}
-                    <h4>{this.state.userinfo.name} <Button style={{float:'right'}} type="primary" ghost> 关注 </Button></h4>
+                    <h4>{this.state.userinfo.name} <Button style={{ float: 'right' }} type="primary" ghost onClick={this.follow.bind(this)}> 关注 </Button></h4>
                     <p>{this.state.article.createdTime} 阅读 {this.state.article.article_views}</p>
+                </div>
+                <div>
+                    {this.state.article.content}
                 </div>
             </div>
         )
+    }
+    follow(){
+        console.log('123');
+        
     }
     componentDidMount(){
         /* this.setState({
@@ -53,7 +59,9 @@ class Details extends Component {
                 article: {
                     createdTime: res.articleinfo[0].createdTime,
                     article_views: res.articleinfo[0].article_views,
-                }
+                    content: res.articleinfo[0].article_content
+                },
+
             })
         },err=>{
             console.log(err);
