@@ -62,4 +62,6 @@ router.post('/loginStatus', loginModule.loginStatus);
 
 router.post('/get-article-details', contentModule.getArticleDetails);
 
+router.post('/toFollow', contentModule.follow);
+
 module.exports = router;

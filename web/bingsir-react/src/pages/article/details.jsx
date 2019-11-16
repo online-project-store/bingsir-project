@@ -33,9 +33,7 @@ class Details extends Component {
                     <h4>{this.state.userinfo.name} <Button style={{ float: 'right' }} type="primary" ghost onClick={this.follow.bind(this)}> 关注 </Button></h4>
                     <p>{this.state.article.createdTime} 阅读 {this.state.article.article_views}</p>
                 </div>
-                <div>
-                    {this.state.article.content}
-                </div>
+                <div dangerouslySetInnerHTML={{ __html: this.state.article.content }}></div>
             </div>
         )
     }

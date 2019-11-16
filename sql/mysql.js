@@ -52,7 +52,7 @@ createTbale(tables.classify_articles);
 createTbale(tables.tag_articles);
 createTbale(tables.user_role);
 createTbale(tables.role_menu);
-
+createTbale(tables.follow);
 /* 
         user_password varchar(60) NOT NULL COMMENT '密码',
         user_email varchar(30) NOT NULL COMMENT '用户邮箱',
@@ -134,6 +134,12 @@ const findArticleNum = ()=>{
     let _sql = `SELECT COUNT(*) FROM articles`;
     return query(_sql);
 }
+
+const setFollow = (value) => {
+    let _sql = `insert into follow(uid,status_sign,followed_user) values(?,?,?)`;
+    return query(_sql, value)
+}
+
 //SELECT COUNT(*) FROM employee_tbl
 module.exports = {
     insertUsers,
@@ -149,5 +155,6 @@ module.exports = {
     findArticleNum,
     findArticlebyArticle_id,
     findUserbyUser_id,
-    findTagbyTag_id
+    findTagbyTag_id,
+    setFollow
 }

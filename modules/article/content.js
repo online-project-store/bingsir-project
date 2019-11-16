@@ -93,3 +93,21 @@ exports.getArticleDetails = async (ctx, next) => {
         }
     }
 }
+
+exports.follow = async (ctx,next)=>{
+    //userid 用户id  followid 关注id  followSign:1 //关注 
+    //uid,status_sign,followed_user
+    let userData = ctx.request.body;
+    if (userData.userid && userData.followid) {
+        let setFollow = await sql.setFollow([userData.userid, followSign, userData.followid]);
+        if (setFollow.affectedRows == 1) {
+             ctx.body = {
+                 code: 1,
+                 data: {
+                     setFollow,
+                     followSign
+                 }
+             }
+        }   
+    }
+}

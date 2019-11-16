@@ -180,6 +180,15 @@ const blogroll = `create table if not exists blogroll(
     blogroll_link VARCHAR(40) NOT NULL COMMENT '友链链接'
 )ENGINE = InnoDB  DEFAULT CHARSET = utf8;`
 
+//用户关注
+const follow = `create table if not exists follow(
+    follow_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uid INT NOT NULL COMMENT '用户id',
+    status_sign CHAR(1) NOT NULL default '0' COMMENT '0不关注,1关注',
+    followed_user INT NOT NULL COMMENT '关注人的id'
+)ENGINE = InnoDB DEFAULT CHARSET = utf8;`
+
+
 module.exports  ={
     options,
     users,
@@ -197,5 +206,6 @@ module.exports  ={
     blogroll,
     role,
     user_role,
-    role_menu
+    role_menu,
+    follow
 }
