@@ -25,3 +25,9 @@ export const getClientHeight = (num) => ({
     clientHeight: num
   }
 });
+export const setModalLogin = (num) => ({
+  type: "CLIENT_NUM",
+  payload: {
+    clientHeight: num
+  }
+});

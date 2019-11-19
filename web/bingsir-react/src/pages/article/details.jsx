@@ -21,7 +21,8 @@ class Details extends Component {
                 createdTime:'',
                 article_views:'',
                 content:''
-            }
+            },
+            params:{},
         }
     }
     render() {
@@ -38,8 +39,12 @@ class Details extends Component {
         )
     }
     follow(){
-        console.log('123');
-        
+        // console.log(this.state.params);
+        http.post(api.toFollow, this.state.params,res=>{
+            console.log(res);
+        },err=>{
+            console.log(err);
+        })
     }
     componentDidMount(){
         /* this.setState({
@@ -48,7 +53,7 @@ class Details extends Component {
 
         }) */
         http.post(api.getArticleDetails, this.props.location.state,res=>{
-            
+            console.log(res);
             this.setState({
                 userinfo: {
                     name: res.userinfo[0].user_nickname,
@@ -59,7 +64,11 @@ class Details extends Component {
                     article_views: res.articleinfo[0].article_views,
                     content: res.articleinfo[0].article_content
                 },
-
+                params:{
+                    article_id: res.articleinfo[0].article_id,
+                    tag_id: res.taginfo[0].tag_id,
+                    user_id: res.userinfo[0].user_id,
+                }
             })
         },err=>{
             console.log(err);
@@ -74,4 +83,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Details))  ;
+export default withRouter(connect(mapStateToProps)(Details));

@@ -13,5 +13,6 @@ export default (config => {
     "insertarticle": "/insertarticle",
     "loginStatus": "/loginStatus",
     "getarticlelist": "/getarticlelist",
-    "getArticleDetails": "/get-article-details"
+    "getArticleDetails": "/get-article-details",
+    "toFollow": "/toFollow"
 })

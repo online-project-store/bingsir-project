@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 // import method from "./method"
 import { message } from 'antd';
 if (process.env.NODE_ENV == 'development') {
@@ -22,18 +23,12 @@ axios.defaults.timeout = 100000
  axios.interceptors.response.use(response => {
      // 在这里你可以判断后台返回数据携带的请求码
     if (response.data.code == 1) {
-      /* if (response.data.lose && window.location.pathname != '/') {
-            message.info('登录已失效,即将跳转到首页',2,()=>{
-                  window.location.href = '/'
-            });
-      } */
       return  response.data;
-    } else if (response.data.code == '-1' && window.location.pathname != '/') {
-        console.log(response);
-        
-        /*  message.info('登录已失效,即将跳转到首页', 1.5, () => {
+    } else if (response.data.code == '-1' && response.data.data.lose && window.location.pathname != '/') {
+        // console.log(response);
+         message.info('登录已失效,即将跳转到首页', 1.5, () => {
              window.location.href = '/'
-         }); */
+         });
     } else {
       // 非200请求抱错
       console.log(response.data);
