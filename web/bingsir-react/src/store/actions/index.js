@@ -25,9 +25,9 @@ export const getClientHeight = (num) => ({
     clientHeight: num
   }
 });
-export const setModalLogin = (num) => ({
-  type: "CLIENT_NUM",
+export const setModalLogin = (sign) => ({
+  type: "SET_MODAL_LOGIN",
   payload: {
-    clientHeight: num
+    modelLogin: sign
   }
 });

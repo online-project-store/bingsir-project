@@ -4,6 +4,7 @@ import { createBrowserHistory } from "history";
 import { connect } from 'react-redux';
 import HeaderComponent from '@/components/common/header.jsx';
 import FooterComponent from '@/components/common/footer.jsx';
+import { setModalLogin } from "@/store/actions";
 import "@/static/style/public.less"
 const { Content, Sider } = Layout;
 const history = createBrowserHistory();
@@ -12,22 +13,20 @@ class layoutDom extends React.Component {
         super(props);
         this.state = {
             isShow:false,
-            visible: true,
         }
     }
     handleOk = e => {
         console.log(e);
-        this.setState({
-            visible: false,
-        });
+        console.log(this.props);
+        this.props.setModalLogin(false)
     };
     handleCancel = e => {
         console.log(e);
-        this.setState({
-            visible: false,
-        });
+        this.props.setModalLogin(false)
     };
     template(props) {
+        console.log(this.props.modalLogin);
+        
         return (
             <Layout style={{position:'relative',paddingBottom:'90px'}}>
                 <HeaderComponent/>
@@ -36,7 +35,7 @@ class layoutDom extends React.Component {
                         {this.props.children}
                         <Modal
                             title="Basic Modal"
-                            visible={this.state.visible}
+                            visible={this.props.modalLogin}
                             onOk={this.handleOk}
                             onCancel={this.handleCancel}
                         >
@@ -66,7 +65,7 @@ class layoutDom extends React.Component {
         }
     }
     componentDidMount(){
-        
+        console.log(this.props);
     }
     render() {
         return (
@@ -79,15 +78,15 @@ class layoutDom extends React.Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-       // getArticleInfo: (...args) => dispatch(articleInfo(...args)),
+        setModalLogin: (...args) => dispatch(setModalLogin(...args)),
         // increment: () => dispatch(increment()),
+
     }
 }
 
 const mapStateToProps = (state) =>{
     return {
-        article_info: state.homeReducer.article_info,
-        clientHeight: state.homeReducer.clientHeight,
+        modalLogin: state.stateReducer.modalLogin,
     }
 }
 
