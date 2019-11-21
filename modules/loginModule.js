@@ -24,8 +24,9 @@ exports.login = async (ctx, next) => {
                 if (user.password != result[0].user_password) {
                     ctx.body = {
                         code: 1,
-                        msg: "密码有误",
-                        data: "输入的密码有误",
+                        data: {
+                            msg: '输入的密码有误'
+                        },
                     }
                 } else {
                     /* const userToken = { //使用jwt
@@ -50,30 +51,36 @@ exports.login = async (ctx, next) => {
                     }
                     ctx.body = {
                         code: 1,
-                        msg: "登录成功",
                         data: {
+                            msg: '登录成功',
                             result
                         },
                     }
                 }
             } else {
                 ctx.body = {
-                    code: 0,
-                    msg: "账户信息不存在",
-                    data: result,
+                    code: 1,
+                    data: {
+                        msg: '账户信息不存在',
+                        data: result,
+                    }
                 }
             }
         }, err => {
             ctx.body = {
-                code: 0,
-                msg: "账户信息报错",
-                data: err,
+                code: 1,
+                data: {
+                    data: err,
+                    msg: "账户信息报错",
+                },
             }
         })
     } else {
         ctx.body = {
-            code: 0,
-            msg: "用户名或密码为空"
+            code: 1,
+            data: {
+                msg: "用户名或密码为空",
+            },
         }
     }
 }

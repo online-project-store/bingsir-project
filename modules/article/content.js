@@ -88,8 +88,9 @@ exports.getArticleDetails = async (ctx, next) => {
     } else {
         ctx.body = {
             code: 1,
-            data: null,
-            msg: '参数有误'
+            data: {
+                msg: '参数有误'
+            }
         }
     }
 }
@@ -98,6 +99,8 @@ exports.follow = async (ctx,next)=>{
     //userid 用户id  followid 关注id  followSign:1 //关注 
     //uid,status_sign,followed_user
     let userData = ctx.request.body;
+    console.log(userData);
+    
     if (userData.userid && userData.followid) {
         let setFollow = await sql.setFollow([userData.userid, followSign, userData.followid]);
         if (setFollow.affectedRows == 1) {
@@ -109,5 +112,12 @@ exports.follow = async (ctx,next)=>{
                  }
              }
         }   
+    }else{
+        ctx.body = {
+            code: 1,
+            data: {
+                msg: '参数有误'
+            }
+        }
     }
 }

@@ -14,5 +14,5 @@ export default (config => {
     "loginStatus": "/loginStatus",
     "getarticlelist": "/getarticlelist",
     "getArticleDetails": "/get-article-details",
-    "toFollow": "/toFollow"
+    "toFollow": "/to-follow"
 })

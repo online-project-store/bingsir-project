@@ -22,13 +22,29 @@ class layoutDom extends React.Component {
         this.props.setModalLogin(false)
     };
     handleCancel = e => {
-        message.warning('期待您的归来，bingsir用心做您的伙伴。', 1, ()=>{
+        message.warning('期待您的归来，bingsir用心做您的伙伴。', 1.5, ()=>{
             this.props.setModalLogin(false)
-            this.props.history.push({
+            /* this.props.history.push({
                 pathname: '/',
-            })
+            }) */
+            window.location.href = '/';
         })
     };
+    hintHtml = ()=>{
+        return(
+            <Modal
+                title="小报告"
+                okText="登录"
+                cancelText="取消"
+                visible={this.props.modalLogin}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+            >
+                <p>大佬还没登录，被我逮到了吧，嘿嘿(￣.￣)；</p>
+                <p>come on，加入进来，踏入秃顶之路，(￣▽￣)／。</p>
+            </Modal>
+        );
+    }
     template(props) {
         console.log(this.props.modalLogin);
         return (
@@ -37,17 +53,7 @@ class layoutDom extends React.Component {
                 <Layout className="w1200">
                     <Content style={{ backgroundColor: '#fff', marginTop: '20px' }}>
                         {this.props.children}
-                        <Modal
-                            title="小报告"
-                            okText="登录"
-                            cancelText="取消"
-                            visible={this.props.modalLogin}
-                            onOk={this.handleOk}
-                            onCancel={this.handleCancel}
-                        >
-                            <p>大佬还没登录，被我逮到了吧，嘿嘿(￣.￣)；</p>
-                            <p>come on，加入进来，踏入秃顶之路，(￣▽￣)／。</p>
-                        </Modal>
+                        {this.hintHtml()}
                     </Content>
                     <Sider style={{ backgroundColor: '#fff', marginLeft: '20px', marginTop: '20px' }}>Sider</Sider>
                 </Layout>
@@ -59,6 +65,7 @@ class layoutDom extends React.Component {
         return (
             <div>
                 {this.props.children}
+                {this.hintHtml()}
             </div>
         )
     }

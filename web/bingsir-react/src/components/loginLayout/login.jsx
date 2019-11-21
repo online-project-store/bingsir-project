@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Row, Col, Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import { withRouter  } from 'react-router-dom';
 import http from '@/config/http';
 import api from '@/config/api';
@@ -13,7 +13,10 @@ class Login extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 http.post(api.login, values, res => {
-                    window.location.href = '/';
+                    message.info(res.msg);
+                    if (res.result&&res.result.length>0){
+                        window.location.href = '/';
+                    }
                 }, err => {
                     console.log(err);
                 })

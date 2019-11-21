@@ -40,6 +40,7 @@ class Details extends Component {
     }
     follow(){
         // console.log(this.state.params);
+        //userid 用户id  followid 关注id  followSign:1 //关注 
         http.post(api.toFollow, this.state.params,res=>{
             console.log(res);
         },err=>{
