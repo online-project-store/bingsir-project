@@ -2,5 +2,5 @@
     user_info:'',
     clientHeight: 0, //document.documentElement.clientHeight - 64 - 20 - 69 -30
     article_info:'',
-    modalLogin: true
+    modalLogin: false
  }

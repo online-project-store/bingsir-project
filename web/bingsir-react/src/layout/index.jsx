@@ -1,7 +1,8 @@
 import React from 'react';
-import { Layout, Modal } from 'antd';
+import { Layout, Modal,message } from 'antd';
 import { createBrowserHistory } from "history";
 import { connect } from 'react-redux';
+import {  withRouter } from 'react-router-dom';
 import HeaderComponent from '@/components/common/header.jsx';
 import FooterComponent from '@/components/common/footer.jsx';
 import { setModalLogin } from "@/store/actions";
@@ -16,17 +17,20 @@ class layoutDom extends React.Component {
         }
     }
     handleOk = e => {
-        console.log(e);
-        console.log(this.props);
+        // console.log(e);
+         window.location.href = '/login';
         this.props.setModalLogin(false)
     };
     handleCancel = e => {
-        console.log(e);
-        this.props.setModalLogin(false)
+        message.warning('期待您的归来，bingsir用心做您的伙伴。', 1, ()=>{
+            this.props.setModalLogin(false)
+            this.props.history.push({
+                pathname: '/',
+            })
+        })
     };
     template(props) {
         console.log(this.props.modalLogin);
-        
         return (
             <Layout style={{position:'relative',paddingBottom:'90px'}}>
                 <HeaderComponent/>
@@ -34,14 +38,15 @@ class layoutDom extends React.Component {
                     <Content style={{ backgroundColor: '#fff', marginTop: '20px' }}>
                         {this.props.children}
                         <Modal
-                            title="Basic Modal"
+                            title="小报告"
+                            okText="登录"
+                            cancelText="取消"
                             visible={this.props.modalLogin}
                             onOk={this.handleOk}
                             onCancel={this.handleCancel}
                         >
-                            <p>Some contents...</p>
-                            <p>Some contents...</p>
-                            <p>Some contents...</p>
+                            <p>大佬还没登录，被我逮到了吧，嘿嘿(￣.￣)；</p>
+                            <p>come on，加入进来，踏入秃顶之路，(￣▽￣)／。</p>
                         </Modal>
                     </Content>
                     <Sider style={{ backgroundColor: '#fff', marginLeft: '20px', marginTop: '20px' }}>Sider</Sider>
@@ -86,8 +91,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state) =>{
     return {
-        modalLogin: state.stateReducer.modalLogin,
+        modalLogin: state.loginReducer.modalLogin,
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(layoutDom);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(layoutDom));

@@ -1,7 +1,8 @@
 import axios from 'axios'
-
+import { setModalLogin } from "@/store/actions";
+import appStore from '@/store';
 // import method from "./method"
-import { message } from 'antd';
+// import { message } from 'antd';
 if (process.env.NODE_ENV == 'development') {
     axios.defaults.baseURL = 'api'
 }else{
@@ -9,7 +10,6 @@ if (process.env.NODE_ENV == 'development') {
 }
 axios.defaults.withCredentials = true
 axios.defaults.timeout = 100000
-// console.log(method.getQueryString('token').length);
 
 //  axios拦截器
  axios.interceptors.request.use(config => {
@@ -25,17 +25,18 @@ axios.defaults.timeout = 100000
     if (response.data.code == 1) {
       return  response.data;
     } else if (response.data.code == '-1' && response.data.data.lose && window.location.pathname != '/') {
-        // console.log(response);
-         message.info('登录已失效,即将跳转到首页', 1.5, () => {
+        //  console.log(setModalLogin);
+         appStore.dispatch(setModalLogin(true))
+         //setModalLogin(false)
+        /*  message.info('登录已失效,即将跳转到首页', 1.5, () => {
              window.location.href = '/'
-         });
+         }); */
     } else {
       // 非200请求抱错
       console.log(response.data);
       throw Error(response.data.msg || '服务异常')
     }
 });
-
 
 const http = {
     post(url, data = {}, success, errcallback) {
