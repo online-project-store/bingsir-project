@@ -1,4 +1,4 @@
-import obj from "../initState/index";
+// import obj from "../initState/index";
 const stateReducer = (state = false, action) => {
     switch (action.type) {
         case 'SET_MODAL_LOGIN':

@@ -22,6 +22,7 @@ export default class loginLayout extends Component {
             loginSign: false
         });
     };
+    
     render() {
         return (
             <div className="loginLayout">
@@ -37,7 +38,7 @@ export default class loginLayout extends Component {
                             注册
                         </Menu.Item>
                     </Menu>
-                    {this.state.loginSign ? <LoginForm /> : <RegisterForm />} 
+                    {this.state.loginSign ? <LoginForm /> : <RegisterForm transferMsg={msg => this.handleClick(msg)} />} 
                 </div>
             </div>
         )

@@ -24,8 +24,7 @@ class HeaderComponenet extends React.Component {
         let num = document.documentElement.clientHeight - 64 - 20 - 69 - 30;
         this.props.getClientHeight(num);
         http.post(api.loginStatus,{},res=>{
-            //console.log(res);
-            this.props.userinfo(res)
+            this.props.userinfo(res[0])
             if (res.lose){
                 this.setState({
                     loginStatus: false,
@@ -37,7 +36,6 @@ class HeaderComponenet extends React.Component {
                     userName: res[0].user_nickname
                 })
             }
-           
         },err=>{
             console.log(err);
         })
@@ -77,13 +75,13 @@ class HeaderComponenet extends React.Component {
                                 <Link to="/article"><Icon type="read" />文章 </Link>
                             </Menu.Item> */}
                             <Menu.Item key="classify">
-                                <Link to="/classify"><Icon type="fire" />话题 </Link>
+                                <Link to="/classify"><Icon type="bars" />分类 </Link>
                             </Menu.Item>
                             {/* <Menu.Item key="topicList">
                                 <Link to="/topicList"><Icon type="bars" />论点 </Link>
                             </Menu.Item> */}
                             <Menu.Item key="activity">
-                                <Link to="/activity"><Icon type="heart" />活动 </Link>
+                                <Link to="/activity"><Icon type="fire" />活动 </Link>
                             </Menu.Item>
                         </Menu>
                     </Col>

@@ -135,12 +135,22 @@ const findArticleNum = ()=>{
     return query(_sql);
 }
 
-const setFollow = (value) => {
-    let _sql = `insert into follow(uid,status_sign,followed_user) values(?,?,?)`;
-    return query(_sql, value)
+const setFollow = (obj) => {
+    //let _sql = `insert into follow(uid,status_sign,followed_user) values(?,?,?)`;
+     let _sql = `INSERT INTO follow(uid, status_sign, followed_user) SELECT ${obj.userid}, ${obj.followSign}, ${obj.followUserid}
+        FROM DUAL
+        WHERE NOT EXISTS(SELECT * FROM follow WHERE followed_user = ${obj.followUserid});`
+     return query(_sql)
+}
+const updateFollow = (obj) => {
+    let _sql = `UPDATE follow SET status_sign = ${obj.followSign} WHERE uid = ${obj.userid} AND followed_user = ${obj.followUserid};`
+    return query(_sql)
 }
 
-//SELECT COUNT(*) FROM employee_tbl
+/* const findFollow = (va)=>{
+
+} */
+
 module.exports = {
     insertUsers,
     findUsersByName,
@@ -156,5 +166,6 @@ module.exports = {
     findArticlebyArticle_id,
     findUserbyUser_id,
     findTagbyTag_id,
-    setFollow
+    setFollow,
+    updateFollow
 }

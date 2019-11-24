@@ -23,6 +23,7 @@ class Details extends Component {
                 content:''
             },
             params:{},
+            followText:'关注'
         }
     }
     render() {
@@ -31,30 +32,41 @@ class Details extends Component {
                 {/* {this.state.detailsInfo.article_id} */}
                 <div className="details-content-header">
                     {this.state.userinfo.img ? <img src={this.state.userinfo.img} alt="" /> : <img src={require("@/static/images/user-default.jpg")} alt="" />}
-                    <h4>{this.state.userinfo.name} <Button style={{ float: 'right' }} type="primary" ghost onClick={this.follow.bind(this)}> 关注 </Button></h4>
+                    <h4>{this.state.userinfo.name} <Button style={{ float: 'right' }} type="primary" ghost onClick={this.follow.bind(this)}> {this.state.followText} </Button></h4>
                     <p>{this.state.article.createdTime} 阅读 {this.state.article.article_views}</p>
                 </div>
                 <div dangerouslySetInnerHTML={{ __html: this.state.article.content }}></div>
+                {/* <div>
+                    <iframe src="//player.bilibili.com/player.html?aid=63409044&cid=110640273&page=2" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+                </div> */}
             </div>
         )
     }
     follow(){
         // console.log(this.state.params);
-        //userid 用户id  followid 关注id  followSign:1 //关注 
-        http.post(api.toFollow, this.state.params,res=>{
+        //userid 当前用户id  followUserid 关注用户id  followSign:1 //关注 
+        console.log(this.props.user_info);
+        this.state.followText == "关注" ? this.setState({
+            followText : '取消关注'
+        }) : this.setState({
+            followText: '关注'
+        })
+        
+        let followData = {
+            userid: this.props.user_info.info? this.props.user_info.info.user_id : 0,
+            followUserid: this.state.params.user_id,
+            followSign: this.state.followText == "关注" ? 1 : 0,
+        }
+        
+        http.post(api.toFollow, followData,res=>{
             console.log(res);
         },err=>{
             console.log(err);
         })
     }
     componentDidMount(){
-        /* this.setState({
-            detailsInfo: this.props.location.state
-        },()=>{
-
-        }) */
         http.post(api.getArticleDetails, this.props.location.state,res=>{
-            console.log(res);
+            // console.log(res);
             this.setState({
                 userinfo: {
                     name: res.userinfo[0].user_nickname,
@@ -78,9 +90,12 @@ class Details extends Component {
 }
 
 function mapStateToProps(state) {
+    // console.log(state.homeReducer.user_info);
+    
     return {
         article_info: state.homeReducer.article_info,
         clientHeight: state.homeReducer.clientHeight,
+        user_info: state.homeReducer.user_info
     }
 }
 

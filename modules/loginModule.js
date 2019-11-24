@@ -96,13 +96,14 @@ exports.register = async (ctx, next) => {
 
     if (data.email && data.password && data.phone && data.password === data.confirmPwd) {
         // data.img = ""
-        await sql.findUsersByPhone(data.phone).then(async res => {
+        await sql.findUsersByName(data.phone).then(async res => {
             data.nickname = 'bingsir'+data.phone.substring(7);
             if (res.length > 0) {
                 ctx.body = {
                     code: 1,
-                    data: '用户已经存在',
-                    msg: "创建用户失败"
+                    data: {
+                        msg: "用户已经存在"
+                    }
                 }
             } else {
                 let interUser =  await sql.insertUsers([data.password, data.email, '', moment().format('YYYY-MM-DD, H:mm:ss'), data.phone, data.nickname]).then(res => {
@@ -132,15 +133,20 @@ exports.register = async (ctx, next) => {
                    if (insertUserRole.affectedRows==1) {
                         ctx.body = {
                             code: 1,
-                            data: 'success',
-                            msg: "创建成功"
+                            data: {
+                                msg: "创建成功",
+                                logining:true
+                            },
+                            
                         }
                    }
                 }else{
                     ctx.body = {
                         code: 1,
-                        data: 'err',
-                        msg: "数据插入失败"
+                        data: {
+                            msg: "数据插入失败"
+                        },
+                        
                     }
                 }
                 /* let base64Data = data.img.replace(/^data:image\/\w+;base64,/, "");

@@ -54,8 +54,6 @@ const role_power = `create table if not exists role_power(
     rid varchar(20) NOT NNULL COMMENT '角色id',
 )ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;` */
 
-
-
 //用户好友
 const friends = `create table if not exists friends(
     friends_id INT NOT NULL AUTO_INCREMENT COMMENT '好友id',

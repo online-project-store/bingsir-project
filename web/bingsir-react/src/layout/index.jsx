@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {  withRouter } from 'react-router-dom';
 import HeaderComponent from '@/components/common/header.jsx';
 import FooterComponent from '@/components/common/footer.jsx';
+import LeftComponent from '@/components/common/left.jsx';
 import { setModalLogin } from "@/store/actions";
 import "@/static/style/public.less"
 const { Content, Sider } = Layout;
@@ -46,7 +47,7 @@ class layoutDom extends React.Component {
         );
     }
     template(props) {
-        console.log(this.props.modalLogin);
+        // console.log(this.props.modalLogin);
         return (
             <Layout style={{position:'relative',paddingBottom:'90px'}}>
                 <HeaderComponent/>
@@ -55,7 +56,9 @@ class layoutDom extends React.Component {
                         {this.props.children}
                         {this.hintHtml()}
                     </Content>
-                    <Sider style={{ backgroundColor: '#fff', marginLeft: '20px', marginTop: '20px' }}>Sider</Sider>
+                    <Sider style={{ backgroundColor: '#fff', marginLeft: '20px', marginTop: '20px' }}>
+                        <LeftComponent/>
+                    </Sider>
                 </Layout>
                 <FooterComponent />
             </Layout>

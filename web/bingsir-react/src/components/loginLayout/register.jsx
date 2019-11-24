@@ -8,12 +8,16 @@ class Register extends React.Component {
         super();
     }
     handleSubmit = e => {
+        console.log(this.props);
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err && values.password === values.confirmPwd) {
                 http.post(api.register, values, res => {
-                    if (res == 'success') {
-                        message.info('账号创建成功!');
+                    if (res.logining){
+                        message.info(res.msg,1.5,()=>{
+                           // window.location.href = '/login'
+                            this.props.transferMsg({ key:"login"})
+                        });
                     }
                 }, err => {
                     console.log(err);
@@ -28,7 +32,7 @@ class Register extends React.Component {
             <div className="login-form">
                 <Row>
                     <Col span={24} >
-                        <Form  onSubmit={this.handleSubmit}>
+                        <Form  onSubmit={this.handleSubmit.bind(this)}>
                             <Form.Item label="手机号" hasFeedback>
                                 {getFieldDecorator('phone', {
                                     rules: [{ required: true, message: '请输入手机号!', len: 11 }],
