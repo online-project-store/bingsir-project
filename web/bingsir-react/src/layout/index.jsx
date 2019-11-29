@@ -80,7 +80,7 @@ class layoutDom extends React.Component {
         }
     }
     componentDidMount(){
-        console.log(this.props);
+        // console.log(this.props);
     }
     render() {
         return (
