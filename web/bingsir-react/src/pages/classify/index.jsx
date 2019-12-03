@@ -1,36 +1,32 @@
-
-import React, { useState, useEffect, useReducer } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { Icon } from 'antd';
-// import '@/static/style/left.less'
-
-const initialState = { count: 0 };
-
-function reducer(state, action) {
-    switch (action.type) {
-        case 'increment':
-            return { count: state.count + 1 };
-        case 'decrement':
-            return { count: state.count - 1 };
-        default:
-            throw new Error();
-    }
-}
-
-function classify() {
-    const [state, dispatch] = useReducer(reducer, initialState);
+import { withRouter } from 'react-router-dom';
+function Classify(props) {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        // console.log(props);
+       /*  document.title = `You clicked ${count} times`; */
+    });
     return (
-        <div>
-            classify页面
+        <div style={{ minHeight: props.clientHeight + 'px' }}>
+            <p>低谷期</p>
         </div>
     )
 }
 
-function mapStateToProps(state) {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        clientHeight: state.homeReducer.clientHeight,
+       // getArticleInfo: (...args) => dispatch(articleInfo(...args)),
+        // increment: () => dispatch(increment()),
     }
 }
-export default withRouter(connect(mapStateToProps)(classify)) ;
+
+function mapStateToProps(state) {
+    return {
+        user_info: state.homeReducer.user_info,
+        clientHeight: state.homeReducer.clientHeight,
+    }
+    // 这里的state是react-redux store中的state，
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Classify));
 

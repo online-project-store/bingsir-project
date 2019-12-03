@@ -19,7 +19,9 @@ class HeaderComponenet extends React.Component {
             userName:'',
         };
     }
-    
+    componentWillMount(){
+        this.selectItem(this.props.location.pathname)
+    }
     componentDidMount(){
         let num = document.documentElement.clientHeight - 64 - 20 - 69 - 30;
         this.props.getClientHeight(num);
@@ -40,15 +42,34 @@ class HeaderComponenet extends React.Component {
             console.log(err);
         })
     }
+    selectItem(pathname){
+        switch (pathname) {
+            case '/':
+                this.setState({
+                    current: 'home',
+                });
+                break;
+            case '/classify':
+                this.setState({
+                    current: 'classify',
+                });
+                break;  
+            case '/activity':
+                this.setState({
+                    current: 'activity',
+                });
+                break;      
+        }
+    }
     getUserInfo(){
         //console.log(this.state.current);
-        this.setState({
+        /* this.setState({
             current:'userinfo'
-        })
+        }) */
         this.props.history.push('/userinfo')
     }
     handleClick = e => {
-        // console.log('click ', e);
+        console.log('click ', e);
         this.setState({
             current: e.key,
         });
@@ -80,8 +101,8 @@ class HeaderComponenet extends React.Component {
                             {/* <Menu.Item key="topicList">
                                 <Link to="/topicList"><Icon type="bars" />论点 </Link>
                             </Menu.Item> */}
-                            <Menu.Item key="activity">
-                                <Link to="/activity"><Icon type="fire" />活动 </Link>
+                            <Menu.Item key="activity" disabled>
+                                <Link to="/activity" ><Icon type="fire" />活动 </Link>
                             </Menu.Item>
                         </Menu>
                     </Col>
