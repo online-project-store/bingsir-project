@@ -6,7 +6,7 @@ class FooterComponenet extends React.Component {
     render() {
         return (
             <Footer className='ui-footer'>
-                Footer
+                <p>别低头，王冠会掉，别后退，梦想会碎~~~~~</p>
             </Footer>
         )
     }
