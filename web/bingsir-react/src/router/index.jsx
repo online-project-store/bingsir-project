@@ -6,7 +6,7 @@ import LayoutIndex from '@/layout/index.jsx';
 import loginLayout from '@/pages/login/index.jsx';
 import Home from '@/pages/home/index.jsx';
 import article from '@/pages/article/index.jsx';
-import classify from '@/pages/classify.jsx';
+import classify from '@/pages/classify/index.jsx';
 import topicList from '@/pages/topicList.jsx';
 import activity from '@/pages/activity.jsx';
 import writeArticle from '@/pages/article/writeArticle.jsx';

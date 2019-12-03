@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {  withRouter } from 'react-router-dom';
 import HeaderComponent from '@/components/common/header.jsx';
 import FooterComponent from '@/components/common/footer.jsx';
-import LeftComponent from '@/components/common/left.jsx';
+import RightComponent from '@/components/common/right.jsx';
 import { setModalLogin } from "@/store/actions";
 import "@/static/style/public.less"
 const { Content, Sider } = Layout;
@@ -57,7 +57,7 @@ class layoutDom extends React.Component {
                         {this.hintHtml()}
                     </Content>
                     <Sider style={{ backgroundColor: '#fff', marginLeft: '20px', marginTop: '20px' }}>
-                        <LeftComponent/>
+                        <RightComponent/>
                     </Sider>
                 </Layout>
                 <FooterComponent />

@@ -75,7 +75,7 @@ class writeArticle extends Component {
                     <Col span={8}><img style={lineStyle.header_img} src={require("@/static/images/logo.png")} alt="" /></Col>
                     <Col span={8} offset={8}>
                         <div style={{marginTop:'10px'}}>
-                            <Button style={{marginRight:'10px'}}> 切换为markdown编辑器</Button>
+                            <Button style={{ marginRight: '10px' }} disabled> 切换为markdown编辑器</Button>
                             <Popover placement="bottom" content={content} trigger="click">
                                 <Button>发布</Button>
                             </Popover>
