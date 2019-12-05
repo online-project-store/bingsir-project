@@ -1,15 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 function Classify(props) {
-    const [count, setCount] = useState(0);
+    const [temp, setTemp] = React.useState(5);
+
+    const log = () => {
+        setTimeout(() => {
+            console.log("3 秒前 temp = 5，现在 temp =", temp);
+        }, 3000);
+    };
+
+    
     useEffect(() => {
-        // console.log(props);
-       /*  document.title = `You clicked ${count} times`; */
+        let getClassList = () => {
+            console.log('123123123');
+            
+        }
+        getClassList()
     });
+
+
+    
     return (
         <div style={{ minHeight: props.clientHeight + 'px' }}>
-            <p>低谷期</p>
+            {/* <div
+                    onClick={() => {
+                            log();
+                            setTemp(3);
+                            // 3 秒前 temp = 5，现在 temp = 5
+                        }}
+                    >
+                    xyz
+            </div> */}
         </div>
     )
 }
