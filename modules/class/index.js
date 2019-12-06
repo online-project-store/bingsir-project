@@ -1,14 +1,16 @@
-/* const sql = require('../../sql/mysql');
-exports.classModules = async (ctx, next) => {
+const sql = require('../../sql/mysql');
+exports.classlist = async (ctx, next) => {
     
     let classList = await sql.findClassify();
-    //console.log(classList);
+    let findTagList = await sql.findTagList();
+    // console.log(findTagList);
     try {
         if (classList.length > 0) {
             ctx.body = {
                 code: 1,
                 data: {
-                    classList
+                    classList,
+                    findTagList
                 },
             }
         } else {
@@ -25,4 +27,4 @@ exports.classModules = async (ctx, next) => {
             data: err,
         }
     }
-} */
+}

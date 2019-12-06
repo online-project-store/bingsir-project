@@ -69,7 +69,7 @@ class HeaderComponenet extends React.Component {
         this.props.history.push('/userinfo')
     }
     handleClick = e => {
-        console.log('click ', e);
+        // console.log('click ', e);
         this.setState({
             current: e.key,
         });

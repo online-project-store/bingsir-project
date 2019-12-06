@@ -5,7 +5,7 @@ import { Input, Button, Row, Col, Popover, Tag, message} from 'antd';
 import api from '@/config/api';
 import http from '@/config/http';
 import 'braft-editor/dist/index.css';
-import '@/static/style/calsslist.less';
+import '@/static/style/classlist.less';
 let lineStyle = {
     text_title:{
         margin: 0,

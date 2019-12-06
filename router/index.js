@@ -2,9 +2,9 @@ const Router = require('koa-router');
 const router = new Router();
 const loginModule = require('../modules/loginModule');
 const userinfoModule = require('../modules/userinfoModule');
-const classModule = require('../modules/article/class');
+const classList = require('../modules/article/class');
 const contentModule = require('../modules/article/content');
-
+const classModule = require('../modules/class');
 /* router.get("/*", async (ctx, next) => {
     await ctx.render('/index')
 }); */
@@ -52,7 +52,7 @@ router.post('/register', loginModule.register);
 
 router.post('/userinfo', userinfoModule.userinfo);
 
-router.post('/class-list', classModule.classlist);
+router.post('/class-list', classList.classlist);
 
 router.post('/insertarticle', contentModule.insertarticle);
 
@@ -63,5 +63,7 @@ router.post('/loginStatus', loginModule.loginStatus);
 router.post('/get-article-details', contentModule.getArticleDetails);
 
 router.post('/to-follow', contentModule.follow);
+
+router.post('/classify-list', classModule.classlist);
 
 module.exports = router;

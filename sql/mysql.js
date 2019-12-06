@@ -147,9 +147,10 @@ const updateFollow = (obj) => {
     return query(_sql)
 }
 
-/* const findFollow = (va)=>{
-
-} */
+const findTagList = ()=>{
+    let _sql = `SELECT * from tag`;
+    return query(_sql)
+}
 
 module.exports = {
     insertUsers,
@@ -167,5 +168,6 @@ module.exports = {
     findUserbyUser_id,
     findTagbyTag_id,
     setFollow,
-    updateFollow
+    updateFollow,
+    findTagList
 }
