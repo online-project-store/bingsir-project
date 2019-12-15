@@ -124,7 +124,11 @@ const findTagbyTag_id = (value) => {
 }
 const findArticleList = (pageNum, pageSize) => {
     let page_sign = (pageNum - 1) * pageSize;
-    let _sql = `SELECT a.article_comment_count,a.article_date,a.article_like_count,a.article_id,a.article_title,a.article_views,t.tag_name,t.tag_id,u.user_nickname,u.user_id FROM articles a LEFT JOIN tag_articles t_a ON  a.article_id = t_a.article_id LEFT JOIN tag t ON t_a.tag_id = t.tag_id LEFT JOIN users u ON a.user_id = u.user_id ORDER BY a.article_views LIMIT ${page_sign}, ${pageSize}`;
+    let _sql = `SELECT a.article_comment_count,a.article_date,a.article_like_count,a.article_id,a.article_title,a.article_views,t.tag_name,t.tag_id,u.user_nickname,u.user_id 
+        FROM articles a LEFT JOIN tag_articles t_a ON  
+        a.article_id = t_a.article_id LEFT JOIN tag t ON 
+        t_a.tag_id = t.tag_id LEFT JOIN users u ON a.user_id = u.user_id 
+        ORDER BY a.article_views LIMIT ${page_sign}, ${pageSize}`;
     return query(_sql);
 }
 //https://www.runoob.com/note/28032

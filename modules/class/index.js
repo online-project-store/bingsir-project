@@ -1,6 +1,5 @@
 const sql = require('../../sql/mysql');
 exports.classlist = async (ctx, next) => {
-    
     let classList = await sql.findClassify();
     let findTagList = await sql.findTagList();
     // console.log(findTagList);
