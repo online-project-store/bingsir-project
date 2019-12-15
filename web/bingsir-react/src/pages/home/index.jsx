@@ -70,6 +70,7 @@ class Home extends React.Component {
     }
     getData(){
         http.post(api.getarticlelist, { pageNum: this.state.pageNum, pageSize: this.state.pageSize },res=>{
+            console.log(res);
             this.setState({
                 articleList: res.articleList,
                 totalPages: res.totalPages

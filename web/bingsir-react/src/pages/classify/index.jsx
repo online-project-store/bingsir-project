@@ -8,7 +8,8 @@ import '@/static/style/classify.less';
 const { CheckableTag } = Tag;
 function Classify(props) {
     const [list, setList] = React.useState({ classList:[], findTagList:[]});
-    const [selectedClass, setSelectedClass] = React.useState([])
+    const [selectedClass, setSelectedClass] = React.useState([]);
+    const [selectedTag, setSelectedTag] = React.useState([]);
    // let selectedTags = [], selectedClass = [];
     let getClassList =  ()=>{
         http.post(api.classifyList,{},res=>{
@@ -23,16 +24,19 @@ function Classify(props) {
         getClassList();
     }, [])
     let handleChange = (item, checked)=>{
-        
-        const nextSelectedTags = checked ? [...selectedClass, item.class_name] : selectedClass.filter(t => t !== item.class_name);
+        const nextSelectedClass = checked ? [...selectedClass, item.class_name] : selectedClass.filter(t => t !== item.class_name);
         // selectedClass = nextSelectedTags;
-        setSelectedClass(nextSelectedTags)
-        console.log(nextSelectedTags);
+        setSelectedClass(nextSelectedClass)
+        // console.log('设置',selectedClass);
     }
-    // console.log('123', list);
+    let tagChange = (item, checked)=>{
+        const nextSelectedTag = checked ? [...selectedTag, item.tag_name] : selectedTag.filter(t => t !== item.tag_name);
+        setSelectedTag(nextSelectedTag)
+        // console.log(selectedTag);
+    }
     const { classList, findTagList} = list;
+    // console.log(selectedClass);
     return (
-        
         <div style={{ minHeight: props.clientHeight + 'px' }}>
             <div className="classify-list">
                 <h5>分类:</h5>
@@ -54,7 +58,7 @@ function Classify(props) {
                         return (
                             // <li key={index}><Tag color="#2db7f5">{item.tag_name}</Tag></li>
                             <li key={index} >
-                                <CheckableTag>
+                                <CheckableTag checked={selectedTag.indexOf(item.tag_name) > -1} onChange={checked => tagChange(item, checked)}>
                                     {item.tag_name}
                                 </CheckableTag>
                             </li>
