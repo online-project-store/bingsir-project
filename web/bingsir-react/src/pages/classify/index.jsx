@@ -27,6 +27,8 @@ function Classify(props) {
         const nextSelectedClass = checked ? [...selectedClass, item.class_name] : selectedClass.filter(t => t !== item.class_name);
         // selectedClass = nextSelectedTags;
         setSelectedClass(nextSelectedClass)
+        console.log(nextSelectedClass, selectedTag);
+        
         // console.log('设置',selectedClass);
     }
     let tagChange = (item, checked)=>{

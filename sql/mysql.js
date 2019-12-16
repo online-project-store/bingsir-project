@@ -156,6 +156,37 @@ const findTagList = ()=>{
     return query(_sql)
 }
 
+const selectTagAndClass = (obj) => {
+    console.log(obj);
+    let _sql;
+    if (!obj.tag && !obj.class) {
+         _sql = `SELECT a.article_comment_count,a.article_date,a.article_like_count,a.article_id,a.article_title,a.article_views,t.tag_name,t.tag_id,u.user_nickname,u.user_id,c.class_name
+            FROM articles a LEFT JOIN tag_articles t_a 
+            ON a.article_id = t_a.article_id LEFT JOIN tag t 
+            ON t_a.tag_id = t.tag_id LEFT JOIN users u 
+            ON a.user_id = u.user_id LEFT JOIN classify_articles c_a
+            ON a.article_id = c_a.article_id LEFT JOIN classify c
+            ON c_a.classify_article_id = c.class_id`
+    } else if (obj.tag && obj.class) {
+         _sql = `SELECT a.article_comment_count,a.article_date,a.article_like_count,a.article_id,a.article_title,a.article_views,t.tag_name,t.tag_id,u.user_nickname,u.user_id,c.class_name
+            FROM articles a LEFT JOIN tag_articles t_a 
+            ON a.article_id = t_a.article_id LEFT JOIN tag t 
+            ON t_a.tag_id = t.tag_id LEFT JOIN users u 
+            ON a.user_id = u.user_id LEFT JOIN classify_articles c_a
+            ON a.article_id = c_a.article_id LEFT JOIN classify c
+            ON c_a.classify_article_id = c.class_id WHERE t.tag_name IN (${obj.tag}) AND c.class_name IN (${obj.class});`
+    }else{
+        _sql = `SELECT a.article_comment_count,a.article_date,a.article_like_count,a.article_id,a.article_title,a.article_views,t.tag_name,t.tag_id,u.user_nickname,u.user_id,c.class_name
+            FROM articles a LEFT JOIN tag_articles t_a 
+            ON a.article_id = t_a.article_id LEFT JOIN tag t 
+            ON t_a.tag_id = t.tag_id LEFT JOIN users u 
+            ON a.user_id = u.user_id LEFT JOIN classify_articles c_a
+            ON a.article_id = c_a.article_id LEFT JOIN classify c
+            ON c_a.classify_article_id = c.class_id WHERE t.tag_name IN (${obj.tag}) OR c.class_name IN (${obj.class});`
+    }
+    return query(_sql); 
+}
+
 module.exports = {
     insertUsers,
     findUsersByName,
@@ -173,5 +204,6 @@ module.exports = {
     findTagbyTag_id,
     setFollow,
     updateFollow,
-    findTagList
+    findTagList,
+    selectTagAndClass
 }

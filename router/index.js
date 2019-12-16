@@ -66,4 +66,6 @@ router.post('/to-follow', contentModule.follow);
 
 router.post('/classify-list', classModule.classlist);
 
+router.post('/classify-tag-list', classModule.classifyTagList);
+
 module.exports = router;
