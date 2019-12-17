@@ -23,19 +23,29 @@ function Classify(props) {
     useEffect(() => {
         getClassList();
     }, [])
+    let getData = (obj) => {
+        http.post(api.classifyTagList, { 'class': obj.classList, 'tag': obj.findTagList }, res => {
+            console.log(res);
+            //setList({ classList: res.classList, findTagList: res.findTagList })
+        }, err => {
+            console.log(err);
+        })
+    }
     let handleChange = (item, checked)=>{
         const nextSelectedClass = checked ? [...selectedClass, item.class_name] : selectedClass.filter(t => t !== item.class_name);
         // selectedClass = nextSelectedTags;
         setSelectedClass(nextSelectedClass)
-        console.log(nextSelectedClass, selectedTag);
-        
+        // console.log(nextSelectedClass, selectedTag);
+        getData({ 'classList': nextSelectedClass, 'findTagList':selectedTag})
         // console.log('设置',selectedClass);
     }
     let tagChange = (item, checked)=>{
         const nextSelectedTag = checked ? [...selectedTag, item.tag_name] : selectedTag.filter(t => t !== item.tag_name);
         setSelectedTag(nextSelectedTag)
         // console.log(selectedTag);
+        getData({ 'classList': selectedClass, 'findTagList': nextSelectedTag })
     }
+    
     const { classList, findTagList} = list;
     // console.log(selectedClass);
     return (

@@ -7,7 +7,7 @@ const redisStore = new Store();
 
 async function Interceptor(ctx, next) {
     let url = ctx.request.url;
-    const allowpage = ['/login', '/register', '/', '/getarticlelist', '/get-article-details', '/loginStatus', '/classify-list'];
+    const allowpage = ['/login', '/register', '/', '/getarticlelist', '/get-article-details', '/loginStatus', '/classify-list', '/classify-tag-list'];
     //console.log(allowpage.indexOf(url),url);
      if (allowpage.indexOf(url) > -1) await next();
      else{
