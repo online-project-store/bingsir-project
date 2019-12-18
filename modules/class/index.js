@@ -1,4 +1,5 @@
 const sql = require('../../sql/mysql');
+// const tool = require('../../config/tool');
 exports.classlist = async (ctx, next) => {
     let classList = await sql.findClassify();
     let findTagList = await sql.findTagList();
@@ -30,18 +31,14 @@ exports.classlist = async (ctx, next) => {
 
 exports.classifyTagList = async (ctx, next) => {
     let data = ctx.request.body;
-    console.log(data.class, data.tag);
-    
-   /*  let classTagData = await sql.selectTagAndClass(data);
-   console.log(classTagData);
-    */
+    let classTagData = await sql.selectTagAndClass(data);
     try {
-        ctx.body = {
-            code: 1,
-            data: {
-                'name': '123'
-            }
-        }
+         ctx.body = {
+             code: 1,
+             data: {
+                 classTagData
+             }
+         }
     } catch (err) {
         ctx.body = {
             code: 0,

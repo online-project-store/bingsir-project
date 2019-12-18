@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from "react-redux";
-import { Tag } from 'antd';
+import { Tag, Icon, Tooltip } from 'antd';
 import { withRouter } from 'react-router-dom';
 import http from '@/config/http';
 import api from '@/config/api';
 import '@/static/style/classify.less';
+import Article from '@/components/article/index.jsx';
 const { CheckableTag } = Tag;
 function Classify(props) {
     const [list, setList] = React.useState({ classList:[], findTagList:[]});
     const [selectedClass, setSelectedClass] = React.useState([]);
     const [selectedTag, setSelectedTag] = React.useState([]);
+    const [dataList, setDataList] = React.useState([]);
    // let selectedTags = [], selectedClass = [];
     let getClassList =  ()=>{
         http.post(api.classifyList,{},res=>{
@@ -19,14 +21,10 @@ function Classify(props) {
             console.log(err);
         })
     }
-
-    useEffect(() => {
-        getClassList();
-    }, [])
     let getData = (obj) => {
         http.post(api.classifyTagList, { 'class': obj.classList, 'tag': obj.findTagList }, res => {
             console.log(res);
-            //setList({ classList: res.classList, findTagList: res.findTagList })
+            setDataList(res.classTagData)
         }, err => {
             console.log(err);
         })
@@ -45,12 +43,15 @@ function Classify(props) {
         // console.log(selectedTag);
         getData({ 'classList': selectedClass, 'findTagList': nextSelectedTag })
     }
-    
+    useEffect(() => {
+        getClassList();
+        getData({ 'classList': [], 'findTagList': [] })
+    }, [])
     const { classList, findTagList} = list;
-    // console.log(selectedClass);
+    //console.log(dataList);
     return (
-        <div style={{ minHeight: props.clientHeight + 'px' }}>
-            <div className="classify-list">
+        <div style={{ minHeight: props.clientHeight + 'px', backgroundColor:'#f0f2f5' }}>
+            <div className="classify-list" style={{ backgroundColor: '#fff'}}>
                 <h5>分类:</h5>
                 <ul>
                     {classList.map((item,index)=>{
@@ -77,6 +78,16 @@ function Classify(props) {
                         )
                     })}
                 </ul>
+            </div>
+            <div style={{paddingTop:'20px'}}>
+                {dataList.length > 0 ? (<Article articleList={dataList}/>):(
+                    <div className="article_no_data" style={{ minHeight: props.clientHeight + 'px',backgroundColor:'#fff' }}>
+                        <div>
+                            <p><Icon type="frown" /> </p>
+                            <p>换个查询条件试试</p>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     )

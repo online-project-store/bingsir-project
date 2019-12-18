@@ -1,6 +1,7 @@
 const mysql = require('mysql')
 const tables = require('./tables')
 const config = require("./config")
+// const tool = require('../config/tool');
 // 创建数据池
 const pool = mysql.createPool({
     host: config.host, // 数据库地址
@@ -157,9 +158,10 @@ const findTagList = ()=>{
 }
 
 const selectTagAndClass = (obj) => {
-    console.log(obj);
+    let queryClass = "'" + obj.class.join("','") + "'";
+    let queryTag = "'" + obj.tag.join("','") + "'";
     let _sql;
-    if (!obj.tag && !obj.class) {
+    if (obj.tag.length == 0 && obj.class.length == 0) {
          _sql = `SELECT a.article_comment_count,a.article_date,a.article_like_count,a.article_id,a.article_title,a.article_views,t.tag_name,t.tag_id,u.user_nickname,u.user_id,c.class_name
             FROM articles a LEFT JOIN tag_articles t_a 
             ON a.article_id = t_a.article_id LEFT JOIN tag t 
@@ -167,14 +169,14 @@ const selectTagAndClass = (obj) => {
             ON a.user_id = u.user_id LEFT JOIN classify_articles c_a
             ON a.article_id = c_a.article_id LEFT JOIN classify c
             ON c_a.classify_article_id = c.class_id`
-    } else if (obj.tag && obj.class) {
+    } else if (obj.tag.length > 0 && obj.class.length > 0) {
          _sql = `SELECT a.article_comment_count,a.article_date,a.article_like_count,a.article_id,a.article_title,a.article_views,t.tag_name,t.tag_id,u.user_nickname,u.user_id,c.class_name
             FROM articles a LEFT JOIN tag_articles t_a 
             ON a.article_id = t_a.article_id LEFT JOIN tag t 
             ON t_a.tag_id = t.tag_id LEFT JOIN users u 
             ON a.user_id = u.user_id LEFT JOIN classify_articles c_a
             ON a.article_id = c_a.article_id LEFT JOIN classify c
-            ON c_a.classify_article_id = c.class_id WHERE t.tag_name IN (${obj.tag}) AND c.class_name IN (${obj.class});`
+            ON c_a.classify_article_id = c.class_id WHERE t.tag_name IN (${queryTag}) AND c.class_name IN (${queryClass});`
     }else{
         _sql = `SELECT a.article_comment_count,a.article_date,a.article_like_count,a.article_id,a.article_title,a.article_views,t.tag_name,t.tag_id,u.user_nickname,u.user_id,c.class_name
             FROM articles a LEFT JOIN tag_articles t_a 
@@ -182,7 +184,7 @@ const selectTagAndClass = (obj) => {
             ON t_a.tag_id = t.tag_id LEFT JOIN users u 
             ON a.user_id = u.user_id LEFT JOIN classify_articles c_a
             ON a.article_id = c_a.article_id LEFT JOIN classify c
-            ON c_a.classify_article_id = c.class_id WHERE t.tag_name IN (${obj.tag}) OR c.class_name IN (${obj.class});`
+            ON c_a.classify_article_id = c.class_id WHERE t.tag_name IN (${queryTag}) OR c.class_name IN (${queryClass});`
     }
     return query(_sql); 
 }
