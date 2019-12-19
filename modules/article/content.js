@@ -144,3 +144,32 @@ exports.follow = async (ctx,next)=>{
         }
     }
 }
+
+exports.sendView = async (ctx, next) => {
+    //userid 当前用户id  followUserid 关注用户id  followSign:1 //关注 
+    //uid,status_sign,followed_user
+    let articleData = ctx.request.body;
+    console.log('article_views', articleData.article_views);
+    
+    if (articleData.article_id) {
+        let articleinfo = await sql.updateArticleViews({
+            article_id: articleData.article_id,
+            article_views: articleData.article_views
+        });
+        //console.log(articleinfo);
+        ctx.body = {
+            code: 1,
+            data: {
+                articleinfo,
+                msg:'success'
+            }
+        }
+    } else {
+        ctx.body = {
+            code: 1,
+            data: {
+                msg: '参数有误'
+            }
+        }
+    }
+}

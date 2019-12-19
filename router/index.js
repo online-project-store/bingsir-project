@@ -68,4 +68,6 @@ router.post('/classify-list', classModule.classlist);
 
 router.post('/classify-tag-list', classModule.classifyTagList);
 
+router.post('/send-view', contentModule.sendView);
+
 module.exports = router;

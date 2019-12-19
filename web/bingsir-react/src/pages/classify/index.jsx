@@ -83,8 +83,8 @@ function Classify(props) {
                 {dataList.length > 0 ? (<Article articleList={dataList}/>):(
                     <div className="article_no_data" style={{ minHeight: props.clientHeight + 'px',backgroundColor:'#fff' }}>
                         <div>
-                            <p><Icon type="frown" /> </p>
-                            <p>换个查询条件试试</p>
+                            <p><Icon type="loading" /> </p>
+                            <p>客官,换个查询条件试试吧 (*^▽^*)</p>
                         </div>
                     </div>
                 )}

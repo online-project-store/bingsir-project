@@ -26,14 +26,15 @@ class Details extends Component {
             followText:'关注'
         }
     }
+    //阅读 关注等到注册人多了可以放开
     render() {
         return (
             <div style={{ minHeight: this.props.clientHeight + 'px' }} className="details-content">
                 {/* {this.state.detailsInfo.article_id} */}
                 <div className="details-content-header">
                     {this.state.userinfo.img ? <img src={this.state.userinfo.img} alt="" /> : <img src={require("@/static/images/user-default.jpg")} alt="" />}
-                    <h4>{this.state.userinfo.name} <Button style={{ float: 'right' }} type="primary" ghost onClick={this.follow.bind(this)}> {this.state.followText} </Button></h4>
-                    <p>{this.state.article.createdTime} 阅读 {this.state.article.article_views}</p>
+                    <h4>{this.state.userinfo.name} {/* <Button style={{ float: 'right' }} type="primary" ghost onClick={this.follow.bind(this)}> {this.state.followText} </Button> */}</h4>
+                    <p>{this.state.article.createdTime} {/* 阅读 {this.state.article.article_views} */}</p>
                 </div>
                 <div dangerouslySetInnerHTML={{ __html: this.state.article.content }}></div>
                 {/* <div>
@@ -64,9 +65,20 @@ class Details extends Component {
             console.log(err);
         })
     }
+    sendViewNum(articleinfo){
+        let num = parseInt(articleinfo.article_views);
+        if (this.props.location.query && this.props.location.query.sendFlag) { //排除当前页刷新 加 article_views
+            http.post(api.sendView, { article_id: articleinfo.article_id, article_views: num++ }, res => {
+                console.log(res);
+            }, err => {
+                console.log(err);
+            })
+        }
+    }
     componentDidMount(){
+        // 可以根据用户点击次数排名
         http.post(api.getArticleDetails, this.props.location.state,res=>{
-            // console.log(res);
+            //console.log(res);
             this.setState({
                 userinfo: {
                     name: res.userinfo[0].user_nickname,
@@ -83,6 +95,7 @@ class Details extends Component {
                     user_id: res.userinfo[0].user_id,
                 }
             })
+           // this.sendViewNum(res.articleinfo[0])
         },err=>{
             console.log(err);
         })

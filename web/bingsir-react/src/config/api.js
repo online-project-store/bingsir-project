@@ -16,5 +16,6 @@ export default (config => {
     "getArticleDetails": "/get-article-details",
     "toFollow": "/to-follow",
     "classifyList": "/classify-list",
-    'classifyTagList': "/classify-tag-list"
+    'classifyTagList': "/classify-tag-list",
+    "sendView": "/send-view"
 })

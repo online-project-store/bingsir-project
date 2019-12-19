@@ -4,6 +4,7 @@ import {  withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import moment  from 'moment';
 import { articleInfo} from "@/store/actions/home";
+import Article from '@/components/article/index.jsx';
 import http from '@/config/http';
 import api from '@/config/api';
 import '@/static/style/article.less';
@@ -24,19 +25,9 @@ class Home extends React.Component {
          
         if (this.state.articleList){
             return (
-                <div className="articleDiv" style={{ minHeight: this.props.clientHeight + 'px' }}>
-                    <ul className="articleList">
-                        {this.state.articleList.map((item, index) => {
-                            return (
-                                <li key={index} className="articleDiv-content" onClick={this.toDetails.bind(this, item)}>
-                                    {/* <div dangerouslySetInnerHTML={{ __html: item.article_content }}></div> */}
-                                    <p><span> {item.user_nickname}</span> · <span>{item.time}</span> · <span>{item.tag_name}</span></p>
-                                    <h3>{item.article_title}</h3>
-                                </li>
-                            )
-                        })}
-                    </ul>
-                    <div style={{ textAlign: "center" }}>
+                <div className="articleDiv" style={{ minHeight: this.props.clientHeight + 'px', backgroundColor:"#F4F5F5" }}>
+                    <Article articleList={this.state.articleList} />
+                    <div style={{ textAlign: "center", backgroundColor:"#F4F5F5",paddingTop: "20px" }}>
                         <Pagination defaultCurrent={this.state.pageNum} defaultPageSize={this.state.pageSize} total={this.state.totalPages} onChange={this.onChange.bind(this)} />
                     </div>
                 </div>
@@ -52,7 +43,7 @@ class Home extends React.Component {
             )
         }
     }
-    toDetails(item){
+    /* toDetails(item){
          console.log(item);
         // this.props.getArticleInfo(item)
         // let params = JSON.stringify();
@@ -60,7 +51,7 @@ class Home extends React.Component {
             pathname: '/details',
             state: { 'article_id': item.article_id, 'user_id': item.user_id, 'tag_id': item.tag_id }
         })
-    }
+    } */
     onChange(pageNumber) {
         this.setState({
             pageNum: pageNumber

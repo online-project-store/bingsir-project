@@ -189,6 +189,11 @@ const selectTagAndClass = (obj) => {
     return query(_sql); 
 }
 
+const updateArticleViews = (obj) => {
+    let _sql = `UPDATE articles SET article_views = ${obj.article_views} WHERE article_id = ${obj.article_id};`
+    return query(_sql)
+}
+
 module.exports = {
     insertUsers,
     findUsersByName,
@@ -207,5 +212,6 @@ module.exports = {
     setFollow,
     updateFollow,
     findTagList,
-    selectTagAndClass
+    selectTagAndClass,
+    updateArticleViews
 }
