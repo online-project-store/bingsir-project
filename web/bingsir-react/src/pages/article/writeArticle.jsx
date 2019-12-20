@@ -158,12 +158,12 @@ class writeArticle extends Component {
             this.setState({
                 publishSign: true
             })
-            if (res.affectedRows === 1) {
+            /* if (res.affectedRows === 1) {
                 //this.props.history.push('/')
                 message.info('添加成功,即将跳转到首页', 1, () => {
                     window.location.href = '/'
                 });
-            }
+            } */
         }, err => {
             console.log(err);
         })
