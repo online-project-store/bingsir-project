@@ -38,7 +38,7 @@ class writeArticle extends Component {
             editorState: BraftEditor.createEditorState(null),
             checked: true ,
             selectedTags:[],
-            radioItem: '前端',
+            radioItem: '',
             inputVal:'',
             listdata:[],
             title:'',
@@ -145,15 +145,17 @@ class writeArticle extends Component {
         })
     }
     publish() {
-        if (this.state.inputVal == '') {
-            message.info('添加一个标签！')
+        // console.log('radioItem', this.state.radioItem);
+        
+        if (this.state.inputVal == '' || this.state.radioItem == '') {
+            message.info('添加一个标签或分类！')
             return false;
         }
         if (this.state.title == '' || this.state.editorState.toHTML() == '<p></p>') {
             message.info('标题和内容不能为空！')
             return false;
         }
-        http.post(api.insertarticle, { 'article_title': this.state.title, 'article_content': this.state.editorState.toHTML(), 'tag_name': this.state.inputVal, 'tag_description': '', 'tag_another_name': '', 'classify': this.state.radioItem }, res => {
+        http.post(api.insertarticle, { 'article_title': this.state.title, 'article_content': this.state.editorState.toHTML(), 'tag_name': this.state.inputVal.trim(), 'tag_description': '', 'tag_another_name': '', 'classify': this.state.radioItem }, res => {
             // console.log(res);
             this.setState({
                 publishSign: true

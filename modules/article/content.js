@@ -14,11 +14,11 @@ exports.insertarticle = async (ctx, next) => {
         try {
             let findClassify = await sql.findClassify(articleCon.classify);
             let findTagName = await sql.findTagbyText(articleCon.tag_name);
-             console.log('findTagName====>>', findTagName);
+            //  console.log('findTagName====>>', findTagName,findClassify);
 
             if (findTagName.length == 0) {
                 let  reasultInsert = await sql.insertTag([articleCon.tag_name, articleCon.tag_description, articleCon.tag_another_name]);
-                console.log('insertTag===>>', insertTag);
+                //console.log('reasultInsert===>>', reasultInsert);
                 insertTag = reasultInsert.insertId;
             }else(
                 insertTag = findTagName[0].tag_id
@@ -27,9 +27,9 @@ exports.insertarticle = async (ctx, next) => {
            
            let sqlArticleContent = await sql.insertArticle([user[0].user_id, articleCon.article_title, articleCon.article_content, article_views, article_comment_count, article_date, article_like_count]);
            if (sqlArticleContent.affectedRows == 1 && findClassify[0].class_id) {
-               console.log('insertTag====>>>', insertTag);
+              // console.log('insertTag====>>>', insertTag);
                
-               await sql.insert_tag_article([insertTag.trim(), sqlArticleContent.insertId]); //标签文章关系表
+               await sql.insert_tag_article([insertTag, sqlArticleContent.insertId]); //标签文章关系表
                await sql.insert_classify_articles([findClassify[0].class_id, sqlArticleContent.insertId]);//分类文章关系表
                ctx.body = {
                    code: 1,
@@ -43,6 +43,7 @@ exports.insertarticle = async (ctx, next) => {
                }
            }
         } catch (err) {
+            console.log('err',err);
             ctx.body = {
                 code: 1,
                 data: err,
