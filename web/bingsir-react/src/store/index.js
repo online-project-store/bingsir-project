@@ -7,7 +7,7 @@ const store = createStore(
     reducer,
     compose(
         applyMiddleware(...[thunk]),
-        composeWithDevTools()
+        window.devToolsExtension ? composeWithDevTools() : f => f
     ),
 );//创建store
 
