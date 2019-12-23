@@ -1,4 +1,6 @@
 const sql = require('../../sql/mysql');
+const moment = require('moment');
+moment.locale('zh-cn');
 // const tool = require('../../config/tool');
 exports.classlist = async (ctx, next) => {
     let classList = await sql.findClassify();
@@ -32,11 +34,19 @@ exports.classlist = async (ctx, next) => {
 exports.classifyTagList = async (ctx, next) => {
     let data = ctx.request.body;
     let classTagData = await sql.selectTagAndClass(data);
+    let totalPages = await sql.findArticleNum();
+    let num = totalPages[0]['COUNT(*)'];
+    classTagData.map((item, index) => {
+        item.time = moment(item.article_date, "YYYYMMDD").fromNow();
+        return item;
+    })
+
     try {
          ctx.body = {
              code: 1,
              data: {
-                 classTagData
+                 classTagData,
+                 totalPages: num
              }
          }
     } catch (err) {

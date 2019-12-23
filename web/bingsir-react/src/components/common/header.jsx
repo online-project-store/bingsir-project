@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Icon, Row, Col } from 'antd';
+import { Layout, Menu, Icon, Row, Col, message } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { userinfo } from "@/store/actions/home";
@@ -66,7 +66,8 @@ class HeaderComponenet extends React.Component {
         /* this.setState({
             current:'userinfo'
         }) */
-        this.props.history.push('/userinfo')
+        message.info('codeing , 敬请期待');
+       // this.props.history.push('/userinfo')
     }
     handleClick = e => {
         // console.log('click ', e);

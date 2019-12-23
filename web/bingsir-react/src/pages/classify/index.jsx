@@ -15,7 +15,7 @@ function Classify(props) {
    // let selectedTags = [], selectedClass = [];
     let getClassList =  ()=>{
         http.post(api.classifyList,{},res=>{
-            console.log(res);
+            // console.log(res);
             setList({ classList: res.classList, findTagList: res.findTagList})
         },err=>{
             console.log(err);
@@ -23,7 +23,7 @@ function Classify(props) {
     }
     let getData = (obj) => {
         http.post(api.classifyTagList, { 'class': obj.classList, 'tag': obj.findTagList }, res => {
-            console.log(res);
+            // console.log('classifyTagList',res);
             setDataList(res.classTagData)
         }, err => {
             console.log(err);

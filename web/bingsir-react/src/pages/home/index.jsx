@@ -69,6 +69,7 @@ class Home extends React.Component {
         },err=>{
             console.log(err);
         })
+        
     }
     /* componentWillUpdate(nextProps, nextState) {
       //这个里面不可以做更新ui的事情
