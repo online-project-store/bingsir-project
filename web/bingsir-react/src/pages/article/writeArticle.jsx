@@ -1,11 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import BraftEditor from 'braft-editor';
+import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
 import { Input, Button, Row, Col, Popover, Tag, message} from 'antd';
+import 'prismjs/components/prism-java'
+import 'prismjs/components/prism-php'
 import api from '@/config/api';
 import http from '@/config/http';
 import 'braft-editor/dist/index.css';
+import 'braft-extensions/dist/code-highlighter.css'
 import '@/static/style/classlist.less';
+//https://github.com/margox/braft-extensions  代码高亮 use
+const options = {
+    syntaxs: [
+        {
+            name: 'JavaScript',
+            syntax: 'javascript'
+        }, {
+            name: 'HTML',
+            syntax: 'html'
+        }, {
+            name: 'CSS',
+            syntax: 'css'
+        }, {
+            name: 'Java',
+            syntax: 'java',
+        }, {
+            name: 'PHP',
+            syntax: 'php'
+        }
+    ]
+}
+BraftEditor.use(CodeHighlighter(options ))
 let lineStyle = {
     text_title:{
         margin: 0,

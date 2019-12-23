@@ -2,10 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button } from 'antd';
+// import { Button } from 'antd';
+import BraftEditor from 'braft-editor';
+import 'braft-editor/dist/index.css';
+import 'braft-editor/dist/output.css'
 import http from '@/config/http';
 import api from '@/config/api';
 import "@/static/style/details.less";
+//以后编辑 数据库中同时存储raw字符串和html字符串，分别用于再次编辑和前台展示。
+//https://www.yuque.com/braft-editor/be/lzwpnr#9a27e818  
 class Details extends Component {
     static propTypes = {
         prop: PropTypes.string
@@ -23,9 +28,11 @@ class Details extends Component {
                 content:''
             },
             params:{},
-            followText:'关注'
+            followText:'关注',
+            editorState: null,
         }
     }
+    
     //阅读 关注等到注册人多了可以放开
     render() {
         return (
@@ -36,7 +43,9 @@ class Details extends Component {
                     <h4>{this.state.userinfo.name} {/* <Button style={{ float: 'right' }} type="primary" ghost onClick={this.follow.bind(this)}> {this.state.followText} </Button> */}</h4>
                     <p>{this.state.article.createdTime} {/* 阅读 {this.state.article.article_views} */}</p>
                 </div>
-                <div dangerouslySetInnerHTML={{ __html: this.state.article.content }}></div>
+                {<div className="braft-output-content" dangerouslySetInnerHTML={{ __html:   this.state.article.content }}></div>}
+                {/* <div className="braft-output-content" dangerouslySetInnerHTML={{ __html: this.state.editorState }}></div> */}
+                
                 {/* <div>
                     <iframe src="//player.bilibili.com/player.html?aid=63409044&cid=110640273&page=2" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
                 </div> */}
@@ -93,7 +102,8 @@ class Details extends Component {
                     article_id: res.articleinfo[0].article_id,
                     tag_id: res.taginfo[0].tag_id,
                     user_id: res.userinfo[0].user_id,
-                }
+                },
+               // editorState: BraftEditor.createEditorState(res.articleinfo[0].article_content).toHTML()
             })
            // this.sendViewNum(res.articleinfo[0])
         },err=>{
