@@ -46,7 +46,21 @@ function Container(params) {
         setVisible(false)
     }
     const onChange = (e)=>{
-        console.log(e);
+        console.log(e, e.target.value);
+        selectObj.sign = e.target.value;
+        // console.log(selectObj);
+        setSelectObj(selectObj)
+    }
+    const signHtml = (tag)=>{
+        let signCon = '';
+        if (tag == 1) {
+            signCon = (<Tag color='geekblue'>通过</Tag>)
+        } else if (tag == 0) {
+            signCon = (<Tag color='purple'>待定</Tag>)
+        } else {
+            signCon = (<Tag color='magenta'>不通过</Tag>)
+        }
+        return signCon;
     }
     const columns = [
         {
@@ -76,7 +90,7 @@ function Container(params) {
             dataIndex: 'sign',
             render: tags => (
                 <span>
-                    {tags == 1 ? (<Tag color='geekblue'>通过</Tag>) : (<Tag color='magenta'>不通过</Tag>)}
+                    {signHtml(tags)}
                 </span>
             ),
         },
@@ -93,14 +107,18 @@ function Container(params) {
             <Table columns={columns} dataSource={data} />
             <Modal
                 title="审核"
+                okText="确认"
+                cancelText="取消"
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
                 <div>
-                    <Radio.Group onChange={onChange} value={selectObj.sign}>
+                    <p>{selectObj.sign}</p>
+                    <Radio.Group onChange={onChange} value={parseInt(selectObj.sign)}>
                         <Radio value={1}>注册通过</Radio>
-                        <Radio value={0}>注册不通过</Radio>
+                        <Radio value={0}>待定</Radio>
+                        <Radio value={2}>注册不通过</Radio>
                     </Radio.Group>
                 </div>
             </Modal>

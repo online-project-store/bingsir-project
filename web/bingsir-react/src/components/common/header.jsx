@@ -28,7 +28,7 @@ class HeaderComponenet extends React.Component {
         this.props.getClientHeight(num);
         http.post(api.loginStatus,{},res=>{
             console.log('res',res);
-            if (res[0].user_id == '8'){
+            if (res[0].user_id == '9'){
                 this.setState({
                     sign:true 
                 })
