@@ -17,6 +17,7 @@ class HeaderComponenet extends React.Component {
             current: 'home',
             loginStatus: false,
             userName:'',
+            sign: false,
         };
     }
     componentWillMount(){
@@ -26,6 +27,12 @@ class HeaderComponenet extends React.Component {
         let num = document.documentElement.clientHeight - 64 - 20 - 69 - 30;
         this.props.getClientHeight(num);
         http.post(api.loginStatus,{},res=>{
+            console.log('res',res);
+            if (res[0].user_id == '8'){
+                this.setState({
+                    sign:true 
+                })
+            }
             this.props.userinfo(res[0])
             if (res.lose){
                 this.setState({
@@ -58,7 +65,12 @@ class HeaderComponenet extends React.Component {
                 this.setState({
                     current: 'activity',
                 });
-                break;      
+                break;
+            case '/container':
+                this.setState({
+                    current: 'container',
+                });
+                break;           
         }
     }
     getUserInfo(){
@@ -105,6 +117,9 @@ class HeaderComponenet extends React.Component {
                             <Menu.Item key="activity" disabled>
                                 <Link to="/activity" ><Icon type="fire" />活动 </Link>
                             </Menu.Item>
+                            {this.state.sign ? (<Menu.Item key="container">
+                                <Link to="/container" ><Icon type="container" />审核 </Link>
+                            </Menu.Item>):''}
                         </Menu>
                     </Col>
                     <Col span={6} className='ui-header-right'>

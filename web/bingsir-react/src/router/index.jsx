@@ -12,6 +12,7 @@ import activity from '@/pages/activity.jsx';
 import writeArticle from '@/pages/article/writeArticle.jsx';
 import userinfo from '@/pages/userinfo.jsx';
 import details from '@/pages/article/details.jsx';
+import container from '@/pages/container/index.jsx';
 const history = createBrowserHistory();
 
 const BasicRoute = () => (
@@ -27,6 +28,7 @@ const BasicRoute = () => (
                 <Route exact path="/writeArticle" component={writeArticle} />
                 <Route exact path="/userinfo" component={userinfo} />
                 <Route exact path="/details" component={details} />
+                <Route exact path="/container" component={container} />
                 <Route render={() => <Redirect to="/" />} />
             </Switch>
         </LayoutIndex>

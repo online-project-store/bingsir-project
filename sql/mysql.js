@@ -198,6 +198,11 @@ const findTagbyText = (text)=>{
     let _sql = `SELECT * FROM tag WHERE tag.tag_name = "${text}"`;
     return query(_sql);
 }
+
+const userinfo = () => {
+    let _sql = `SELECT * FROM users`;
+    return query(_sql);
+}
 module.exports = {
     insertUsers,
     findUsersByName,
@@ -218,5 +223,6 @@ module.exports = {
     findTagList,
     selectTagAndClass,
     updateArticleViews,
-    findTagbyText
+    findTagbyText,
+    userinfo
 }

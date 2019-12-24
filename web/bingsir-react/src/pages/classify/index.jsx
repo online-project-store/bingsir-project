@@ -8,10 +8,10 @@ import '@/static/style/classify.less';
 import Article from '@/components/article/index.jsx';
 const { CheckableTag } = Tag;
 function Classify(props) {
-    const [list, setList] = React.useState({ classList:[], findTagList:[]});
-    const [selectedClass, setSelectedClass] = React.useState([]);
-    const [selectedTag, setSelectedTag] = React.useState([]);
-    const [dataList, setDataList] = React.useState([]);
+    const [list, setList] = useState({ classList:[], findTagList:[]});
+    const [selectedClass, setSelectedClass] = useState([]);
+    const [selectedTag, setSelectedTag] = useState([]);
+    const [dataList, setDataList] = useState([]);
    // let selectedTags = [], selectedClass = [];
     let getClassList =  ()=>{
         http.post(api.classifyList,{},res=>{

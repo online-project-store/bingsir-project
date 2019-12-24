@@ -17,5 +17,6 @@ export default (config => {
     "toFollow": "/to-follow",
     "classifyList": "/classify-list",
     'classifyTagList': "/classify-tag-list",
-    "sendView": "/send-view"
+    "sendView": "/send-view",
+    "getUserData": "/get-user-data"
 })

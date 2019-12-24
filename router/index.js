@@ -50,7 +50,7 @@ router.post('/login', loginModule.login);
 
 router.post('/register', loginModule.register);
 
-router.post('/userinfo', userinfoModule.userinfo);
+// router.post('/userinfo', userinfoModule.userinfo);
 
 router.post('/class-list', classList.classlist);
 
@@ -69,5 +69,7 @@ router.post('/classify-list', classModule.classlist);
 router.post('/classify-tag-list', classModule.classifyTagList);
 
 router.post('/send-view', contentModule.sendView);
+
+router.post('/get-user-data', userinfoModule.getUserData);
 
 module.exports = router;
