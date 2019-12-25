@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Table, Tag, Button, Modal, Radio } from 'antd';
+import { Table, Tag, Button, Modal, Radio, message } from 'antd';
 import http from '@/config/http';
 import api from '@/config/api';
 function Container(params) {
     const [userData, setUserData] = useState([]);
     const [visible, setVisible] = useState(false);
     const [selectObj, setSelectObj] = useState({});
+    const [num, setNum] = useState();
     let getUserData = ()=>{
         http.post(api.getUserData,{},res=>{
             console.log('res',res);
@@ -15,9 +16,10 @@ function Container(params) {
         })
     };
     const audit = (row)=>{
-        console.log(row);
-        setVisible(true)
+        //console.log('row',row);
         setSelectObj(row)
+        setNum(row.sign)
+        setVisible(true)
     }
     useEffect(() => {
         getUserData();
@@ -31,25 +33,35 @@ function Container(params) {
             iphone: item.user_telephone_number,
             email: item.user_email,
             time: item.time,
-            sign: item.sign
+            sign: item.sign,
+            user_id: item.user_id
         }
     })
     
     const handleOk = (e)=>{
-        // console.log(e);
-        console.log(selectObj);
+
+        http.post(api.updateUserSign, { sign: num, user_id: selectObj.user_id }, res => {
+            // console.log('res', res);
+            if (res.result.affectedRows==1){
+                message.info('审核成功',1.5).then(()=>{
+                    getUserData();
+                    setVisible(false)
+                });
+            }else{
+                message.info('审核失败');
+            }
+        }, err => {
+            console.log(err);
+        })
+        // setSelectObj(selectObj)
         
-        setVisible(false)
     }
     const handleCancel = (e) => {
         console.log(e);
         setVisible(false)
     }
     const onChange = (e)=>{
-        console.log(e, e.target.value);
-        selectObj.sign = e.target.value;
-        // console.log(selectObj);
-        setSelectObj(selectObj)
+        setNum(e.target.value)
     }
     const signHtml = (tag)=>{
         let signCon = '';
@@ -114,8 +126,7 @@ function Container(params) {
                 onCancel={handleCancel}
             >
                 <div>
-                    <p>{selectObj.sign}</p>
-                    <Radio.Group onChange={onChange} value={parseInt(selectObj.sign)}>
+                    <Radio.Group onChange={(e) => onChange(e)} value={parseInt(num)}>
                         <Radio value={1}>注册通过</Radio>
                         <Radio value={0}>待定</Radio>
                         <Radio value={2}>注册不通过</Radio>

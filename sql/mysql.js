@@ -203,6 +203,12 @@ const userinfo = () => {
     let _sql = `SELECT * FROM users`;
     return query(_sql);
 }
+
+const updateUserSign = (obj) => {
+    let _sql = `UPDATE users SET sign = ${obj.sign} WHERE user_id = ${obj.user_id}`;
+    return query(_sql);
+}
+
 module.exports = {
     insertUsers,
     findUsersByName,
@@ -224,5 +230,6 @@ module.exports = {
     selectTagAndClass,
     updateArticleViews,
     findTagbyText,
-    userinfo
+    userinfo,
+    updateUserSign
 }

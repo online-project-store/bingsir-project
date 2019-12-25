@@ -72,4 +72,7 @@ router.post('/send-view', contentModule.sendView);
 
 router.post('/get-user-data', userinfoModule.getUserData);
 
+router.post('/update-user-sign', userinfoModule.updateUserSign);
+
+router.post('/userinfo-by-id', userinfoModule.userinfoById);
 module.exports = router;

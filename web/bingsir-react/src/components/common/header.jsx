@@ -28,7 +28,7 @@ class HeaderComponenet extends React.Component {
         this.props.getClientHeight(num);
         http.post(api.loginStatus,{},res=>{
             console.log('res',res);
-            if (res[0].user_id == '9'){
+            if (res[0].user_id == '8'){
                 this.setState({
                     sign:true 
                 })
@@ -88,7 +88,11 @@ class HeaderComponenet extends React.Component {
         });
     };
     goWriteArticle(){
-        window.location.href = '/writeArticle'
+        let id = 0;
+        if (this.props.user_info){
+            id = this.props.user_info.info.user_id
+        }
+        window.location.href = '/writeArticle?id=' + id
     }
     goLogin(){
         window.location.href = '/login'
@@ -123,7 +127,7 @@ class HeaderComponenet extends React.Component {
                         </Menu>
                     </Col>
                     <Col span={6} className='ui-header-right'>
-                        <span   onClick={this.goWriteArticle}><Icon type="form" />写文章 </span>
+                        <span   onClick={this.goWriteArticle.bind(this)}><Icon type="form" />写文章 </span>
                         <i> | </i>
                         {this.state.loginStatus ? (<span onClick={this.getUserInfo.bind(this)}><Icon type="user" /> {this.state.userName} </span>) : (<span onClick={this.goLogin}><Icon type="login" />登录·注册 </span>)}
                     </Col>

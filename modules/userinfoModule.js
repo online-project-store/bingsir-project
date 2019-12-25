@@ -15,5 +15,44 @@ exports.getUserData = async (ctx, next) => {
             userinfo
         }
     }
-    
+}
+
+exports.updateUserSign = async (ctx, next) => {
+    let obj = ctx.request.body;
+    let result = await sql.updateUserSign(obj);
+    try {
+        ctx.body = {
+            code: 1,
+            data: {
+                result
+            }
+        }
+    } catch (error) {
+        ctx.body = {
+            code: 1,
+            data: {
+                result: error
+            }
+        }
+    }
+}
+
+exports.userinfoById = async (ctx, next) => {
+    let id = ctx.request.body.id;
+    let result = await sql.findUserbyUser_id(id);
+    try {
+        ctx.body = {
+            code: 1,
+            data: {
+                result
+            }
+        }
+    } catch (error) {
+        ctx.body = {
+            code: 1,
+            data: {
+                result: error
+            }
+        }
+    }
 }

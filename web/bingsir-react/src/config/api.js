@@ -18,5 +18,7 @@ export default (config => {
     "classifyList": "/classify-list",
     'classifyTagList': "/classify-tag-list",
     "sendView": "/send-view",
-    "getUserData": "/get-user-data"
+    "getUserData": "/get-user-data",
+    "updateUserSign": "/update-user-sign",
+    "userinfoById": '/userinfo-by-id'
 })

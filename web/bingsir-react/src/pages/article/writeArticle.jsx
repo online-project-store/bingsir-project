@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import BraftEditor from 'braft-editor';
+import {  withRouter } from 'react-router-dom';
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter'
-import { Input, Button, Row, Col, Popover, Tag, message} from 'antd';
+import { Input, Button, Row, Col, Popover, Tag, message, Modal} from 'antd';
 import 'prismjs/components/prism-java'
 import 'prismjs/components/prism-php'
 import api from '@/config/api';
@@ -50,11 +51,7 @@ let lineStyle = {
     }
 }
 const { CheckableTag } = Tag;
-function mapStateToProps(state) {
-    return {
-        
-    };
-}
+
 
 class writeArticle extends Component {
     constructor(props) {
@@ -68,8 +65,13 @@ class writeArticle extends Component {
             inputVal:'',
             listdata:[],
             title:'',
-            publishSign: false 
+            publishSign: false,
+            visible: false,
+            userSign:'',
         }
+    }
+    handleOk(){
+        window.location.href = '/';
     }
     
     render() {
@@ -118,6 +120,23 @@ class writeArticle extends Component {
                         placeholder='请输入内容...'
                     />
                 </div>
+                <Modal
+                    title="提示"
+                    okText="返回首页"
+                    zIndex = '9999'
+                    cancelText="返回"
+                    footer={[
+                        <Button key="submit" type="primary"  onClick={this.handleOk}>
+                            返回首页
+                        </Button>
+                    ]}
+                    closable= {false}
+                    visible={this.state.visible}
+                    
+                >
+                    <p>感谢大佬支持,暂时不可以发布哦。</p>
+                    <p>站主审核中。请稍后...</p>
+                </Modal>
             </div>
         )
     }
@@ -125,10 +144,26 @@ class writeArticle extends Component {
         // this.props.history.push('/')
         window.location.href = '/';
     }
+    componentWillMount(){
+        const query = this.props.location.search
+        const search = query.split("=");
+        http.post(api.userinfoById, { id: search[1]}, res => {
+            this.setState({
+                userSign: res.result[0].sign
+            })
+            if (res.result[0].sign!=1){
+                this.setState({
+                    visible: true
+                })
+            }
+        }, err => {
+            console.log(err);
+        })
+    }
     componentDidMount() {
         // 假设此处从服务端获取html格式的编辑器内容
         // const htmlContent = await fetchEditorContent()
-        http.post(api.classlist, '', res => {
+        http.post(api.classlist, {}, res => {
             let arr = [];
             for (let i = 0; i < res.classList.length; i++) {
                 arr.push(res.classList[i].class_name);
@@ -172,7 +207,16 @@ class writeArticle extends Component {
     }
     publish() {
         // console.log('radioItem', this.state.radioItem);
-        
+        if (this.state.userSign!=1){
+            this.setState({
+                visible: true
+            })
+            this.setState({
+                publishSign: true
+            })
+            return false;
+        }
+
         if (this.state.inputVal == '' || this.state.radioItem == '') {
             message.info('添加一个标签或分类！')
             return false;
@@ -202,7 +246,11 @@ class writeArticle extends Component {
         })
     }
 }
+function mapStateToProps(state) {
+    return {
 
-export default connect(
+    };
+}
+export default withRouter(connect(
     mapStateToProps,
-)(writeArticle);
+)(writeArticle)) ;
