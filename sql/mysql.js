@@ -209,6 +209,35 @@ const updateUserSign = (obj) => {
     return query(_sql);
 }
 
+const findTagbyArticleId = (articleId) => {
+    let _sql = `SELECT tag_name, tag_id FROM tag WHERE tag_id=(SELECT tag_id  FROM tag_articles WHERE tag_articles.article_id = ${articleId})`;
+    return query(_sql);
+}
+const findClassfiybyArticleId = (articleId) => {
+    let _sql = `SELECT class_name, class_id FROM classify WHERE class_id=(SELECT classify_id  FROM classify_articles WHERE classify_articles.article_id = ${articleId})`;
+    return query(_sql);
+}
+/* 
+ 'article_title': this.state.title,
+     'article_content': this.state.editorState.toHTML(),
+     'tag_name': this.state.inputVal.trim(),
+     'classify': this.state.radioItem,
+     'tag_id': this.state.tag_id,
+     'class_id': this.state.class_id,
+     'article_id': this.state.article_id
+*/
+const updateTag = (obj)=>{
+    let _sql = `UPDATE tag SET tag_name = ${obj.tag_name} WHERE tag_id = ${obj.tag_id}`;
+    return query(_sql);
+}
+const updateClassify = (obj) => {
+    let _sql = `UPDATE classify SET class_name = ${obj.classify} WHERE class_id = ${obj.class_id}`;
+    return query(_sql);
+}
+const updateArticle = (obj) => {
+    let _sql = `UPDATE articles SET article_content = ${obj.article_content},article_title = ${obj.article_title} WHERE article_id = ${obj.article_id}`;
+    return query(_sql);
+}
 module.exports = {
     insertUsers,
     findUsersByName,
@@ -231,5 +260,10 @@ module.exports = {
     updateArticleViews,
     findTagbyText,
     userinfo,
-    updateUserSign
+    updateUserSign,
+    findTagbyArticleId,
+    findClassfiybyArticleId,
+    updateTag,
+    updateClassify,
+    updateArticle
 }

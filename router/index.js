@@ -75,4 +75,9 @@ router.post('/get-user-data', userinfoModule.getUserData);
 router.post('/update-user-sign', userinfoModule.updateUserSign);
 
 router.post('/userinfo-by-id', userinfoModule.userinfoById);
+
+router.post('/find-article-id', contentModule.findArticleId);
+
+router.post('/update-articleinfo', contentModule.updateArticleinfo);
+
 module.exports = router;

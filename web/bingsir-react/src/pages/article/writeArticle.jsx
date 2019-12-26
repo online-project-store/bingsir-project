@@ -68,6 +68,9 @@ class writeArticle extends Component {
             publishSign: false,
             visible: false,
             userSign:'',
+            tag_id:'',
+            class_id:'',
+            article_id:''
         }
     }
     handleOk(){
@@ -140,14 +143,21 @@ class writeArticle extends Component {
             </div>
         )
     }
+    getQueryVariable(variable) {
+        let query = window.location.search.substring(1);
+        let vars = query.split("&");
+        for (let i = 0; i < vars.length; i++) {
+            let pair = vars[i].split("=");
+            if (pair[0] == variable) { return pair[1]; }
+        }
+        return (false);
+    }
     toHome() {
         // this.props.history.push('/')
         window.location.href = '/';
     }
     componentWillMount(){
-        const query = this.props.location.search
-        const search = query.split("=");
-        http.post(api.userinfoById, { id: search[1]}, res => {
+        http.post(api.userinfoById, { id: this.getQueryVariable('id')}, res => {
             this.setState({
                 userSign: res.result[0].sign
             })
@@ -158,6 +168,24 @@ class writeArticle extends Component {
             }
         }, err => {
             console.log(err);
+        })
+    }
+    getArticleData(article_id){
+        http.post(api.findArticleId, {article_id},res=>{
+            console.log('res', res, res.tab[0].tag_name)
+            const htmlContent = res.articleinfo[0].article_content
+            // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorState数据
+            this.setState({
+                editorState: BraftEditor.createEditorState(htmlContent),
+                title: res.articleinfo[0].article_title,
+                radioItem: res.className[0].class_name,
+                inputVal: res.tab[0].tag_name,
+                tag_id: res.tab[0].tag_id,
+                class_id: res.className[0].class_id,
+                article_id: res.articleinfo[0].article_id
+            })
+        },err=>{
+            console.log(err)
         })
     }
     componentDidMount() {
@@ -175,11 +203,10 @@ class writeArticle extends Component {
         }, err => {
             console.log(err);
         })
-        const htmlContent = ''
-        // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorState数据
-        this.setState({
-            editorState: BraftEditor.createEditorState(htmlContent)
-        })
+        if (this.getQueryVariable('article') != 'null') {
+            this.getArticleData(this.getQueryVariable('article'))
+        }
+        
     }
     submitContent = async () => {
         // 在编辑器获得焦点时按下ctrl+s会执行此方法
@@ -225,20 +252,49 @@ class writeArticle extends Component {
             message.info('标题和内容不能为空！')
             return false;
         }
-        http.post(api.insertarticle, { 'article_title': this.state.title, 'article_content': this.state.editorState.toHTML(), 'tag_name': this.state.inputVal.trim(), 'tag_description': '', 'tag_another_name': '', 'classify': this.state.radioItem }, res => {
-            // console.log(res);
-            this.setState({
-                publishSign: true
-            })
-            if (res.affectedRows === 1) {
-                //this.props.history.push('/')
-                message.info('添加成功,即将跳转到首页', 1, () => {
-                    window.location.href = '/'
-                });
+        let obj;
+        if (this.getQueryVariable('article') != 'null'){
+            //修改
+            obj = {
+                'article_title': this.state.title,
+                'article_content': this.state.editorState.toHTML(),
+                'tag_name': this.state.inputVal.trim(),
+                'classify': this.state.radioItem,
+                'tag_id': this.state.tag_id,
+                'class_id': this.state.class_id,
+                'article_id': this.state.article_id
             }
-        }, err => {
-            console.log(err);
-        })
+            console.log(obj)
+            http.post(api.updateArticleinfo, obj,res=>{
+                console.log(res)
+            },err=>{
+                console.log(err)
+            })
+        }else{
+            obj = { 
+                'article_title': this.state.title,
+                'article_content': this.state.editorState.toHTML(),
+                'tag_name': this.state.inputVal.trim(),
+                'tag_description': '',
+                'tag_another_name': '',
+                'classify': this.state.radioItem
+             }
+            http.post(api.insertarticle, obj, res => {
+                // console.log(res);
+                this.setState({
+                    publishSign: true
+                })
+                if (res.affectedRows === 1) {
+                    //this.props.history.push('/')
+                    message.info('添加成功,即将跳转到首页', 1, () => {
+                        window.location.href = '/'
+                    });
+                }
+            }, err => {
+                console.log(err);
+            })
+        }
+        
     }
     addTitle(e) {
         this.setState({

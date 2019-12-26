@@ -92,7 +92,8 @@ class HeaderComponenet extends React.Component {
         if (this.props.user_info){
             id = this.props.user_info.info.user_id
         }
-        window.location.href = '/writeArticle?id=' + id
+        window.location.href = `/writeArticle?id=${id}&article=null` 
+        //window.location.href = '/writeArticle?id=' + id
     }
     goLogin(){
         window.location.href = '/login'

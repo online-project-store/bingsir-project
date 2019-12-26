@@ -20,5 +20,7 @@ export default (config => {
     "sendView": "/send-view",
     "getUserData": "/get-user-data",
     "updateUserSign": "/update-user-sign",
-    "userinfoById": '/userinfo-by-id'
+    "userinfoById": '/userinfo-by-id',
+    "findArticleId": '/find-article-id',
+    "updateArticleinfo": "/update-articleinfo"
 })

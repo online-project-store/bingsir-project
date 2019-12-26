@@ -188,3 +188,33 @@ exports.sendView = async (ctx, next) => {
         }
     }
 }
+
+exports.findArticleId = async (ctx, next) => {
+    let data = ctx.request.body;
+    let articleinfo = await sql.findArticlebyArticle_id(data.article_id);
+    let tab = await sql.findTagbyArticleId(data.article_id);
+    let className = await sql.findClassfiybyArticleId(data.article_id);
+    console.log(tab, className)
+    if (articleinfo.length>0) {
+        ctx.body = {
+            code: 1,
+            data: {
+                articleinfo,
+                tab,
+                className
+            }
+        }
+    }else{
+        ctx.body = {
+            code: 1,
+            data: {
+                msg:'文章编辑失败',
+            }
+        }
+    }
+}
+
+exports.updateArticleinfo = async (ctx, next) => {
+    let data = ctx.request.body;
+    
+}
