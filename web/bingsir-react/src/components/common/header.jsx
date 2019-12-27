@@ -28,12 +28,13 @@ class HeaderComponenet extends React.Component {
         this.props.getClientHeight(num);
         http.post(api.loginStatus,{},res=>{
             // console.log('res',res);
-            if (res[0].user_id == '8'){
+            //admin 管理员
+            if (res.rolename[0].role_name == 'admin'){
                 this.setState({
                     sign:true 
                 })
             }
-            this.props.userinfo(res[0])
+            this.props.userinfo(res.userinfo[0])
             if (res.lose){
                 this.setState({
                     loginStatus: false,
@@ -42,12 +43,15 @@ class HeaderComponenet extends React.Component {
             }else{
                 this.setState({
                     loginStatus: true,
-                    userName: res[0].user_nickname
+                    userName: res.userinfo[0].user_nickname
                 })
             }
         },err=>{
             console.log(err);
         })
+    }
+    getPower(){
+
     }
     selectItem(pathname){
         switch (pathname) {

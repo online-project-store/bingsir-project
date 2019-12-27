@@ -6,7 +6,7 @@ import '@/static/style/article.less';
 
 
 function ArticleDom(props) { 
-    console.log('props',props);
+    // console.log('props',props);
     
     let toDetails = (item) => {
         //console.log(item);

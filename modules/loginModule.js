@@ -97,7 +97,7 @@ exports.register = async (ctx, next) => {
     if (data.email && data.password && data.phone && data.password === data.confirmPwd) {
         // data.img = ""
         await sql.findUsersByName(data.phone).then(async res => {
-            data.nickname = 'bingsir'+data.phone.substring(7);
+            data.nickname = 'bingsir-'+data.phone.substring(7);
             if (res.length > 0) {
                 ctx.body = {
                     code: 1,
@@ -115,13 +115,10 @@ exports.register = async (ctx, next) => {
                         msg: "插入失败"
                     }
                 });
-                let rid = 3;//1: 超级管理员 2:管理员 3:普通用户
+                let rid = 3; //1: admin 管理员 2:write 可写 3:read只读
                 switch (data.phone) {
                     case '17600113369':
                         rid = 1;
-                        break;
-                    case '17600113368':
-                        rid = 2;
                         break;
                     default:
                         rid = 3;
@@ -202,10 +199,14 @@ exports.register = async (ctx, next) => {
 
 exports.loginStatus = async (ctx, next) => {
    let userinfo =  await sql.findUsersByName(ctx.session.phone);
+   let rolename = await sql.findPower(userinfo[0].user_id);
    if (userinfo.length>0) {
         ctx.body = {
             code: 1,
-            data: userinfo
+            data:{
+                rolename,
+                userinfo
+            } 
         }
    }else{   
        ctx.body = {
@@ -215,5 +216,4 @@ exports.loginStatus = async (ctx, next) => {
            }
        }
    }
-   
 }

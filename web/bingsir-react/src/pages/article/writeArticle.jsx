@@ -67,7 +67,7 @@ class writeArticle extends Component {
             title:'',
             publishSign: false,
             visible: false,
-            userSign:'',
+            role_name:'',
             tag_id:'',
             class_id:'',
             article_id:''
@@ -158,10 +158,15 @@ class writeArticle extends Component {
     }
     componentWillMount(){
         http.post(api.userinfoById, { id: this.getQueryVariable('id')}, res => {
+            // console.log(res)
             this.setState({
-                userSign: res.result[0].sign
+                role_name: res.result[0].role_name
             })
-            if (res.result[0].sign!=1){
+            if (res.result[0].role_name == 'write' || res.result[0].role_name == 'admin' ){
+                this.setState({
+                    visible: false
+                })
+            }else{
                 this.setState({
                     visible: true
                 })
@@ -234,7 +239,7 @@ class writeArticle extends Component {
     }
     publish() {
         // console.log('radioItem', this.state.radioItem);
-        if (this.state.userSign!=1){
+        if (this.state.role_name =='read'){
             this.setState({
                 visible: true
             })

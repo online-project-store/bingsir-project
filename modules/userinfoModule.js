@@ -39,7 +39,7 @@ exports.updateUserSign = async (ctx, next) => {
 
 exports.userinfoById = async (ctx, next) => {
     let id = ctx.request.body.id;
-    let result = await sql.findUserbyUser_id(id);
+    let result = await sql.findPower(id);
     try {
         ctx.body = {
             code: 1,

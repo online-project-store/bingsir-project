@@ -200,12 +200,12 @@ const findTagbyText = (text)=>{
 }
 
 const userinfo = () => {
-    let _sql = `SELECT * FROM users`;
+    let _sql = `SELECT * FROM users u LEFT JOIN user_role u_r  ON u.user_id = u_r.uid LEFT JOIN role r ON u_r.rid = r.role_id`;
     return query(_sql);
 }
 
 const updateUserSign = (obj) => {
-    let _sql = `UPDATE users SET sign = ${obj.sign} WHERE user_id = ${obj.user_id}`;
+    let _sql = `UPDATE user_role SET rid = ${obj.rid} WHERE user_role_id = ${obj.user_role_id}`;
     return query(_sql);
 }
 
@@ -229,7 +229,6 @@ const findClassfiybyArticleId = (articleId) => {
     }
 */
 const updateTag = (obj)=>{
-    console.log('obj111111111',obj)
     let _sql = `UPDATE tag SET tag_name = '${obj.tag_name}' WHERE tag_id = ${obj.tag_id}`;
     return query(_sql);
 }
@@ -239,6 +238,10 @@ const updateClassify = (obj) => {
 }
 const updateArticle = (obj) => {
     let _sql = `UPDATE articles SET article_content = '${obj.article_content}',article_title = '${obj.article_title}' WHERE article_id = ${obj.article_id}`;
+    return query(_sql);
+}
+const findPower = (id) => {
+    let _sql = `SELECT role_name FROM role WHERE role_id=(SELECT rid  FROM user_role WHERE user_role.uid = ${id})`;
     return query(_sql);
 }
 module.exports = {
@@ -268,5 +271,6 @@ module.exports = {
     findClassfiybyArticleId,
     updateTag,
     updateClassify,
-    updateArticle
+    updateArticle,
+    findPower
 }
