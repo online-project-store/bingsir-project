@@ -13,11 +13,14 @@ class Register extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err && values.password === values.confirmPwd) {
                 http.post(api.register, values, res => {
+                    console.log(res);
                     if (res.logining){
                         message.info(res.msg,1.5,()=>{
                            // window.location.href = '/login'
                             this.props.transferMsg({ key:"login"})
                         });
+                    }else{
+                        message.info(res.msg)
                     }
                 }, err => {
                     console.log(err);
