@@ -216,5 +216,23 @@ exports.findArticleId = async (ctx, next) => {
 
 exports.updateArticleinfo = async (ctx, next) => {
     let data = ctx.request.body;
+    let updateArticle = await sql.updateArticle(data);
+    let updateTag = await sql.updateTag(data);
+    let updateClassify = await sql.updateClassify(data);
+    if (updateArticle.affectedRows == 1 && updateTag.affectedRows == 1 && updateClassify.affectedRows==1) {
+        ctx.body = {
+            code: 1,
+            data: {
+                msg:'success',
+            }
+        }
+    }else{
+        ctx.body = {
+            code: 1,
+            data: {
+                msg: '更新失败',
+            }
+        }
+    }
     
 }

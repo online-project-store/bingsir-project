@@ -61,7 +61,7 @@ class Details extends Component {
     edit(){
         //写文章userid
         //window.location.href = '/writeArticle?id=' + id
-        console.log(this.state.params.user_id, this.state.article.article_id);
+        // console.log(this.state.params.user_id, this.state.article.article_id);
         //window.location.href = "/writeArticle?id=9"
         window.location.href = `/writeArticle?id=${this.state.params.user_id}&article=${this.state.article.article_id}` 
     }
@@ -100,8 +100,8 @@ class Details extends Component {
     componentDidMount(){
         // 可以根据用户点击次数排名
         http.post(api.getArticleDetails, this.props.location.state,res=>{
-            console.log('bingsir',res);
-            console.log(this.props.user_info.info.user_id);
+            // console.log('bingsir',res);
+            // console.log(this.props.user_info.info.user_id);
             this.setState({
                 userinfo: {
                     name: res.userinfo[0].user_nickname,

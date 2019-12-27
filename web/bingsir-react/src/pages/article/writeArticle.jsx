@@ -264,9 +264,18 @@ class writeArticle extends Component {
                 'class_id': this.state.class_id,
                 'article_id': this.state.article_id
             }
-            console.log(obj)
+            //console.log(obj)
             http.post(api.updateArticleinfo, obj,res=>{
-                console.log(res)
+                // console.log(res)
+                this.setState({
+                    publishSign: true
+                })
+                if (res.msg == 'success') {
+                    //this.props.history.push('/')
+                    message.info('修改成功,即将跳转到首页', 1, () => {
+                        window.location.href = '/'
+                    });
+                }
             },err=>{
                 console.log(err)
             })
