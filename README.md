@@ -15,4 +15,4 @@ koa2+mysql+react+redux+redis
 4.  首先配置mysql,redis；然后启动npm run dev
 
 #### 使用说明
-1.  遇到疑问可访问[bingsir](http://www.vip.bingsir.com);添加博主为好友
+1.  遇到疑问可访问[bingsir](http://vip.bingsir.com/);添加博主为好友
